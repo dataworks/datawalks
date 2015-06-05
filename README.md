@@ -1,2 +1,6 @@
-# internship-2015
-Data Works Summer Internship 2015
+# Project layout
+
+analytics - Analytics code (Apache Spark)
+etl - ETL related code (Pentaho)
+service - Front-end service code (Spring Boot)
+ui - Front-end Javascript code (AngularJS)

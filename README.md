@@ -1,4 +1,4 @@
-# Project layout
+# Data Walks - Project layout
 
 analytics - Analytics code (Apache Spark)
 etl - ETL related code (Pentaho)

@@ -1,0 +1,27 @@
+<!doctype html>
+<html ng-app="datawalks">
+	<head>
+		<title>Data Walks</title>
+		<script src="bower_components/angular/angular.js"></script>
+		<script src="bower_components/angular-resource/angular-resource.js"></script>
+    	<script src="js/app.js"></script>
+    	<script src="js/services/watch.js"></script>
+    	<script src="js/controllers/display.js"></script>
+        <link rel="stylesheet" href="css/main.css">
+	</head>
+
+	<body>
+		<div ng-controller="Display">
+
+		<table>
+			<tr ng-repeat="x in records.rows">
+				<td>{{ x.id }}</td>
+				<td>{{ x.lat }}</td>
+				<td>{{ x.lon }}</td>
+				<td>{{ x.date  | date:'MM-dd-yyyy HH:MM:ss'}}</td>
+			</tr>
+		</table>
+
+		</div>
+	</body>
+</html>

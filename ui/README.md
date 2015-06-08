@@ -1,1 +1,1 @@
-Front-end using AngularJS
+User interface using Spring Boot + AngularJS

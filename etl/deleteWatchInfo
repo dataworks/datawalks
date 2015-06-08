@@ -1,0 +1,10 @@
+﻿ALTER TABLE bobby_drive DROP COLUMN xml_element_level;
+ALTER TABLE bobby_drive DROP COLUMN xml_path;
+ALTER TABLE bobby_drive DROP COLUMN xml_parent_path;
+ALTER TABLE bobby_drive DROP COLUMN xml_row_number;
+ALTER TABLE bobby_drive DROP COLUMN xml_data_type_numeric;
+ALTER TABLE bobby_drive DROP COLUMN xml_data_type_description;
+ALTER TABLE bobby_drive DROP COLUMN xml_location_line;
+ALTER TABLE bobby_drive DROP COLUMN xml_location_column;
+ALTER TABLE bobby_drive DROP COLUMN xml_element_id;
+ALTER TABLE bobby_drive DROP COLUMN xml_parent_element_id;

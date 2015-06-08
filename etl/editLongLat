@@ -1,0 +1,8 @@
+﻿SELECT  xml_data_name,xml_data_value
+into bobby_human
+FROM bobby_drive 
+WHERE xml_data_value IS NOT NULL
+AND (xml_data_name = 'Id'
+OR xml_data_name = 'Time'
+OR xml_data_name = 'LatitudeDegrees'
+OR xml_data_name = 'LongitudeDegrees');

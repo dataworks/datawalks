@@ -1,15 +1,13 @@
 package datawalks.service
 
 import groovy.sql.Sql
-
 import javax.sql.DataSource
-
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
+
 @Service
 class SqlService {
-	//@Autowired JdbcTemplate jdbcTemplate
 	@Autowired DataSource dataSource
 	
 	def getGeoPoints(long watchId, Date startDate, Date stopDate) {
@@ -20,16 +18,14 @@ class SqlService {
 		{
 			rows << [device: it.device, latitude: it.latitude, longitude: it.longitude ]
 		}
-		//sql.eachRow("""select datetime datetime, longitudedegrees longitude, latitudedegrees latitude from dan_drive """) {
-			//rows << [datetime: it.datetime, latitude: it.latitude, longitude: it.longitude]
-		//}
 		return rows
 	}
 	//create jwc connection
 	//take in config
 	
-	/*
+	/* def - getTotalDistance()
 	 * Returns the max distance for each day in the table workabledata
+	 * Not currently in use
 	 */
 	def getTotalDistance(long watchId, Date startDate, Date stopDate){
 		def rows = []

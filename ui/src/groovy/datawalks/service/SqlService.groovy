@@ -5,7 +5,6 @@ import javax.sql.DataSource
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
-
 @Service
 class SqlService {
 	@Autowired DataSource dataSource
@@ -20,8 +19,6 @@ class SqlService {
 		}
 		return rows
 	}
-	//create jwc connection
-	//take in config
 	
 	/* def - getTotalDistance()
 	 * Returns the max distance for each day in the table workabledata
@@ -35,10 +32,5 @@ class SqlService {
 			rows << [ dtime: it.dtime, mdistance: it.mdistance]
 		}
 		return rows
-	}
-	
-
-	
-	
-	
+	}	
 }

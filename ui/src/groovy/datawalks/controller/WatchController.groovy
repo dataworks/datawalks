@@ -24,8 +24,4 @@ class WatchController {
 			[rows: points, total: points.size(), aggs: sqlService.getTotalDistance(id, startDate, stopDate)]
 	}
 	
-	@RequestMapping("/watch/listLat")
-	public def listLat(){
-		sqlService.getGeoLat();
-	}
 }

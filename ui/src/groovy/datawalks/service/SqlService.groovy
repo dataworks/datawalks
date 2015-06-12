@@ -27,6 +27,10 @@ class SqlService {
 	}
 	//create jwc connection
 	//take in config
+	
+	/*
+	 * Returns the max distance for each day in the table workabledata
+	 */
 	def getTotalDistance(long watchId, Date startDate, Date stopDate){
 		def rows = []
 		Sql sql = new Sql(dataSource)
@@ -37,15 +41,7 @@ class SqlService {
 		return rows
 	}
 	
-	def getGeoLat() {
-		def rows = []
-		Sql sql = new Sql(dataSource)
-		sql.eachRow("select latitudedegrees latitude from dan_drive where latitudedegrees > ?", [38.956] ) {
-			rows << [ latitude: it.latitude]
-		}
-		return rows
-	}
-	//returns the latitude degrees greater than 38.956
+
 	
 	
 	

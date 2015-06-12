@@ -1,5 +1,27 @@
 controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 	$scope.map;
+	$scope.list = [];
+	$scope.endlist = [];
+    $scope.text = 'start date';
+    $scope.endtext = 'end date'
+    $scope.ids  = [
+      {
+		id: "1"
+      }, 
+      {
+		id: "2"
+      }, 
+      {
+		id: "3"
+      },
+      {
+  		id: "4"
+      },
+      {
+  		id: "5"
+      }];
+    $scope.curr = 3897655761;
+    
 	var pointarray;
 	var heatmap;
 	var watchData = [];
@@ -11,17 +33,46 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 	  };
 	  $scope.map = new google.maps.Map(document.getElementById('map-canvas'),
 	      mapOptions);
-	  for(var i = 0; i < $scope.records.rows.length; i++)
-	  {
-	  	watchData.push(new google.maps.LatLng($scope.records.rows[i].latitude, $scope.records.rows[i].longitude));
-	  }
 	  
-	  var pointArray = new google.maps.MVCArray(watchData);
-	  heatmap = new google.maps.visualization.HeatmapLayer({
-		    data: pointArray
-		  });
+	}
+	$scope.submit = function() 
+	{
+		$scope.list.pop();
+		$scope.endlist.pop();
+		watchData = [];
+		if(heatmap != null)
+		{
+			heatmap.setMap(null);
+		}
+		
+		if ($scope.text) 
+		{
+	          $scope.list.push(this.text);
+	          $scope.endlist.push(this.endtext);
+	          $scope.text = '';
+	          $scope.endtext = '';
+	          var st = $scope.list[0].split("-");
+	          var en = $scope.endlist[0].split("-");
+	          var dt = new Date($scope.records.rows[0].dtime);
+        	  console.log(dt.getDate());
+	          for(var i = 0; i < $scope.records.rows.length; i++)
+			  {
+	        	  var dt = new Date($scope.records.rows[i].dtime);
+	        	  if($scope.records.rows[i].deviceid === $scope.curr 
+	        			  && (dt.getDate() >= st[2] && dt.getDate() <= en[2]))
+	        	  {
+	        		  watchData.push(new google.maps.LatLng(
+	        				  $scope.records.rows[i].latitude, $scope.records.rows[i].longitude));
+	        	  }
+			  }
+			  
+			  var pointArray = new google.maps.MVCArray(watchData);
+			  heatmap = new google.maps.visualization.HeatmapLayer({
+				    data: pointArray
+				  });
 
-	  heatmap.setMap($scope.map);
+			  heatmap.setMap($scope.map);
+		}			
 	}
 	
 	$scope.toggleHeatmap = function() {

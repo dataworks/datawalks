@@ -15,10 +15,12 @@ class SqlService {
 	def getGeoPoints(long watchId, Date startDate, Date stopDate) {
 		def rows = []
 		Sql sql = new Sql(dataSource)
-		sql.eachRow("""select deviceid device, latitude latitude, longitude longitude   
-						from workabledata""") 
+		sql.eachRow("""select deviceid deviceid, latitude latitude, 
+			longitude longitude, dtime dtime, 
+			distancemeters distancemeters from workabledata""") 
 		{
-			rows << [device: it.device, latitude: it.latitude, longitude: it.longitude ]
+			rows << [deviceid: it.deviceid, latitude: it.latitude, 
+				longitude: it.longitude, dtime: it.dtime, distancemeters: it.distancemeters]
 		}
 		//sql.eachRow("""select datetime datetime, longitudedegrees longitude, latitudedegrees latitude from dan_drive """) {
 			//rows << [datetime: it.datetime, latitude: it.latitude, longitude: it.longitude]

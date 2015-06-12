@@ -34,12 +34,25 @@
 
 	<body>
 		<div ng-controller="Display">
-		<table>
-		</div>
+		<div class="col-md-2">
+        <!--Sidebar content-->
+        	
+        <form ng-submit = "submit()">
+        	Enter text and hit enter:
+  				<input type="text" ng-model="text" name="text" />
+  				<pre>list={{list}}</pre>
+  				<input type="text" ng-model="endtext" name="endtext" />
+  				<input type="submit" id="submit" value="Submit" />
+  				<pre>endlist={{endlist}}</pre>
+  		</form>
+        </div>
+
+      </div>
+      
+		<table class = "col-md-10">
 			<tr ng-repeat="x in records.rows | limitTo:5">
 				<td>{{ x.latitude }}</td>
 				<td>{{ x.longitude }}</td>
-				<td>{{ x.time  | date:'MM-dd-yyyy HH:MM:ss'}}</td>
 			</tr>
 		</table>
 		<div id="panel">
@@ -49,7 +62,7 @@
       		<button ng-click="changeOpacity()">Change opacity</button>
       		<button ng-click="invert()">invert</button>
     	</div>
-		</div>
+		
 		
 		<div id="map-canvas">
 		

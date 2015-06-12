@@ -3,97 +3,54 @@
 	<head>
 		<title>Data Walks</title>
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <style>
-      html, body, #map-canvas {
-        height: 80%;
-        width: 80%;
-        margin: 0px;
-        padding: 0px
-      }
-      #panel {
-        position: absolute;
-        top: 80%;
-        left: 50%;
-        margin-left: -180px;
-        z-index: 5;
-        background-color: #fff;
-        padding: 5px;
-        border: 1px solid #999;
-      }
-    </style>
-    
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=visualization"></script>
+    	<meta charset="utf-8">
+    	<link rel="stylesheet" href="css/main.css">  
+    	<style>
+      		html, body, #map-canvas {
+        		height: 80%;
+        		width: 80%;
+        		margin: 0px;
+        		padding: 0px;
+      		}
+      		#panel {
+        		position: absolute;
+        		top: 80%;
+        		left: 50%;
+        		margin-left: -180px;
+        		z-index: 5;
+        		background-color: #fff;
+        		padding: 5px;
+       			border: 1px solid #999;
+      		}
+    	</style>
+    	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=visualization"></script>
 		<script src="bower_components/angular/angular.js"></script>
 		<script src="bower_components/angular-resource/angular-resource.js"></script>
     	<script src="js/app.js"></script>
     	<script src="js/services/watch.js"></script>
-    	<script src="js/controllers/display.js"></script>
-        <link rel="stylesheet" href="css/main.css">    
+    	<script src="js/controllers/display.js"></script>  
+    	<script type="text/javascript" src="js/controllers/cal.js"></script>
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	</head>
 
 	<body>
 		<div ng-controller="Display">
-		<table>
-		</div>
-			<tr ng-repeat="x in records.rows | limitTo:5">
-				<td>{{ x.latitude }}</td>
-				<td>{{ x.longitude }}</td>
-				<td>{{ x.time  | date:'MM-dd-yyyy HH:MM:ss'}}</td>
-			</tr>
-		</table>
-		<div id="panel">
-      		<button ng-click="toggleHeatmap()">Toggle Heatmap</button>
-      		<button ng-click="changeGradient()">Change gradient</button>
-      		<button ng-click="changeRadius()">Change radius</button>
-      		<button ng-click="changeOpacity()">Change opacity</button>
-      		<button ng-click="invert()">invert</button>
-    	</div>
-		</div>
-		
-		<div id="map-canvas">
-		
-		</div>
-		<div></div>
-		<div>
-			<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-      google.load("visualization", "1.1", {packages:["calendar"]});
-      google.setOnLoadCallback(drawChart);
-
-   function drawChart() {
-       var dataTable = new google.visualization.DataTable();
-       dataTable.addColumn({ type: 'date', id: 'Date' });
-       dataTable.addColumn({ type: 'number', id: 'distance' });
-       dataTable.addRows([
-                          
-          [ new Date(2012, 3, 13), 37032 ],
-          [ new Date(2012, 3, 14), 38024 ],
-          [ new Date(2012, 3, 15), 38024 ],
-          [ new Date(2012, 3, 16), 38108 ],
-          [ new Date(2012, 3, 17), 38229 ],
-          // Many rows omitted for brevity.
-          [ new Date(2013, 9, 4), 38177 ],
-          [ new Date(2013, 9, 5), 38705 ],
-          [ new Date(2013, 9, 12), 38210 ],
-          [ new Date(2013, 9, 13), 38029 ],
-          [ new Date(2013, 9, 19), 38823 ],
-          [ new Date(2013, 9, 23), 38345 ],
-          [ new Date(2013, 9, 24), 38436 ],
-          [ new Date(2013, 9, 30), 38447 ]
-                          
-        ]);
-
-       var chart = new google.visualization.Calendar(document.getElementById('calendar_basic'));
-
-       var options = {
-         title: "Distance",
-         height: 400,
-       };
-
-       chart.draw(dataTable, options);
-   }
-    </script>
+			<div id="map-canvas"></div>
+			<table>
+				<tr ng-repeat="x in records.rows | limitTo:5">
+					<td>{{ x.latitude }}</td>
+					<td>{{ x.longitude }}</td>
+					<td>{{ x.time  | date:'MM-dd-yyyy HH:MM:ss'}}</td>
+				</tr>
+			</table>
+			<div id="panel">
+      			<button ng-click="toggleHeatmap()">Toggle Heatmap</button>
+      			<button ng-click="changeGradient()">Change gradient</button>
+      			<button ng-click="changeRadius()">Change radius</button>
+      			<button ng-click="changeOpacity()">Change opacity</button>
+      			<button ng-click="invert()">invert</button>
+    		</div>
+    		<div id="calendar_basic" style="width: 1000px; height: 350px;"></div>
 		</div>
 	</body>
 </html>

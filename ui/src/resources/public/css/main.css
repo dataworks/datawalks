@@ -11,3 +11,197 @@ table tr:nth-child(odd) {
 table tr:nth-child(even) {
   background-color: #ffffff;
 }
+* {
+  font: normal 20px/30px Nunito, sans-serif;
+  color: rgb(66, 66, 66);
+  
+  border: 0;
+  margin: 0;
+  padding: 0;
+  
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+html {
+  margin: 1em;
+  background: rgb(239, 239, 239);
+}
+div {
+	display: inline-block;
+	padding: 5px;
+}
+h2 {
+  color: rgb(0, 153, 204);
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 40px;
+  text-transform: uppercase;
+}
+h6 {
+  color: rgb(99, 99, 99);
+  font-weight: 300;
+  text-align: center;
+}
+
+form {
+  width: 95%;
+  margin: auto;
+  display: block;
+  position: relative;
+}
+span {
+  float: left;
+  width: 40px;
+  height: 50px;
+  background: #FFF;
+  text-align: right;
+  font-size: 30px;
+  line-height: 50px;
+}
+input[type="text"] {
+  float: left;
+  width: 73.8%;
+  height: 50px;
+  padding: 0 20px 0 10px;
+  outline: 0;
+  background: #FFF;
+  line-height: auto;
+}
+input[type="submit"] {
+  float: left;
+  width: 20%;
+  height: 50px;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  background: rgb(102, 255, 102);
+  line-height: 52px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+input[type="submit"]:hover {
+  background: rgb(20, 153, 204);
+}
+
+hr {
+  top: 15px;
+  clear: both;
+  width: 0;
+  height: 5px;
+  margin: 0 0 25px;
+  display: block;
+  position: relative;
+  background: rgb(2, 218, 175);
+}
+hr.load {
+  -webkit-animation: progress 10s infinite;
+  -moz-animation: progress 10s infinite;
+  animation: progress 10s infinite;
+}
+
+ul {
+  list-style: none;
+  display: inline;
+}
+
+li {
+  width: 100%;
+  margin: 5px 0;
+  padding: 30px 40px;
+  display: inline-block;
+  background: rgb(248, 248, 248);
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 24px;
+  text-decoration: none;
+  
+  transition: background 1s;
+  -moz-transition: background 1s;
+  -webkit-transition: background 1s;
+}
+
+li.animate {
+  -webkit-animation: blink 1s 2;
+  -moz-animation: blink 1s 2;
+  animation: blink 1s 2;
+}
+#map-canvas {
+	position: relative;
+    height: 600px;
+    width: 100%;
+}
+.contain {
+	margin-top:30px;
+	margin-bottom: 80px;
+	position: relative;
+	width: 100%;
+	height: 500px;
+}
+.contain .lefty {
+	position: relative;
+	float: left;
+	width: 50%;
+	margin: auto;
+	vertical-align: center;
+}
+.contain .righty {
+	position: relative;
+	float: right;
+	width: 50%;
+	margin: auto;
+	vertical-align: center;
+}
+.contain .top {
+	position: relative;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	vertical-align: center;
+}
+.contain .bottom {
+	position: relative;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	vertical-align: center;
+}
+.contain .mini {
+	display:inline;
+}
+
+.nav li {
+	display: inline;
+	color: #99999;
+}
+
+.butt {
+	height: 50px;
+    width: 50px;
+    border-color: rgb(0, 153, 204);
+    background-color: rgb(0, 153, 204);
+	border-radius: 5px;
+	text-align: center;
+	text-decoration: none;
+	float: right;
+}
+
+@-webkit-keyframes progress {
+  to { width: 100%; }
+}
+@-moz-keyframes progress {
+  to { width: 100%; }
+}
+@keyframes progress {
+  to { width: 100%; }
+}
+
+@-webkit-keyframes blink {
+  50% { background: rgb(226, 226, 226); }
+}
+@-moz-keyframes blink {
+  50% { background: rgb(226, 226, 226); }
+}
+@keyframes blink {
+  50% { background: rgb(226, 226, 226); }
+}

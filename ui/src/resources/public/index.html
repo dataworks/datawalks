@@ -44,6 +44,16 @@
   				<input type="text" ng-model="endtext" name="endtext" />
   				<input type="submit" id="submit" value="Submit" />
   				<pre>endlist={{endlist}}</pre>
+  			<label>Chuck:
+    			<input type="checkbox" ng-model="ids.id1"
+    			ng-true-value="'YES'" ng-false-value="'NO'">
+  			</label><br/>
+  			<label>Danny:
+    		<input type="checkbox" ng-model="ids.id2"
+    		ng-true-value="'YES'" ng-false-value="'NO'">
+   			</label><br/>
+  			<tt>id1 = {{ids.id1}}</tt><br/>
+  			<tt>id2 = {{ids.id2}}</tt><br/>
   		</form>
         </div>
 

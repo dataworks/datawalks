@@ -26,7 +26,16 @@ class SqlService {
 		return rows
 	}
 	//create jwc connection
-	//take in config files
+	//take in config
+	def getTotalDistance(long watchId, Date startDate, Date stopDate){
+		def rows = []
+		Sql sql = new Sql(dataSource)
+		sql.eachRow("""SELECT max(distancemeters) mdistance,to_char(dtime,'yyyy-mm-dd') dtime from workabledata
+						GROUP BY to_char(dtime,'yyyy-mm-dd');"""){
+			rows << [ dtime: it.dtime, mdistance: it.mdistance]
+		}
+		return rows
+	}
 	
 	def getGeoLat() {
 		def rows = []
@@ -38,11 +47,6 @@ class SqlService {
 	}
 	//returns the latitude degrees greater than 38.956
 	
-	def makeTable() {
-		Sql sql = new Sql(dataSource)
-		String create = "create table PROJECT ( id integer not null,name varchar(50),url varchar(100) )"
-		sql.execute(create)
-		
-	}
+	
 	
 }

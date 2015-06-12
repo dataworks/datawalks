@@ -26,7 +26,7 @@ class SqlService {
 		return rows
 	}
 	//create jwc connection
-	//take in config files
+	//take in config
 	def getTotalDistance(long watchId, Date startDate, Date stopDate){
 		def rows = []
 		Sql sql = new Sql(dataSource)

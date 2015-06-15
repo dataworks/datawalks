@@ -4,7 +4,8 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 	var heatmap;
 	var watchData = [];
 	
-	$scope.loadMap = function(results) {
+	$scope.loadMap = function() {
+
 	  var mapOptions = {
 	    zoom: 13,
 	    center: new google.maps.LatLng($scope.records.rows[0].latitude, $scope.records.rows[0].longitude)
@@ -22,6 +23,8 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 		  });
 
 	  heatmap.setMap($scope.map);
+	  
+	  
 	}
 	
 	$scope.toggleHeatmap = function() {
@@ -61,8 +64,42 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 		  heatmap.set('opacity', heatmap.get('opacity') ? null : 0.2);
 		}
 
-	
-	$scope.records = Watch.query({id: 1, startDate: '2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, 
-			$scope.loadMap);
-
+	 $scope.parseDate = function(input){
+  	   var parts = input.split('-');
+  	   return new Date(parts[0], parts[1]-1, parts[2]); 
+     }
+	 
+   //Draw the CalendarChart
+   $scope.drawChart = function() {
+	   
+       var dataTable = new google.visualization.DataTable();
+       dataTable.addColumn({ type: 'date', id: 'Date' });
+       dataTable.addColumn({ type: 'number', id: 'distance' });
+       
+ 	   for(var i = 0; i < $scope.records.aggs.length; i++)
+ 		  {
+ 	       	 dataTable.addRow( [ new Date(Date.parse($scope.records.aggs[i].dtime)), parseInt($scope.records.aggs[i].mdistance) ] );
+ 		  }
+ 	       
+ 	   var chart = new google.visualization.Calendar(document.getElementById('calendar_basic'));
+ 	
+ 	   var options = {
+ 	         title: "Distance",
+ 	         height: 1000,
+ 	         width: 1200,
+		    tooltip: {
+		    	isHtml: false
+		    	}
+ 	       };
+ 	
+ 	   chart.draw(dataTable, options); 
+   }
+   
+   $scope.recordsLoaded = function(results){
+	   $scope.loadMap();
+	   $scope.drawChart(); 
+   }
+   
+   $scope.records = Watch.query({id: 1, startDate: '2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, 
+			$scope.recordsLoaded);
 }]);

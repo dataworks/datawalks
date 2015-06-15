@@ -22,20 +22,21 @@
         border: 1px solid #999;
       }
     </style>
-    
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script text = "text/javascript">
+   	 	google.load("visualization", "1.1", {packages:["calendar"]});
+    </script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=visualization"></script>
 		<script src="bower_components/angular/angular.js"></script>
 		<script src="bower_components/angular-resource/angular-resource.js"></script>
     	<script src="js/app.js"></script>
     	<script src="js/services/watch.js"></script>
     	<script src="js/controllers/display.js"></script>
-        <link rel="stylesheet" href="css/main.css">    
+        <link rel="stylesheet" href="css/main.css">      
 	</head>
-
 	<body>
-		<div ng-controller="Display">
+	<div ng-controller="Display">
 		<table>
-		</div>
 			<tr ng-repeat="x in records.rows | limitTo:5">
 				<td>{{ x.latitude }}</td>
 				<td>{{ x.longitude }}</td>
@@ -49,42 +50,8 @@
       		<button ng-click="changeOpacity()">Change opacity</button>
       		<button ng-click="invert()">invert</button>
     	</div>
-		</div>
-		
-		<div id="map-canvas">
-		
-		</div>
-		<div></div>
-		<div>
-			<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-      google.load("visualization", "1.1", {packages:["calendar"]});
-      google.setOnLoadCallback(drawChart);
-
-   function drawChart() {
-       var dataTable = new google.visualization.DataTable();
-       dataTable.addColumn({ type: 'date', id: 'Date' });
-       dataTable.addColumn({ type: 'number', id: 'distance' });
-       
-         
-      for(var i = 0; i < $scope.records.aggs.length; i++)
-	  {
-       	 dataTable.addRow( [ Date.parse($scope.records.aggs[i].dtime), $scope.records.aggs[i].mdistance ] );
-	  }
-      	dataTable.addRow([ new Date(2012, 3, 17), 38229 ]);
-                          
-        ]);
-
-       var chart = new google.visualization.Calendar(document.getElementById('calendar_basic'));
-
-       var options = {
-         title: "Distance",
-         height: 400,
-       };
-
-       chart.draw(dataTable, options);
-   }
-    </script>
-		</div>
+	</div>	
+	<div id="map-canvas"></div>
+	<div id="calendar_basic" style="width: 1000px; height: 350px;"></div>
 	</body>
 </html>

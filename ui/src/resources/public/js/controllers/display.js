@@ -8,11 +8,10 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
     $scope.text = 'start date';
     $scope.endtext = 'end date'
     $scope.curr =[];
-    $scope.ids  = {
-        id1: 'NO',    
-        id2: 'NO'            
-   };
-    $scope.deviceId = '';
+    $scope.ids  =[];
+    $scope.deviceId = [];
+    $scope.test = [];
+    
     
 	//Creates the heap map
 	$scope.loadMap = function() {
@@ -24,7 +23,28 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 	  $scope.map = new google.maps.Map(document.getElementById('map-canvas'),
 	      mapOptions);
 	  
+	  for(var i = 0; i < $scope.records.device.length; i++)
+      {
+          $scope.ids[i] = $scope.records.device[i];
+          $scope.deviceId[i] = i;
+          $scope.test[i]=true;
+      }
+	  
 	}
+	
+	//pasted
+	 $scope.toggleSelection = function toggleSelection(identifier){
+		 	if($scope.test[identifier]){
+		 		console.log($scope.records.device[identifier]);
+		 		$scope.test[identifier]=false;
+		 	}
+		 	else{
+		 		console.log("Unselect");
+		 		$scope.test[identifier]=true;
+		 	}
+
+		  };
+	//paseted
 	
 	function hM1init(text1, text2)
     {

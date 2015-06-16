@@ -5,6 +5,7 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 	var heatmap2;
     $scope.list = [];
     $scope.endlist = [];
+<<<<<<< HEAD
     $scope.text = '';
     $scope.endtext = '';
     $scope.curr =[];
@@ -168,7 +169,6 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
             hM2init($scope.list[0],$scope.endlist[0]);
         }
     }
-	//n
 	
 	$scope.toggleHeatmap = function() {
 		  heatmap.setMap(heatmap.getMap() ? null : $scope.map);

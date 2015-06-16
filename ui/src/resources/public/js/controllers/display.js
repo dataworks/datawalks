@@ -3,7 +3,6 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 	var pointarray;
 	var heatmap;
 	var heatmap2;
-	//var watchData = [];
     $scope.list = [];
     $scope.endlist = [];
     $scope.text = 'start date';
@@ -15,7 +14,7 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
    };
     $scope.deviceId = '';
     
-	
+	//Creates the heap map
 	$scope.loadMap = function() {
 
 	  var mapOptions = {
@@ -24,23 +23,9 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 	  };
 	  $scope.map = new google.maps.Map(document.getElementById('map-canvas'),
 	      mapOptions);
-	  /*
-	  for(var i = 0; i < $scope.records.rows.length; i++)
-	  {
-	  	watchData.push(new google.maps.LatLng($scope.records.rows[i].latitude, $scope.records.rows[i].longitude));
-	  }
-	  
-	  var pointArray = new google.maps.MVCArray(watchData);
-	  heatmap = new google.maps.visualization.HeatmapLayer({
-		    data: pointArray
-		  });
-	
-	  heatmap.setMap($scope.map);
-	 */
 	  
 	}
 	
-	//pasted
 	function hM1init(text1, text2)
     {
         var watchData = [];
@@ -112,7 +97,7 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
     
     $scope.submit = function() 
     {
-    	/*
+    	
         if(heatmap != null)
         {
             heatmap.setMap(null);
@@ -121,7 +106,7 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
         {
             heatmap2.setMap(null);
         }
-        */
+        
         if($scope.ids.id1 === 'YES')
         {
             $scope.curr[0] = 3897655761;
@@ -170,12 +155,12 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 		  ]
 		  heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
 		}
+	
 	$scope.invert = function()
 	{
-		console.log(heatmap.getData().WeightedLocation.weight);
-		
-		//heatmap.set('radius', heatmap.get('radius')? null:20)
+		heatmap.set('radius', heatmap.get('radius')? null:20)
 	}
+	
 	$scope.changeRadius = function() {
 		  heatmap.set('radius', heatmap.get('radius') ? null : 20);
 		}

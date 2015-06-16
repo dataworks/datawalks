@@ -9,20 +9,21 @@ import org.springframework.stereotype.Service
 class SqlService {
 	@Autowired DataSource dataSource
 	
-	def getGeoPoints(long watchId, Date startDate, Date stopDate) {
-		def rows = []
-		Sql sql = new Sql(dataSource)
-		sql.eachRow("""select deviceid device, latitude latitude, longitude longitude   
-						from workabledata""") 
-		{
-			rows << [device: it.device, latitude: it.latitude, longitude: it.longitude ]
-		}
-		return rows
-	}
+def getGeoPoints(long watchId, Date startDate, Date stopDate) {
+        def rows = []
+        Sql sql = new Sql(dataSource)
+        sql.eachRow("""select deviceid deviceid, latitude latitude,
+            longitude longitude, dtime dtime,
+            distancemeters distancemeters from workabledata""")
+        {
+            rows << [deviceid: it.deviceid, latitude: it.latitude,
+                longitude: it.longitude, dtime: it.dtime, distancemeters: it.distancemeters]
+        }
+        return rows
+    } 
 	
 	/* def - getTotalDistance()
 	 * Returns the max distance for each day in the table workabledata
-	 * Not currently in use
 	 */
 	def getTotalDistance(long watchId, Date startDate, Date stopDate){
 		def rows = []

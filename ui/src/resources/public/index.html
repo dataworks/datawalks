@@ -36,20 +36,8 @@
 	</head>
 	<body>
 	<div ng-controller="Display">
-		<table>
-			<tr ng-repeat="x in records.rows | limitTo:5">
-				<td>{{ x.latitude }}</td>
-				<td>{{ x.longitude }}</td>
-				<td>{{ x.time  | date:'MM-dd-yyyy HH:MM:ss'}}</td>
-			</tr>
-		</table>
-		<div id="panel">
-      		<button ng-click="toggleHeatmap()">Toggle Heatmap</button>
-      		<button ng-click="changeGradient()">Change gradient</button>
-      		<button ng-click="changeRadius()">Change radius</button>
-      		<button ng-click="changeOpacity()">Change opacity</button>
-      		<button ng-click="invert()">invert</button>
-    	</div>
+
+
 	</div>	
 	<div id="map-canvas"></div>
 	<div id="calendar_basic" style="width: 1000px; height: 350px;"></div>

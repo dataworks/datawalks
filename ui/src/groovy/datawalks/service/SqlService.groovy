@@ -40,4 +40,21 @@ class SqlService {
 		}
 		return rows
 	}	
+	
+	/* getDeviceId(long, Date, Date)
+	 * 
+	 * Returns one column of deviceid's for comparison purposess
+	 */
+	def getDeviceId(long watchId, Date startDate, Date stopDate){
+		def rows = []
+		Sql sql = new Sql(datasource)
+		sql.eachRow("""SELECT DISTINCT deviceid deviceid FROM workabledata"""){
+			rows << [device: it.deviceid]
+		}
+		return rows
+	}
+	
+	
+	
+	
 }

@@ -9,7 +9,12 @@ import org.springframework.stereotype.Service
 class SqlService {
 	@Autowired DataSource dataSource
 	
-def getGeoPoints(long watchId, Date startDate, Date stopDate) {
+	/* getGeoPoints(long, Date, Date)
+	 * 
+	 * Returns information from the workabledata table, used
+	 * for the google heatmap
+	 */
+	def getGeoPoints(long watchId, Date startDate, Date stopDate) {
         def rows = []
         Sql sql = new Sql(dataSource)
         sql.eachRow("""select deviceid deviceid, latitude latitude,
@@ -22,7 +27,8 @@ def getGeoPoints(long watchId, Date startDate, Date stopDate) {
         return rows
     } 
 	
-	/* def - getTotalDistance()
+	/* getTotalDistance(long, Date, Date)
+	 * 
 	 * Returns the max distance for each day in the table workabledata
 	 */
 	def getTotalDistance(long watchId, Date startDate, Date stopDate){

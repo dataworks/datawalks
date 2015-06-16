@@ -5,34 +5,69 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 	var heatmap2;
     $scope.list = [];
     $scope.endlist = [];
-    $scope.text = 'start date';
-    $scope.endtext = 'end date'
+    $scope.text = '';
+    $scope.endtext = '';
     $scope.curr =[];
-    $scope.ids  =[];
-    $scope.deviceId = [];
-    $scope.test = [];
-    
-    
+    $scope.deviceIds = [];
+        
 	//Creates the heap map
-	$scope.loadMap = function() {
-
+	$scope.loadMap = function() 
+	{
 	  var mapOptions = {
 	    zoom: 13,
 	   center: new google.maps.LatLng($scope.records.rows[0].latitude, $scope.records.rows[0].longitude)
 	  };
+	  $scope.loadIds();
 	  $scope.map = new google.maps.Map(document.getElementById('map-canvas'),
-	      mapOptions);
-	  
-	  for(var i = 0; i < $scope.records.device.length; i++)
-      {
-          $scope.ids[i] = $scope.records.device[i];
-          $scope.deviceId[i] = i;
-          $scope.test[i]=true;
-      }
-	  
+	      mapOptions); 
 	}
 	
-	//pasted
+	$scope.matchId = function(index)
+	{
+		var watchData = [];
+		if($scope.deviceIds[index].value == true)
+		{
+			for(var i = 0; i < $scope.records.rows.length; i++)
+			{
+				if($scope.records.rows[i].deviceid == $scope.deviceIds[index].id)
+				{
+					//console.log(dt.getDate());
+					watchData.push(new google.maps.LatLng(
+							$scope.records.rows[i].latitude, $scope.records.rows[i].longitude));
+				}
+			}
+			var pointArray = new google.maps.MVCArray(watchData);
+        
+			heatmap = new google.maps.visualization.HeatmapLayer({
+              data: pointArray
+            });
+			heatmap.setMap($scope.map);
+		}
+		else
+		{
+			heatmap.setMap(null);
+		}
+	}
+	
+	$scope.loadIds = function()
+	{
+		for(var i = 0; i < $scope.records.device.length; i++)
+		{
+			$scope.deviceIds.push({
+				index: i+1,
+				id: $scope.records.device[i].device,
+				value: false
+			});
+			
+		}
+		for(var i = 0; i < 5; i++)
+		{
+			console.log($scope.deviceIds[i].id);
+		}
+
+	}
+	
+	
 	 $scope.toggleSelection = function toggleSelection(identifier){
 		 	if($scope.test[identifier]){
 		 		console.log($scope.records.device[identifier]);
@@ -44,7 +79,7 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 		 	}
 
 		  };
-	//paseted
+	
 	
 	function hM1init(text1, text2)
     {
@@ -67,8 +102,6 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
           heatmap = new google.maps.visualization.HeatmapLayer({
                 data: pointArray
               });
-          console.log(heatmap);
-          console.log($scope.map);
           heatmap.setMap($scope.map);
     }
     function hM2init(text1, text2)
@@ -150,7 +183,6 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
             hM2init($scope.list[0],$scope.endlist[0]);
         }
     }
-	//pasted
 	
 	$scope.toggleHeatmap = function() {
 		  heatmap.setMap(heatmap.getMap() ? null : $scope.map);

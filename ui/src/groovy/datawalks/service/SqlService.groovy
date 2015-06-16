@@ -53,8 +53,5 @@ class SqlService {
 		}
 		return rows
 	}
-	
-	
-	
-	
+
 }

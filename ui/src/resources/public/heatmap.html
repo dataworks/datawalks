@@ -2,7 +2,7 @@
 <html ng-app="datawalks">
 <head>
 	<title>Data Walks</title>
-	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=yes">
     <meta charset="utf-8">
 	<link rel="stylesheet" type=text/css href="/css/main.css">
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=visualization"></script>
@@ -54,20 +54,16 @@
    				<div ng-controller="Display">
         		<div class="col-md-2">
         		
+        		Select the Watch ID's to view:</br>
+        		<label ng-repeat = "index in deviceIds">{{index.index}}
+               			<input type="checkbox" name = "index" ng-model = "index.value" 
+               			ng-click = "matchId(index.index-1)" ng-value="{{index.value}}">
+             	</label><br/></br>
    			    <form ng-submit = "submit()">
           			Enter the date YYYY-MM-DD:
                  		<input type="text" ng-model="text"  placeholder="Start Day"  name="text" />
-
                  		<input type="text" ng-model="endtext" placeholder="End Day" name="endtext"  />
-                 		</br>
-						</br>
-             			</br>
-             			</br>
-							<label ng-repeat="id in deviceId">
-  								</br>
-  								<input type="checkbox" checklist-model="id" checklist-value="id" ng-click="toggleSelection(id)">{{}}
-							</label>
-             		 <br/>
+
 		             <input type="submit" id="submit" value="Submit"/>
 		         </form>
 		       </div>

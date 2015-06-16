@@ -47,7 +47,7 @@ class SqlService {
 	 */
 	def getDeviceId(long watchId, Date startDate, Date stopDate){
 		def rows = []
-		Sql sql = new Sql(datasource)
+		Sql sql = new Sql(dataSource)
 		sql.eachRow("""SELECT DISTINCT deviceid deviceid FROM workabledata"""){
 			rows << [device: it.deviceid]
 		}

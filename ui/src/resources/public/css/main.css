@@ -1,3 +1,6 @@
+//green = 7eb900
+//blue = 0071c5
+
 table, th , td {
   border: 1px solid black;
   border-collapse: collapse;
@@ -7,7 +10,281 @@ table, th , td {
 table tr:nth-child(odd) {
   background-color: #f1f1f1;
 }
+.invis {
+	display: none;
+	visibility: hidden;
+}
+
 
 table tr:nth-child(even) {
   background-color: #ffffff;
+}
+* {
+  font: normal 20px/30px Nunito, sans-serif;
+  color: rgb(66, 66, 66);
+  
+  border: 0;
+  margin: 0;
+  padding: 0;
+  
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+html {
+  margin: 1em;
+  background: rgb(239, 239, 239);
+}
+div {
+	display: inline-block;
+	padding: 5px;
+}
+h2 {
+  color: #0073c6;
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 40px;
+  text-transform: uppercase;
+}
+h6 {
+  color: rgb(99, 99, 99);
+  font-weight: 300;
+  text-align: center;
+}
+.box {
+	top: 0px;
+	background-color:#0073c6;
+	width:100%;
+	height: 120px;
+}
+.box img {
+	border-width: 10px;
+	height: 110px;
+	width: 37%;
+	margin-top: 0;
+	border-color: red;	
+	margin: auto;
+}
+.foot {
+	margin-bottom: 20px;
+	background-color:#0073c6;
+	width:100%;
+	height: 60px;
+	position: relative;
+}
+form {
+  width: 95%;
+  margin: auto;
+  display: block;
+  position: relative;
+}
+button {
+	background-color: white;
+	color: #0071c5;
+	padding: 5px;
+	border-radius: 5px;
+}
+button:hover { 
+    background-color: rgb(99, 99, 99);
+}
+span {
+  float: left;
+  width: 40px;
+  height: 50px;
+  background: #FFF;
+  text-align: right;
+  font-size: 30px;
+  line-height: 50px;
+}
+input[type="text"] {
+  float: left;
+  width: 73.8%;
+  height: 50px;
+  padding: 0 20px 0 10px;
+  outline: 0;
+  background: #FFF;
+  line-height: auto;
+}
+input[type="submit"] {
+  float: left;
+  width: 20%;
+  height: 50px;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  background: #85c302;
+  line-height: 52px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+input[type="submit"]:hover {
+  background: rgb(20, 153, 204);
+}
+
+hr {
+  top: 15px;
+  clear: both;
+  width: 0;
+  height: 5px;
+  margin: 0 0 25px;
+  display: block;
+  position: relative;
+  background: rgb(2, 218, 175);
+}
+hr.load {
+  -webkit-animation: progress 10s infinite;
+  -moz-animation: progress 10s infinite;
+  animation: progress 10s infinite;
+}
+
+ul {
+  list-style: none;
+  display: inline;
+}
+.tabbies {
+	
+}
+li {
+  width: 100%;
+  margin: 5px 0;
+  padding: 30px 40px;
+  display: inline-block;
+  background: rgb(248, 248, 248);
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 24px;
+  text-decoration: none;
+  
+  transition: background 1s;
+  -moz-transition: background 1s;
+  -webkit-transition: background 1s;
+}
+
+li.animate {
+  -webkit-animation: blink 1s 2;
+  -moz-animation: blink 1s 2;
+  animation: blink 1s 2;
+}
+#map-canvas {
+	position: relative;
+    height: 600px;
+    width: 100%;
+}
+#panel {
+        position: absolute;
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+}
+.contain {
+	margin-top:30px;
+	margin-bottom: 80px;
+	position: relative;
+	width: 100%;
+	height: 500px;
+}
+.contain .lefty {
+	position: relative;
+	float: left;
+	width: 50%;
+	margin: auto;
+	vertical-align: center;
+}
+.contain .righty {
+	position: relative;
+	float: right;
+	width: 50%;
+	margin: auto;
+	vertical-align: center;
+}
+.contain .top {
+	position: relative;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	vertical-align: center;
+}
+.contain .bottom {
+	position: relative;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	vertical-align: center;
+}
+.contain .mini {
+	display:inline;
+}
+
+.nav li {
+	display: inline;
+	color: #99999;
+}
+
+.butt {
+	height: 50px;
+    width: 50px;
+    border-color: rgb(0, 153, 204);
+    background-color: rgb(0, 153, 204);
+	border-radius: 5px;
+	text-align: center;
+	text-decoration: none;
+	float: right;
+}
+img {
+	display: block;
+}
+
+
+
+.tabs {
+  position: relative;   
+  min-height: 200px; /* This part sucks */
+  clear: both;
+  margin: 25px 0;
+}
+.tab {
+  float: right;
+}
+.tab label {
+  background: #eee; 
+  padding: 10px; 
+  border: 1px solid #ccc; 
+  margin-left: -1px; 
+  position: relative;
+  left: 1px; 
+}
+.tab [type=radio] {
+  display: none;   
+}
+[type=radio]:checked ~ label {
+  background: white;
+  border-bottom: 1px solid white;
+  z-index: 2;
+}
+[type=radio]:checked ~ label ~ .content {
+  z-index: 1;
+}
+
+@-webkit-keyframes progress {
+  to { width: 100%; }
+}
+@-moz-keyframes progress {
+  to { width: 100%; }
+}
+@keyframes progress {
+  to { width: 100%; }
+}
+
+@-webkit-keyframes blink {
+  50% { background: rgb(226, 226, 226); }
+}
+@-moz-keyframes blink {
+  50% { background: rgb(226, 226, 226); }
+}
+@keyframes blink {
+  50% { background: rgb(226, 226, 226); }
 }

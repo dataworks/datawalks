@@ -1,0 +1,59 @@
+<!doctype html>
+<html ng-app="datawalks">
+<head>
+        <title>Data Walks</title>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+   		<meta charset="utf-8">
+   		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+   		<script text = "text/javascript">
+           google.load("visualization", "1.1", {packages:["calendar"]});
+  		</script>
+  		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=visualization"></script>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-resource/angular-resource.js"></script>
+       	<script src="js/app.js"></script>
+       	<script src="js/services/watch.js"></script>
+       	<script src="js/controllers/display.js"></script>
+       	<link rel="stylesheet" href="css/main.css">      
+</head>
+<body>
+	<div class="box">
+		<img src="dwlogo.jpg">
+	</div>
+	<h6>
+  		~Codin' Charts and Throwin' Darts~
+	</h6>
+	<div class="nav nav-tab">
+      <div class="container">
+        <ul class="pull-right">
+          <li><a href="index.html">Markers</a></li>
+          <li><a href="heatmap.html">Heat Map</a></li>
+          <li><a href="chart.html">Chart</a></li>
+        </ul>
+      </div>
+    </div>
+	<div class="contain">
+		<div class="top">
+    		<div ng-controller="Display">
+    		<div class="invis"><div id="map-canvas"></div></div>  
+    		<div id="calendar_basic""></div>
+    		</div>  
+		</div>
+		<!-- 
+		<div class="bottom">
+			<form ng-app="MyApp" ng-controller="TwitterCtrl" ng-submit="initResults()">
+	  			<span>#</span>
+				<input type="text" ng-model="hashtag" placeholder="Hashtag" spellcheck="false" />
+  				<input type="submit" value="Start" />
+				<hr ng-class="progressClass" />
+				<ul id="tweets">
+	    			<li animate ng-repeat="tweet in tweets">
+		      			{{tweet.text}}
+		    		</li>
+	  			</ul>
+			</form>
+   		</div>
+   		 -->
+	</div>
+</body>
+</html>

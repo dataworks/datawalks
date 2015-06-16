@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html ng-app="datawalks">
+<head>
+	<title>Data Walks</title>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=yes">
+    <meta charset="utf-8">
+	<link rel="stylesheet" type=text/css href="/css/main.css">
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=visualization"></script>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-resource/angular-resource.js"></script>
+       <script src="js/app.js"></script>
+       <script src="js/services/watch.js"></script>
+       <script src="js/controllers/display.js"></script>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+       <link rel="stylesheet" href="css/main.css">      
+    </head>
+
+</head>
+<body>
+	<div class="box" >
+		<img src="dwlogo.jpg">
+	</div>
+	<h6>
+  		~Codin' Charts and Throwin' Darts~
+	</h6>
+	<div class="nav nav-tab">
+      <div class="container">
+        <ul class="tabbies">
+          <li><a href="index.html">Markers</a></li>
+          <li><a href="heatmap.html">Heat Map</a></li>
+          <li><a href="chart.html">Chart</a></li>
+        </ul>
+        
+      </div>
+    </div>
+	<div class="contain">
+	
+		<div class="lefty">
+		
+
+				<input type="text" ng-model="hashtag" placeholder="Hashtag" spellcheck="false" />
+  				
+				<hr ng-class="progressClass" />
+				<ul id="tweets">
+	    			<li animate ng-repeat="tweet in tweets">
+		      			{{tweet.text}}
+		    		</li>
+	  			</ul>
+   			 <!--<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+   			 <a class="twitter-timeline" href="https://twitter.com/twitter" data-widget-id="606124399452954624">Tweets by @twitter</a> -->
+   			 
+   				<div ng-controller="Display">
+        		<div class="col-md-2">
+        		Select the Watch ID's to view:</br>
+        		<label ng-repeat = "index in deviceIds">{{index.index}}
+               			<input type="checkbox" name = "index" ng-model = "index.value" 
+               			ng-click = "matchId(index.index-1)" ng-value="{{index.value}}">
+             	</label><br/></br>
+   			    <form ng-submit = "submit()">
+          			Enter the date YYYY-MM-DD:
+                 		<input type="text" ng-model="text"  placeholder="Start Day"  name="text" />
+                 		<input type="text" ng-model="endtext" placeholder="End Day" name="endtext"  />
+                 		</br>            		 
+		             <input type="submit" id="submit" value="Submit"/>
+		         </form>
+		       </div>
+   			 
+		</div>
+	</div>
+	
+		<div class="righty">
+			
+
+		<div id="panel">
+      		<button ng-click="toggleHeatmap()">Toggle Heatmap</button>
+      		<button ng-click="changeGradient()">Change gradient</button>
+      		<button ng-click="changeRadius()">Change radius</button>
+      		<button ng-click="changeOpacity()">Change opacity</button>
+      		<button ng-click="invert()">invert</button>
+    	</div>
+    	
+		</br>
+		</br>
+		</br>
+		   <div id="map-canvas"></div> 
+    	   <div class="invis"><div id="calendar-basic" ></div></div> 
+    	</div>
+
+		</div>
+		
+
+		
+</body>
+</html>

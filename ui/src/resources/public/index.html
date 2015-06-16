@@ -22,61 +22,24 @@
         border: 1px solid #999;
       }
     </style>
-    
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script text = "text/javascript">
+   	 	google.load("visualization", "1.1", {packages:["calendar"]});
+    </script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=visualization"></script>
 		<script src="bower_components/angular/angular.js"></script>
 		<script src="bower_components/angular-resource/angular-resource.js"></script>
     	<script src="js/app.js"></script>
     	<script src="js/services/watch.js"></script>
     	<script src="js/controllers/display.js"></script>
-        <link rel="stylesheet" href="css/main.css">    
+        <link rel="stylesheet" href="css/main.css">      
 	</head>
-
 	<body>
-		<div ng-controller="Display">
-		<div class="col-md-2">
-        <!--Sidebar content-->
-        	
-        <form ng-submit = "submit()">
-        	Enter text and hit enter:
-  				<input type="text" ng-model="text" name="text" />
-  				<pre>list={{list}}</pre>
-  				<input type="text" ng-model="endtext" name="endtext" />
-  				<input type="submit" id="submit" value="Submit" />
-  				<pre>endlist={{endlist}}</pre>
-  			<label>Chuck:
-    			<input type="checkbox" ng-model="ids.id1"
-    			ng-true-value="'YES'" ng-false-value="'NO'">
-  			</label><br/>
-  			<label>Danny:
-    		<input type="checkbox" ng-model="ids.id2"
-    		ng-true-value="'YES'" ng-false-value="'NO'">
-   			</label><br/>
-  			<tt>id1 = {{ids.id1}}</tt><br/>
-  			<tt>id2 = {{ids.id2}}</tt><br/>
-  		</form>
-        </div>
+	<div ng-controller="Display">
 
-      </div>
-      
-		<table class = "col-md-10">
-			<tr ng-repeat="x in records.rows | limitTo:5">
-				<td>{{ x.latitude }}</td>
-				<td>{{ x.longitude }}</td>
-			</tr>
-		</table>
-		<div id="panel">
-      		<button ng-click="toggleHeatmap()">Toggle Heatmap</button>
-      		<button ng-click="changeGradient()">Change gradient</button>
-      		<button ng-click="changeRadius()">Change radius</button>
-      		<button ng-click="changeOpacity()">Change opacity</button>
-      		<button ng-click="invert()">invert</button>
-    	</div>
-		
-		
-		<div id="map-canvas">
-		
-		</div>
-		<div></div>
+
+	</div>	
+	<div id="map-canvas"></div>
+	<div id="calendar_basic" style="width: 1000px; height: 350px;"></div>
 	</body>
 </html>

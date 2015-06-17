@@ -3,8 +3,6 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 	var pointarray;
 	var heatmap;
 	var heatmap2;
-    $scope.list = [];
-    $scope.endlist = [];
     $scope.text = '';
     $scope.endtext = '';
     $scope.curr =[];
@@ -22,18 +20,78 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 	      mapOptions); 
 	}
 	
+	$scope.avgPath = function()
+	{
+		var c = 1;
+		var ind = 0;
+		var isize = 0;
+		var avgPath = [];
+		var avgLat;
+		var avgLon;
+		for(var i = 0; i < $scope.records.rows.length; i++)
+		{
+			if($scope.deviceIds[4].id == $scope.records.rows[i].deviceid)
+			{				
+				if(c == 20)
+				{
+					avgLat = avgLat/20;
+					avgLon = avgLon/20;
+					avgPath.push({
+						lat: avgLat,
+						lon: avgLon
+					});
+					
+					ind++;
+					avgLat = 0;
+					avgLon = 0;
+					c = 1;
+				}
+				else
+				{
+					avgLat = avgLat+$scope.records.rows[i].latitude;
+					avgLon = avgLon+$scope.records.rows[i].longitude;
+					c++;
+				}
+			}
+		}
+		console.log(avgPath.length);
+		/*var data = [][];
+		for(var i = 0; i < $scope.deviceIds.length; i++)
+		{
+			for(var j = 0; j < $scope.records.rows.length; j++)
+			{
+				
+			}
+		}*/
+	}
+	
 	$scope.matchId = function(index)
 	{
+		console.log(new Date($scope.deviceIds[index].stDate) + " " + new Date($scope.records.rows[0].dtime));
 		var watchData = [];
 		if($scope.deviceIds[index].value == true)
 		{
 			for(var i = 0; i < $scope.records.rows.length; i++)
 			{
-				if($scope.records.rows[i].deviceid == $scope.deviceIds[index].id)
+				if($scope.deviceIds[index].stDate == 0 && $scope.deviceIds[index].enDate == 0)
 				{
-					//console.log(dt.getDate());
-					watchData.push(new google.maps.LatLng(
+					if($scope.records.rows[i].deviceid == $scope.deviceIds[index].id)
+					{
+						//console.log(dt.getDate());
+						watchData.push(new google.maps.LatLng(
 							$scope.records.rows[i].latitude, $scope.records.rows[i].longitude));
+					}
+				}
+				else
+				{
+					if($scope.records.rows[i].deviceid == $scope.deviceIds[index].id &&
+							$scope.deviceIds[index].stDate <= $scope.records.rows[i].dtime &&
+							$scope.deviceIds[index].enDate >= $scope.records.rows[i].dtime)
+					{
+						
+						watchData.push(new google.maps.LatLng(
+							$scope.records.rows[i].latitude, $scope.records.rows[i].longitude));
+					}
 				}
 			}
 			var pointArray = new google.maps.MVCArray(watchData);
@@ -56,15 +114,12 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 			$scope.deviceIds.push({
 				index: i+1,
 				id: $scope.records.device[i].device,
+				stDate: 0,
+				enDate: 0,
 				value: false
 			});
 			
 		}
-		for(var i = 0; i < 5; i++)
-		{
-			console.log($scope.deviceIds[i].id);
-		}
-
 	}
 	
 	
@@ -150,38 +205,25 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
     
     $scope.submit = function() 
     {
+    	if($scope.deviceIds[Number(this.endtext.substring(0,1))-1].value = true)
+    	{
+    		heatmap.setMap(null);
+    	}
+    	var date = this.text.substring(3,13);//parse date yyyy-mm-dd
+    	date = date.split("-");
+    	var newDate = date[0]+","+date[1]+","+date[2] + " 00:00:00 GMT+0400";//date with commas instead of -
+    	$scope.deviceIds[Number(this.text.substring(0,1))-1].stDate = new Date(newDate).getTime();
+    	var edate = this.endtext.substring(3,13);
+    	edate = edate.split("-");
+    	var neweDate = edate[0]+","+edate[1]+","+edate[2] + " 23:59:59 GMT+0400";
+    	$scope.deviceIds[Number(this.endtext.substring(0,1))-1].enDate = new Date(neweDate).getTime();
+    	$scope.deviceIds[Number(this.endtext.substring(0,1))-1].value = true;
+    	$scope.matchId(Number(this.text.substring(0,1))-1);
+    	$scope.deviceIds[Number(this.text.substring(0,1))-1].stDate = 0;
+    	$scope.deviceIds[Number(this.endtext.substring(0,1))-1].enDate = 0;
+    	this.text = '';
+    	this.endtext = '';
     	
-        if(heatmap != null)
-        {
-            heatmap.setMap(null);
-        }
-        else if(heatmap2 != null)
-        {
-            heatmap2.setMap(null);
-        }
-        
-        if($scope.ids.id1 === 'YES')
-        {
-            $scope.curr[0] = 3897655761;
-            $scope.list.pop();
-            $scope.endlist.pop();
-            $scope.list.push(this.text);
-            $scope.endlist.push(this.endtext);
-            $scope.text = '';
-            $scope.endtext = '';
-            hM1init($scope.list[0],$scope.endlist[0]);
-        }
-        if($scope.ids.id2 === 'YES')
-        {
-            $scope.curr[1] = 3890500495;
-            $scope.list.pop();
-            $scope.endlist.pop();
-            $scope.list.push(this.text);
-            $scope.endlist.push(this.endtext);
-            $scope.text = '';
-            $scope.endtext = '';
-            hM2init($scope.list[0],$scope.endlist[0]);
-        }
     }
 	
 	$scope.toggleHeatmap = function() {

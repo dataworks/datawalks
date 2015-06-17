@@ -1,0 +1,2 @@
+#Put Pentaho Repository username in the -user field and password in the -pass field
+/dataworks/pentaho/data-integration/kitchen.sh -rep="Pentaho Repository" -job="DataWalks" -dir=/ -user= -pass= -level=Basic

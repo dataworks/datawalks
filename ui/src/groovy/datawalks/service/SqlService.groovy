@@ -54,7 +54,15 @@ class SqlService {
 		return rows
 	}
 	
-	
-	
-	
+	def getCalorieInfo(long watchId, Date startDate, Date stopDate){
+		def rows = []
+		Sql sql = new Sql(dataSource)
+		sql.eachRow("""Select time dtime, calories cal from workabledetails where split = ' Summary' 
+						and (calories is not null and calories > 10);""") {
+			rows << [dtime: it.dtime, cal: it.cal]
+						
+		}
+		return rows
+	}
+
 }

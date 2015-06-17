@@ -8,6 +8,9 @@
    		<script text = "text/javascript">
            google.load("visualization", "1.1", {packages:["calendar"]});
   		</script>
+  		<script text = "text/javascript"> 
+  			google.load("visualization", "1", {packages:["corechart"]});
+  		</script>
   		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=visualization"></script>
         <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-resource/angular-resource.js"></script>
@@ -26,39 +29,26 @@
 	</br>
 	<div class="nav nav-tab">
       <div class="container">
-        <ul class="pull-right">
+        <ul class="tabbies">
           <li><a href="index.html">Markers</a></li>
           <li><a href="heatmap.html">Heat Map</a></li>
           <li><a href="chart.html">Calendar Chart</a></li>
-          <li><a href="calories.html">Calories Burned</a></li>
+          <li><a href="calories.html">Calories Burned</a>
         </ul>
-        </br>
-      </div>
+      </br>
+    </div>
     </div>
 	<div class="contain">
+	      Rough sketch, until primary keys are added
+      </br>
 		<div class="top">
     		<div ng-controller="Display">
-    		<div class="invis"><div id="map-canvas"></div></div>  
-    		<div id="calendar_basic""></div>
+    		<div id="calTime"></div>
+    		<div class="invis"><div id="map-canvas"></div></div>
+    		<div class="invis"><div id="calendar_basic"></div></div>
     		</div>  
 		</div>
-		
-		<!-- 
-		<div class="bottom">
-			<form ng-app="MyApp" ng-controller="TwitterCtrl" ng-submit="initResults()">
-	  			<span>#</span>
-				<input type="text" ng-model="hashtag" placeholder="Hashtag" spellcheck="false" />
-  				<input type="submit" value="Start" />
-				<hr ng-class="progressClass" />
-				<ul id="tweets">
-	    			<li animate ng-repeat="tweet in tweets">
-		      			{{tweet.text}}
-		    		</li>
-	  			</ul>
-			</form>
-   		</div>
-   		 -->
-   		 
+
 	</div>
 </body>
 </html>

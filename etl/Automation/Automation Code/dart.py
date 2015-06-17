@@ -1,5 +1,3 @@
-#Charles Wild
-
 # Imports
 import os
 import re
@@ -87,62 +85,62 @@ def login(agent, username, password):
     response_url = re.search("response_url\s*=\s*'(.*)';", res.get_data()).groups()[0]
     agent.open(response_url)
 
-def file_exists_in_folder(filename, folder):
+def file_exists_in_folder(filename, archive):
     "Check if the file exists in folder of any subfolder"
-    for _, _, files in os.walk(folder):
+    for _, _, files in os.walk(archive):
         if filename in files:
             return True
     return False
 
 # Can be increased from 100 if needed.
-def activities(agent, outdir, increment = 100):
-    global ACTIVITIES
-    currentIndex = 0
-    initUrl = ACTIVITIES % (currentIndex, increment) 
-    try:
-        response = agent.open(initUrl)
-    except:
-        print('Wrong credentials for user {}. Skipping.'.format(username))
-        return
-    search = json.loads(response.get_data())
-    totalActivities = int(search['results']['totalFound'])
-    while True:
-        for item in search['results']['activities']:
-            # Read this list of activities and save the files.
-            activityId = item['activity']['activityId']
-            
-            if filetype == 'GPX':
-                url = GPX % activityId
-                file_name = '{}_{}.gpx'.format(username, activityId)
-            if filetype == 'TCX':
-                url = TCX % activityId
-                file_name = '{}_{}.tcx'.format(username, activityId)
-            if filetype == 'CSV':
-                url = CSV % activityId
-                file_name = '{}_{}.csv'.format(username, activityId)
-            if filetype == 'KML':
-                url = KML % activityId
-                file_name = '{}_{}.kml'.format(username, activityId)
-
-            if file_exists_in_folder(file_name, output):
-                print('{} already exists in {}. Skipping.'.format(file_name, output))
-                continue
-            print('{} is downloading...'.format(file_name))
-            datafile = agent.open(url).get_data()
-            file_path = os.path.join(outdir, file_name)
-            f = open(file_path, "w")
-            f.write(datafile)
-            f.close()
-            shutil.copy(file_path, os.path.join(os.path.dirname(os.path.dirname(file_path)), file_name))
-
-        if (currentIndex + increment) > totalActivities:
-            break
-
-        # We still have at least 1 activity.
-        currentIndex += increment
-        url = ACTIVITIES % (currentIndex, increment)
-        response = agent.open(url)
+def activities(agent, outdir, increment = 100):  
+        global ACTIVITIES
+        currentIndex = 0
+        initUrl = ACTIVITIES % (currentIndex, increment) 
+        try:
+            response = agent.open(initUrl)
+        except:
+            print('Wrong credentials for user {}. Skipping.'.format(username))
+            return
         search = json.loads(response.get_data())
+        totalActivities = int(search['results']['totalFound'])
+        while True:
+            for item in search['results']['activities']:
+                # Read this list of activities and save the files.
+                activityId = item['activity']['activityId']
+                
+                if filetype == 'GPX':
+                    url = GPX % activityId
+                    file_name = '{}_{}.gpx'.format(username, activityId)
+                if filetype == 'TCX':
+                    url = TCX % activityId
+                    file_name = '{}_{}.tcx'.format(username, activityId)
+                if filetype == 'CSV':
+                    url = CSV % activityId
+                    file_name = '{}_{}.csv'.format(username, activityId)
+                if filetype == 'KML':
+                    url = KML % activityId
+                    file_name = '{}_{}.kml'.format(username, activityId)
+
+                if file_exists_in_folder(file_name, archive):
+                    print('{} already exists in {}. Skipping.'.format(file_name, archive))
+                    continue
+                print('{} is downloading...'.format(file_name))
+                datafile = agent.open(url).get_data()
+                file_path = os.path.join(output, file_name)
+                f = open(file_path, "w")
+                f.write(datafile)
+                f.close()
+             
+
+            if (currentIndex + increment) > totalActivities:
+                break
+
+            # We still have at least 1 activity.
+            currentIndex += increment
+            url = ACTIVITIES % (currentIndex, increment)
+            response = agent.open(url)
+            search = json.loads(response.get_data())
 
 def download_files_for_user(username, password, output):
     # Create the agent and log in.
@@ -150,14 +148,9 @@ def download_files_for_user(username, password, output):
     login(agent, username, password)
 
     user_output = os.path.join(output, username)
-    download_folder = os.path.join(user_output, 'Historical')
-
-    # Need if directory isnt specified! Without specification, 
-    if not os.path.exists(download_folder):
-        os.makedirs(download_folder)
 
     # Scrape all the activities. GET THEM!
-    activities(agent, download_folder)
+    activities(agent, output)
 
 folder_execute = os.path.dirname(sys.executable)
 if folder_execute.endswith('/Contents/MacOS'):
@@ -168,20 +161,43 @@ parser = argparse.ArgumentParser(description = 'Garmin File Downloader.',
     prog = '-u <user> -f File type to download from Garmin Connect. -o <output dir>')
 parser.add_argument('-u', '--user', required = False,
     help = 'Garmin username.')
-parser.add_argument('-o', '--output', required = False,
-    help = 'Output directory.', default=os.path.join(os.getcwd(), 'Results/'))
+parser.add_argument('-o', '--output', required = True,
+    help = 'Output directory filepath.', default=os.path.join(os.getcwd(), 'Results/'))
 parser.add_argument('-f', '--filetype', required = True,
     help = 'File type to download. CSV, KML, GPX, TCX, or ALL', default='TCX')
+parser.add_argument('-l', '--login', required=True,
+    help = 'Comma separated file with no spaces (Username,Password).',
+    default = os.path.join(os.getcwd(), 'password.csv'))
+parser.add_argument('-a', '--archive', required=True,
+    help = 'Archive to check if its been downloaded.',
+    default = "/dataworks/$USER/archive")
+
 
 # Parsing argument from comamnd line. User and output.
 args = vars(parser.parse_args())
 output = args['output']
 filetype = args['filetype']
+archive = args['archive']
 
 if args['user'] is not None:
     password = getpass('Garmin account password:')
     username = args['user']
     download_files_for_user(username, password, output)
 
-
+# CSV Password File Input 
+if args['login'] is not None:
+    csv_file_path = args['login']
+    if not os.path.exists(csv_file_path):
+        print("CSV file doesn't exist.")
+        sys.exit()
+    else:
+        with open(csv_file_path, 'r') as c:
+            for line in c:
+                try:
+                    if ',' in line:
+                        username, password = (line.strip().split(','))
+                        print 'Downloading files for user {}'.format(username)
+                        download_files_for_user(username, password, output)
+                except IndexError:
+                    raise Exception('Wrong line in CSV file. Please check the line {}'.format(line))
 

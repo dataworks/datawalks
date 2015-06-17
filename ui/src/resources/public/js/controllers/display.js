@@ -253,9 +253,38 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
  	   chart.draw(dataTable, options); 
    }
    
+   //Draw bar chart -- eventually should be scatter plot when primary keys are set
+   $scope.drawBarChart = function() {
+	     var dataTable = new google.visualization.DataTable();
+	     dataTable.addColumn('string', "Time");
+	     dataTable.addColumn('number', "Calories");
+	     
+	     for(var i = 0; i< $scope.records.calories.length; i++){
+	    	 dataTable.addRow([ $scope.records.calories[i].dtime, $scope.records.calories[i].cal ]);
+	     }
+	     
+	     var options = {
+	    		 title: 'Calories Burned Over Time',
+	    		 subtitle: 'Time(Hr:Mn:Sd:Ms',
+	    		 hAxis: {title: 'Calories Burned'},
+	    		 vAxis: {title: 'Time Traveled', subtitle: 'H:M:S:MS'},
+	             width: 900,
+	             height: 800,
+	             bar: { groupWidth: '75%' }
+
+	           };
+
+	     var chart = new google.visualization.BarChart(document.getElementById('calTime'));
+	     
+	     chart.draw(dataTable, options);
+	     
+	 }
+
+   
    $scope.recordsLoaded = function(results){
 	   $scope.loadMap();
 	   $scope.drawChart(); 
+	   $scope.drawBarChart();
    }
    
    $scope.records = Watch.query({id: 1, startDate: '2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, 

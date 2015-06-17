@@ -21,7 +21,8 @@ class WatchController {
 		@RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern= "yyyy-MM-dd HH:mm:ss") Date startDate,
 		@RequestParam(value = "stopDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date stopDate) {
 			def points = sqlService.getGeoPoints(id, startDate, stopDate)
-			[rows: points, total: points.size(), aggs: sqlService.getTotalDistance(id, startDate, stopDate), device: sqlService.getDeviceId(id, startDate, stopDate)]
+			[rows: points, total: points.size(), aggs: sqlService.getTotalDistance(id, startDate, stopDate), 
+				device: sqlService.getDeviceId(id, startDate, stopDate), calories: sqlService.getCalorieInfo(id, startDate, stopDate)]
 	}
 	
 }

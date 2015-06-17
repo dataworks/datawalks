@@ -20,6 +20,51 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 	      mapOptions);	  
 	}
 	
+	$scope.avgPath = function()
+	{
+		var c = 1;
+		var ind = 0;
+		var isize = 0;
+		var avgPath = [];
+		var avgLat;
+		var avgLon;
+		for(var i = 0; i < $scope.records.rows.length; i++)
+		{
+			if($scope.deviceIds[4].id == $scope.records.rows[i].deviceid)
+			{				
+				if(c == 20)
+				{
+					avgLat = avgLat/20;
+					avgLon = avgLon/20;
+					avgPath.push({
+						lat: avgLat,
+						lon: avgLon
+					});
+					
+					ind++;
+					avgLat = 0;
+					avgLon = 0;
+					c = 1;
+				}
+				else
+				{
+					avgLat = avgLat+$scope.records.rows[i].latitude;
+					avgLon = avgLon+$scope.records.rows[i].longitude;
+					c++;
+				}
+			}
+		}
+		console.log(avgPath.length);
+		/*var data = [][];
+		for(var i = 0; i < $scope.deviceIds.length; i++)
+		{
+			for(var j = 0; j < $scope.records.rows.length; j++)
+			{
+				
+			}
+		}*/
+	}
+	
 	$scope.matchId = function(index)
 	{
 		console.log(new Date($scope.deviceIds[index].stDate) + " " + new Date($scope.records.rows[0].dtime));

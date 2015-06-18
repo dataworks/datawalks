@@ -1,7 +1,8 @@
 # Data Walks - Project layout
 
-Chuck, Danny, Bobby, Lindsay, Hayato
+Team: Chuck, Danny, Bobby, Lindsay, Hayato
 
-* analytics - Analytics code (Apache Spark)
-* etl - ETL related code (Pentaho)
+Folder layout:
+* etl - ETL/Analytics related code (Pentaho + Spark)
+* sample - Sample code
 * ui - User Interface code (Spring Boot + AngularJS)

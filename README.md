@@ -2,6 +2,7 @@
 
 Team: Chuck, Danny, Bobby, Lindsay, Hayato
 
-Folder Structure:
-* etl - ETL related code (Pentaho)
+Folder layout:
+* etl - ETL/Analytics related code (Pentaho + Spark)
+* sample - Sample code
 * ui - User Interface code (Spring Boot + AngularJS)

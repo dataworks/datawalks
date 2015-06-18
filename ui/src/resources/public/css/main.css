@@ -154,7 +154,7 @@ li {
   font-weight: 300;
   line-height: 24px;
   text-decoration: none;
-  
+  border: 1px solid #0000FF
   transition: background 1s;
   -moz-transition: background 1s;
   -webkit-transition: background 1s;
@@ -222,6 +222,7 @@ li.animate {
 .nav li {
 	display: inline;
 	color: #99999;
+	border: 1px solid #0000FF
 }
 
 .butt {

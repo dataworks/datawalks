@@ -35,11 +35,20 @@
         <link rel="stylesheet" href="css/main.css">      
 	</head>
 	<body>
-	<div ng-controller="Display">
-
-
-	</div>	
-	<div id="map-canvas"></div>
-	<div id="calendar_basic" style="width: 1000px; height: 350px;"></div>
+		<ng-include src="'include.htm'"></ng-include>
+		</br>
+					<form ng-submit = "twitterGeo()" ng-controller="Display">
+						<input type="text" ng-model="lat"  placeholder="Latitude"  name="lat" style="border:1px solid #ff0000"/>
+							</br></br>
+						<input type="text" ng-model="long" placeholder="Longitude" name="long" style="border:1px solid #ff0000"/>
+							</br></br>
+						<input type="submit" value="Update Tweets"/>
+							</br></br>
+					                <a class="twitter-timeline"  href="https://twitter.com/search?q=geocode%3A38.9430356025696%2C-77.3330824356526%2C5mi" data-widget-id="611231952797085697"></a>
+            			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+          
+			        </form>
+			        
+			        <div class="invis"><div id="map-canvas"></div></div>
 	</body>
 </html>

@@ -7,6 +7,21 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
     $scope.endtext = '';
     $scope.curr =[];
     $scope.deviceIds = [];
+    $scope.tweets = "https://twitter.com/search?q=geocode%3A40.748441%2C-73.985664%2C5mi";
+    $scope.tweetsFirst = "https://twitter.com/search?q=geocode%3A";
+    $scope.tweetsMid = "%2C"
+    $scope.lat = '';
+    $scope.long = '';
+    //40.748441
+    //-73.985664
+    
+    
+    //Take the coordinates for the embedded tweets
+    $scope.twitterGeo = function() {
+    	console.log("getting there");
+    	if($scope.lat && $scope.long)
+    		$scope.tweets = $scope.tweetsFirst + $scope.lat + $scope.tweetsMid + $scope.long + "%2C5mi";
+    }
         
 	//Creates the heap map
 	$scope.loadMap = function() 

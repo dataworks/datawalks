@@ -2,7 +2,7 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 	$scope.map;
 	var pointarray;
 	var heatmap;
-	var heatmap2;
+	var heatmaps = [];
     $scope.text = '';
     $scope.endtext = '';
     $scope.curr =[];
@@ -41,77 +41,119 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 	      mapOptions); 
 	}
 	
-	$scope.avgPath = function()
+	$scope.avgPath = function(index)
 	{
-		console.log("test");
 		var c = 1;
 		var avgLat = 0;
 		var avgLon = 0;
 		var avgData = [];
-		for(var k = 0; k < $scope.deviceIds.length; k++)
+		var divCount = 0;
+		if($scope.deviceIds[index].avgShown == false)
 		{
-			if($scope.deviceIds[k].avgShown == false && $scope.deviceIds[k].avgRdy == true)
+			if($scope.deviceIds[index].selectDate == false)
 			{
-				if($scope.deviceIds[k].value == true)
+				for(var i  = 0; i < $scope.records.rows.length; i++)//naive way to calculate divisor
 				{
-					console.log("nulled");
-					heatmap.setMap(null);
-				}
-				console.log("why");
-				for(var i = 0; i < $scope.records.rows.length; i++)
-				{
-					if($scope.deviceIds[k].id == $scope.records.rows[i].deviceid 
-							/*&& $scope.deviceIds[k].selectDates == false*/)
+					if($scope.deviceIds[index].id == $scope.records.rows[i].deviceid)
 					{
-						if(c == 12)
+						divCount++;
+					}
+				}
+				var sqDiv = Math.round(Math.sqrt(divCount));
+				for(var i  = 0; i < $scope.records.rows.length; i++)//find average points on path
+				{
+					if($scope.deviceIds[index].id == $scope.records.rows[i].deviceid)
+					{
+						if(c == sqDiv)
 						{
 							avgLat = avgLat+$scope.records.rows[i].latitude;
 							avgLon = avgLon+$scope.records.rows[i].longitude;
-							avgLat = avgLat/12;
-							avgLon = avgLon/12;
-							//console.log(avgLat+ " , "+ avgLon);
-							avgData.push(new google.maps.LatLng(avgLat, avgLon));				
+							avgLat = avgLat/sqDiv;
+							avgLon = avgLon/sqDiv;
+							avgData.push(new google.maps.LatLng(avgLat, avgLon));
 							avgLat = 0;
 							avgLon = 0;
-							c = 1;
+							c=1;
 						}
 						else
 						{
-							//console.log(avgLat + " " + avgLon);
 							avgLat = avgLat+$scope.records.rows[i].latitude;
 							avgLon = avgLon+$scope.records.rows[i].longitude;
 							c++;
 						}
 					}
 				}
-				$scope.deviceIds[k].avgShown = true;
+				avgLat = 0;
+				avgLon = 0;
+				divCount = 0;
 				var pointArray = new google.maps.MVCArray(avgData);
-		        
-				heatmap = new google.maps.visualization.HeatmapLayer({
-		          data: pointArray
-		        });
-				heatmap.setMap($scope.map);
+				heatmaps[index] = new google.maps.visualization.HeatmapLayer({
+	              data: pointArray
+	            });
+				heatmaps[index].setMap($scope.map);
+				
+			}
+			else
+			{
+				for(var i  = 0; i < $scope.records.rows.length; i++)//naive way to calculate divisor
+				{
+					if($scope.records.rows[i].deviceid == $scope.deviceIds[index].id &&
+							$scope.deviceIds[index].stDate <= $scope.records.rows[i].dtime &&
+							$scope.deviceIds[index].enDate >= $scope.records.rows[i].dtime)
+					{
+						divCount++;			
+					}
+				}
+				var sqDiv = Math.round(Math.sqrt(divCount));
+				for(var i  = 0; i < $scope.records.rows.length; i++)//naive way to calculate divisor
+				{
+					if($scope.records.rows[i].deviceid == $scope.deviceIds[index].id &&
+							$scope.deviceIds[index].stDate <= $scope.records.rows[i].dtime &&
+							$scope.deviceIds[index].enDate >= $scope.records.rows[i].dtime)
+					{
+						if(c == sqDiv)
+						{
+							avgLat = avgLat+$scope.records.rows[i].latitude;
+							avgLon = avgLon+$scope.records.rows[i].longitude;
+							avgLat = avgLat/sqDiv;
+							avgLon = avgLon/sqDiv;
+							avgData.push(new google.maps.LatLng(avgLat, avgLon));
+							avgLat = 0;
+							avgLon = 0;
+							c=1;
+						}
+						else
+						{
+							avgLat = avgLat+$scope.records.rows[i].latitude;
+							avgLon = avgLon+$scope.records.rows[i].longitude;
+							c++;
+						}			
+					}
+				}
+				$scope.deviceIds[index].selectDate = false;
+				avgLat = 0;
+				avgLon = 0;
+				divCount = 0;
+				var pointArray = new google.maps.MVCArray(avgData);
+				heatmaps[index] = new google.maps.visualization.HeatmapLayer({
+	              data: pointArray
+	            });
+				heatmaps[index].setMap($scope.map);
 			}
 		}
-		
-		//console.log(avgPath.length + " " + isize);
 	}
 	
 	$scope.matchId = function(index)
 	{
-		console.log(index);
 		var watchData = [];
-		console.log($scope.avg.value);
-		if($scope.avg.value == true)
+		if($scope.avg.value == true && $scope.deviceIds[index].value == true)
 		{
-			console.log("blah");
-			$scope.avgPath();
+			$scope.avgPath(index);
 		}
 		else
 		{
 			if($scope.deviceIds[index].value == true)
 			{
-				$scope.deviceIds[index].avgRdy = true;
 				for(var i = 0; i < $scope.records.rows.length; i++)
 				{
 					if($scope.deviceIds[index].selectDate == false)
@@ -135,17 +177,17 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 						}
 					}
 				}
+				$scope.deviceIds[index].selectDate = false;
 				var pointArray = new google.maps.MVCArray(watchData);
 	        
-				heatmap = new google.maps.visualization.HeatmapLayer({
+				heatmaps[index] = new google.maps.visualization.HeatmapLayer({
 	              data: pointArray
 	            });
-				heatmap.setMap($scope.map);
+				heatmaps[index].setMap($scope.map);
 			}
 			else
 			{
-				$scope.deviceIds[index].avgRdy = false;
-				heatmap.setMap(null);
+				heatmaps[index].setMap(null);
 			}
 		}
 		
@@ -161,7 +203,6 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 				stDate: 0,
 				enDate: 0,
 				selectDate: false,
-				avgRdy: false,
 				avgShown: false,
 				value: false
 			});
@@ -186,7 +227,7 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
     {
     	if($scope.deviceIds[Number(this.endtext.substring(0,1))-1].value = true)
     	{
-    		heatmap.setMap(null);
+    		heatmaps[Number(this.endtext.substring(0,1))-1].setMap(null);
     	}
     	var date = this.text.substring(3,13);//parse date yyyy-mm-dd
     	date = date.split("-");

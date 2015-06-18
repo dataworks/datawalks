@@ -4,24 +4,6 @@
 		<title>Data Walks</title>
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <style>
-      html, body, #map-canvas {
-        height: 80%;
-        width: 80%;
-        margin: 0px;
-        padding: 0px
-      }
-      #panel {
-        position: absolute;
-        top: 80%;
-        left: 50%;
-        margin-left: -180px;
-        z-index: 5;
-        background-color: #fff;
-        padding: 5px;
-        border: 1px solid #999;
-      }
-    </style>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script text = "text/javascript">
    	 	google.load("visualization", "1.1", {packages:["calendar"]});
@@ -36,7 +18,7 @@
 	</head>
 	<body>
 		<ng-include src="'include.htm'"></ng-include>
-		</br>
+		</br></br>
 					<form ng-submit = "twitterGeo()" ng-controller="Display">
 						<input type="text" ng-model="lat"  placeholder="Latitude"  name="lat" style="border:1px solid #ff0000"/>
 							</br></br>

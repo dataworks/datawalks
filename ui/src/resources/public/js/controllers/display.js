@@ -7,28 +7,28 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
     $scope.endtext = '';
     $scope.curr =[];
     $scope.deviceIds = [];
-    $scope.tweets = "https://twitter.com/search?q=geocode%3A40.748441%2C-73.985664%2C5mi";
-    $scope.tweetsFirst = "https://twitter.com/search?q=geocode%3A";
-    $scope.tweetsMid = "%2C"
     $scope.lat = '';
     $scope.long = '';
+    //Example coordinates
     //40.748441
     //-73.985664
+
     
-    
-    //Take the coordinates for the embedded tweets
-    $scope.twitterGeo = function() {
-    	console.log("getting there");
-    	if($scope.lat && $scope.long)
-    		$scope.tweets = $scope.tweetsFirst + $scope.lat + $scope.tweetsMid + $scope.long + "%2C5mi";
+    //Take the coordinates for the tweets and display them in a new window
+    $scope.twitterGeo = function() { 
+    	  var left = (screen.width/2)-(750/2);
+    	  var top = (screen.height/2)-(750/2);
+    	  if($scope.lat =='' || $scope.long=='')
+    		  window.alert("Please enter a latitude and longitude");
+    	  else
+    		  window.open("https://twitter.com/search?q=geocode%3A" + $scope.lat + "%2C" + $scope.long +"%2C1mi&src=typd&vertical=default&f=tweets", 'Tweets', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=no, width=750, height=750, top='+top+', left='+left);	
     }
     
     $scope.avg = {
     	name: "average",
     	value: false
     };
-
-        
+    
 	//Creates the heap map
 	$scope.loadMap = function() 
 	{
@@ -297,16 +297,31 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 	           };
 
 	     var chart = new google.visualization.BarChart(document.getElementById('calTime'));
-	     
+
 	     chart.draw(dataTable, options);
 	     
 	 }
-
+   
+   $scope.twits = [];
+   
+   $scope.loadTweets = function(){
+	   for(var i =0; i < 10; i++){
+		   var newDate = new Date($scope.records.twitter[i].uni);
+		   $scope.twits.push({
+			   uname: $scope.records.twitter[i].uname,
+			   tStamp: newDate,
+			   text: $scope.records.twitter[i].tweettext,
+			   img:  $scope.records.twitter[i].img
+		   });
+	   }
+	   
+   }
    
    $scope.recordsLoaded = function(results){
 	   $scope.loadMap();
+	   $scope.loadTweets();
 	   $scope.drawChart(); 
-	   $scope.drawBarChart();
+	   $scope.drawBarChart();   
    }
    
    $scope.records = Watch.query({id: 1, startDate: '2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, 

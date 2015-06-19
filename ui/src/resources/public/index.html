@@ -10,11 +10,11 @@
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=visualization"></script>
 		<script src="bower_components/angular/angular.js"></script>
-		<script src="bower_components/angular-resource/angular-resource.js"></script>
-    	<script src="js/app.js"></script>
+		<script src="bower_components/angular-resource/angular-resource.js"></script>    	
+		<script src="js/app.js"></script>
     	<script src="js/services/watch.js"></script>
     	<script src="js/controllers/display.js"></script>
-        <link rel="stylesheet" href="css/main.css">      
+        <link rel="stylesheet" href="css/main.css">     
 	</head>
 	<body>
 		<ng-include src="'include.htm'"></ng-include>
@@ -24,13 +24,25 @@
 							</br></br>
 						<input type="text" ng-model="long" placeholder="Longitude" name="long" style="border:1px solid #ff0000"/>
 							</br></br>
-						<input type="submit" value="Update Tweets"/>
+						<input type="submit" value="View Tweets!"/>
 							</br></br>
-					                <a class="twitter-timeline"  href="https://twitter.com/search?q=geocode%3A38.9430356025696%2C-77.3330824356526%2C5mi" data-widget-id="611231952797085697"></a>
-            			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-          
+						<label>A new window will be displayed</label>
+						</br>
+						</br>
+						<label>Exit out and enter new coordinates
+								for a different search
+						</label>
+						
+						<div ng-repeat="twit in twits">
+							<li><img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_2_reasonably_small.png" height="50" width="50">
+							<b>@{{twit.uname}}</b> </br>
+							{{twit.text}}
+							</br> 
+							<i>{{twit.tStamp}}</i>
+							</li>
+						</div>
+						
 			        </form>
-			        
-			        <div class="invis"><div id="map-canvas"></div></div>
+			<div class="invis"><div id="map-canvas"></div></div>
 	</body>
 </html>

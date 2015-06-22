@@ -1,5 +1,5 @@
 # Extract
-psql -h dw-intern-db-micro.crr707brjv0s.us-east-1.rds.amazonaws.com -U geodata -W -c "SELECT row_to_json(t) FROM (SELECT * FROM japanesetweets) t;" | grep '^ {' > japanRows.json
+psql -h dw-intern-db-micro.crr707brjv0s.us-east-1.rds.amazonaws.com -U -W -c "SELECT row_to_json(t) FROM (SELECT * FROM japanesetweets) t;" | grep '^ {' > japanRows.json
 
 # Create Index
 curl -XPUT http://localhost:9200/tweets/

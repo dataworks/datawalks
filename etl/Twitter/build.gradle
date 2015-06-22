@@ -47,12 +47,13 @@ compileScala {
 eclipse {
 	pathVariables 'GRADLE_USER_HOME': gradle.gradleUserHomeDir
 	classpath {
+		containers 'org.eclipse.jdt.USER_LIBRARY/SPARK'
 		defaultOutputDir = new File('build/classes')
 		file {
 			// Remove SCALA_CONTAINER. Use Spark built-in scala library instead.
 			whenMerged { classpath ->
 				classpath.entries.removeAll { entry ->
-					entry.path == "org.scala-ide.sdt.launching.SCALA_CONTAINER"
+					entry.path == "org.scala-ide.sdt.launching.SCALA_CONTAINER" || entry.path == "$SPARK_LIB"
 				}
 			}
 		}

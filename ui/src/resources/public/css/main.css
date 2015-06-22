@@ -239,7 +239,12 @@ img {
 	display: block;
 }
 
-
+.boxish {
+	height:400px;
+	width:100%;
+	overflow:auto;
+	position: fixed;
+}
 
 .tabs {
   position: relative;   

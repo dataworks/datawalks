@@ -1,2 +1,4 @@
 /bin/
+/build/
 .cache
+.gradle

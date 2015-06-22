@@ -3,12 +3,12 @@
 	<head>
 		<title>Data Walks</title>
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script text = "text/javascript">
+    	<meta charset="utf-8">
+    	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    	<script text = "text/javascript">
    	 	google.load("visualization", "1.1", {packages:["calendar"]});
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=visualization"></script>
+    	</script>
+    	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=visualization"></script>
 		<script src="bower_components/angular/angular.js"></script>
 		<script src="bower_components/angular-resource/angular-resource.js"></script>    	
 		<script src="js/app.js"></script>
@@ -19,30 +19,33 @@
 	<body>
 		<ng-include src="'include.htm'"></ng-include>
 		</br></br>
-					<form ng-submit = "twitterGeo()" ng-controller="Display">
-						<input type="text" ng-model="lat"  placeholder="Latitude"  name="lat" style="border:1px solid #ff0000"/>
-							</br></br>
-						<input type="text" ng-model="long" placeholder="Longitude" name="long" style="border:1px solid #ff0000"/>
-							</br></br>
-						<input type="submit" value="View Tweets!"/>
-							</br></br>
-						<label>A new window will be displayed</label>
-						</br>
-						</br>
-						<label>Exit out and enter new coordinates
-								for a different search
-						</label>
-						
-						<div ng-repeat="twit in twits">
-							<li><img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_2_reasonably_small.png" height="50" width="50">
-							<b>@{{twit.uname}}</b> </br>
-							{{twit.text}}
-							</br> 
-							<i>{{twit.tStamp}}</i>
-							</li>
-						</div>
-						
-			        </form>
-			<div class="invis"><div id="map-canvas"></div></div>
+		<div class="contain">		<!-- banana -->
+		<form ng-submit = "twitterGeo()" ng-controller="Display">
+		<div class="lefty">			<!-- pear -->
+			<input type="text" ng-model="lat"  placeholder="Latitude"  name="lat" style="width: 100%"/>
+				</br></br>
+			<input type="text" ng-model="long" placeholder="Longitude" name="long" style="width: 100%"/>
+			
+			</br></br>
+			
+			<input type="submit" value="View Tweets!" style="width: 100%"/>
+			
+			</br></br>
+		</div>						<!-- pear2 -->
+			<div class="righty boxish">	<!-- apple -->
+			<div ng-repeat="twit in twits" style="border: 1px red">
+				<li><img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_2_reasonably_small.png" height="25" width="25">
+				<b>@{{twit.uname}}</b> </br>
+				{{twit.text}}
+				</br> 
+				<i>{{twit.tStamp}}</i>
+				</li>
+			</div>
+			</div>					<!-- apple2 -->	
+		</form>	
+		</div> 						<!-- banana2 -->
+		<div class="invis">
+				<div id="map-canvas"></div>
+			</div>
 	</body>
 </html>

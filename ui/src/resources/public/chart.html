@@ -14,14 +14,19 @@
        	<script src="js/app.js"></script>
        	<script src="js/services/watch.js"></script>
        	<script src="js/controllers/display.js"></script>
+       	<script src="js/controllers/chartDisplay.js"></script>
        	<link rel="stylesheet" href="css/main.css">      
 </head>
 <body>
 	<ng-include src="'include.htm'"></ng-include>
 	<div class="contain">
 		<div class="top">
-    		<div ng-controller="Display">
-    		<div class="invis"><div id="map-canvas"></div></div>  
+    		<div ng-controller="ChartDisplay"> 
+    		Select the Watch ID's to view:</br>
+        	<label ng-repeat = "index in deviceIds">{{index.index}}
+               	<input type="radio" name = "index" ng-model = "index.value" 
+               	ng-click = "showIds(index.index)" ng-value="{{index.value}}">
+            </label><br/>
     		<div id="calendar_basic"></div>
     		</div>  
 		</div>

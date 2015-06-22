@@ -34,16 +34,16 @@ class SqlService {
 	def getTotalDistance(long watchId, Date startDate, Date stopDate){
 		def rows = []
 		Sql sql = new Sql(dataSource)
-		sql.eachRow("""SELECT max(distancemeters) mdistance,to_char(dtime,'yyyy-mm-dd') dtime from workabledata
-						GROUP BY to_char(dtime,'yyyy-mm-dd');"""){
-			rows << [ dtime: it.dtime, mdistance: it.mdistance]
+		sql.eachRow("""SELECT deviceid did, max(distancemeters) mdistance,to_char(dtime,'yyyy-mm-dd') dtime from workabledata
+						GROUP BY to_char(dtime,'yyyy-mm-dd'), did;"""){
+			rows << [ dtime: it.dtime, mdistance: it.mdistance, did: it.did]
 		}
 		return rows
 	}	
 	
 	/* getDeviceId(long, Date, Date)
 	 * 
-	 * Returns one column of deviceid's for comparison purposess
+	 * Returns one column of deviceid's for comparison purposes
 	 */
 	def getDeviceId(long watchId, Date startDate, Date stopDate){
 		def rows = []

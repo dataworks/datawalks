@@ -290,7 +290,7 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
      }
 	 
    //Draw the CalendarChart
-   $scope.drawChart = function() {
+   /*$scope.drawChart = function() {
 	   
        var dataTable = new google.visualization.DataTable();
        dataTable.addColumn({ type: 'date', id: 'Date' });
@@ -314,7 +314,7 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
  	       };
  	
  	   chart.draw(dataTable, options); 
-   }
+   }*/
    
    //Draw bar chart -- eventually should be scatter plot when primary keys are set
    $scope.drawBarChart = function() {

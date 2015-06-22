@@ -24,9 +24,9 @@
     		<div ng-controller="ChartDisplay"> 
     		Select the Watch ID's to view:</br>
         	<label ng-repeat = "index in deviceIds">{{index.index}}
-               	<input type="checkbox" name = "index" ng-model = "index.value" 
-               	ng-value="{{index.value}}">
-            </label><br/></br>
+               	<input type="radio" name = "index" ng-model = "index.value" 
+               	ng-click = "showIds(index.index)" ng-value="{{index.value}}">
+            </label><br/>
     		<div id="calendar_basic"></div>
     		</div>  
 		</div>

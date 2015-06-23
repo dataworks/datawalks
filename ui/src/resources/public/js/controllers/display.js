@@ -11,19 +11,7 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
     $scope.long = '';
     //Example coordinates
     //40.748441
-    //-73.985664
-
-    
-    //Take the coordinates for the tweets and display them in a new window
-    $scope.twitterGeo = function() { 
-    	  var left = (screen.width/2)-(750/2);
-    	  var top = (screen.height/2)-(750/2);
-    	  if($scope.lat =='' || $scope.long=='')
-    		  window.alert("Please enter a latitude and longitude");
-    	  else
-    		  window.open("https://twitter.com/search?q=geocode%3A" + $scope.lat + "%2C" + $scope.long +"%2C1mi&src=typd&vertical=default&f=tweets", 'Tweets', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=no, width=750, height=750, top='+top+', left='+left);	
-    }
-    
+    //-73.985664    
     $scope.avg = {
     	name: "average",
     	value: false
@@ -289,25 +277,8 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
   	   return new Date(parts[0], parts[1]-1, parts[2]); 
      }
    
-   $scope.twits = [];
-   
-   $scope.loadTweets = function(){
-	   for(var i =0; i < 10; i++){
-		   var newDate = new Date($scope.records.twitter[i].uni);
-		   $scope.twits.push({
-			   uname: $scope.records.twitter[i].uname,
-			   tStamp: newDate,
-			   text: $scope.records.twitter[i].tweettext,
-			   img:  $scope.records.twitter[i].img
-		   });
-	   }
-	   
-   }
-   
    $scope.recordsLoaded = function(results){
-	   $scope.loadMap();
-	   $scope.loadTweets(); 
-	   $scope.drawBarChart();   
+	   $scope.loadMap();   
    }
    
    $scope.records = Watch.query({id: 1, startDate: '2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, 

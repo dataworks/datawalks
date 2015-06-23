@@ -288,41 +288,6 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
   	   var parts = input.split('-');
   	   return new Date(parts[0], parts[1]-1, parts[2]); 
      }
-	
-	 
-
-   
-   //Draw bar chart 
-   $scope.drawBarChart = function(index) {
-	   	 index--;
-	     var dataTable = new google.visualization.DataTable();
-	     dataTable.addColumn('string', "Time");
-	     dataTable.addColumn('number', "Calories");
-	     
-	     for(var i = 0; i< $scope.records.calories.length; i++){
-		 		if($scope.deviceIds[index].id == $scope.records.calories[i].did)
-		 		{
-		 			newDate = new Date($scope.records.calories[i].dtime);
-		 			dataTable.addRow([ $scope.records.calories[i].dtime.substring(5), $scope.records.calories[i].scal ]);
-		 		}	
-	     }
-	     
-	     var options = {
-	    		 title: 'Calories Burned Over Time',
-	    		 subtitle: 'Time(Hr:Mn:Sd:Ms',
-	    		 hAxis: {title: 'Calories Burned'},
-	    		 vAxis: {title: 'Time Traveled', subtitle: 'H:M:S:MS'},
-	             width: 900,
-	             height: 800,
-	             bar: { groupWidth: '75%' }
-
-	           };
-
-	     var chart = new google.visualization.BarChart(document.getElementById('calTime'));
-
-	     chart.draw(dataTable, options);
-	     
-	 }
    
    $scope.twits = [];
    

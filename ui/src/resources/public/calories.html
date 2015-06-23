@@ -13,13 +13,13 @@
         <script src="bower_components/angular-resource/angular-resource.js"></script>
        	<script src="js/app.js"></script>
        	<script src="js/services/calories.js"></script>
-       	<script src="js/controllers/display.js"></script>
+       	<script src="js/controllers/calDisplay.js"></script>
        	<link rel="stylesheet" href="css/main.css">      
 </head>
 <body>
 	<ng-include src="'include.htm'"></ng-include>
 	<div class="contain">
-	<div ng-controller="Display">
+	<div ng-controller="CalDisplay">
 			
 			      Select the Watch ID's to view:
 			      </br>
@@ -31,8 +31,6 @@
 		    		   
 		</div> 
 		</div>
-    	<div class="invis"><div id='map-canvas'></div></div>
-
 	</div>
 </body>
 </html>

@@ -2,7 +2,7 @@
  * 
  */
 
-controllers.controller('ChartDisplay', ['$scope', 'Watch', function($scope, Watch) {
+controllers.controller('ChartDisplay', ['$scope', 'Aggregate', function($scope, Aggregate) {
 	//Draw the CalendarChart
 	$scope.deviceIds = [];
 	var dataTables = [];
@@ -68,7 +68,7 @@ controllers.controller('ChartDisplay', ['$scope', 'Watch', function($scope, Watc
 	   $scope.drawChart(); 
 	   //$scope.drawBarChart();   
 	}
-	$scope.records = Watch.query({id: 1, startDate: '2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, 
+	$scope.records = Aggregate.query({id: 1, startDate: '2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, 
 				$scope.recordsLoaded);
 }]);
 

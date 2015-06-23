@@ -288,42 +288,23 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
   	   var parts = input.split('-');
   	   return new Date(parts[0], parts[1]-1, parts[2]); 
      }
+	
 	 
-   //Draw the CalendarChart
-   /*$scope.drawChart = function() {
-	   
-       var dataTable = new google.visualization.DataTable();
-       dataTable.addColumn({ type: 'date', id: 'Date' });
-       dataTable.addColumn({ type: 'number', id: 'distance' });
-       
- 	   for(var i = 0; i < $scope.records.aggs.length; i++)
- 		  {
- 	       	 dataTable.addRow( [ new Date(Date.parse($scope.records.aggs[i].dtime)), parseInt($scope.records.aggs[i].mdistance) ] );
- 		  }
- 	       
- 	   var chart = new google.visualization.Calendar(document.getElementById('calendar_basic'));
- 	
- 	   var options = {
- 	         title: "Distance",
- 	         height: 300,
- 	         width: 2000,
-		    tooltip: {
-		    	isHtml: false
-		    	},
-		    	calendar: { cellSize: 25 }
- 	       };
- 	
- 	   chart.draw(dataTable, options); 
-   }*/
+
    
-   //Draw bar chart -- eventually should be scatter plot when primary keys are set
-   $scope.drawBarChart = function() {
+   //Draw bar chart 
+   $scope.drawBarChart = function(index) {
+	   	 index--;
 	     var dataTable = new google.visualization.DataTable();
 	     dataTable.addColumn('string', "Time");
 	     dataTable.addColumn('number', "Calories");
 	     
 	     for(var i = 0; i< $scope.records.calories.length; i++){
-	    	 dataTable.addRow([ $scope.records.calories[i].dtime, $scope.records.calories[i].cal ]);
+		 		if($scope.deviceIds[index].id == $scope.records.calories[i].did)
+		 		{
+		 			newDate = new Date($scope.records.calories[i].dtime);
+		 			dataTable.addRow([ $scope.records.calories[i].dtime.substring(5), $scope.records.calories[i].scal ]);
+		 		}	
 	     }
 	     
 	     var options = {
@@ -360,8 +341,7 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
    
    $scope.recordsLoaded = function(results){
 	   $scope.loadMap();
-	   $scope.loadTweets();
-	   $scope.drawChart(); 
+	   $scope.loadTweets(); 
 	   $scope.drawBarChart();   
    }
    

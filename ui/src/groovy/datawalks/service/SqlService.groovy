@@ -61,9 +61,14 @@ class SqlService {
 	def getCalorieInfo(long watchId, Date startDate, Date stopDate){
 		def rows = []
 		Sql sql = new Sql(dataSource)
-		sql.eachRow("""Select time dtime, calories cal from workabledetails where split = ' Summary' 
-						and (calories is not null and calories > 10);""") {
-			rows << [dtime: it.dtime, cal: it.cal]
+		sql.eachRow("""SELECT DISTINCT ON(wdata.runid) deviceid did, to_char(dtime,'yyyy-mm-dd') dtime, sum(calories) scal, wdata.runid wrun
+						FROM workabledata wdata
+						JOIN workabledetails wdetails 
+							ON wdata.runid = wdetails.runid
+						WHERE calories != 0
+						GROUP BY deviceid, dtime, wrun
+						ORDER BY wrun, dtime""") {
+			rows << [dtime: it.dtime, did: it.did, scal: it.scal, wrun: it.wrun]
 						
 		}
 		return rows
@@ -84,5 +89,4 @@ class SqlService {
 		}
 		return rows
 	}
-
 }

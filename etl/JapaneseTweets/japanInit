@@ -1,0 +1,37 @@
+# Extract
+psql -h dw-intern-db-micro.crr707brjv0s.us-east-1.rds.amazonaws.com -U -W -c "SELECT row_to_json(t) FROM (SELECT * FROM japanesetweets) t;" | grep '^ {' > japanRows.json
+
+# Create Index
+curl -XPUT http://localhost:9200/tweets/
+
+# Create Mapping
+curl -XPUT http://localhost:9200/tweets/_mapping/japan -d '
+{
+  "japan": {
+    "properties": {
+      "id": {"type": "long", "store": true},
+      "username": {"type": "string", "store": true},
+      "universal_time_stamp": {"type": "date", "store": true},
+      "local_time_stamp": {"type": "date", "store": true},
+      "tweet_text": {"type": "string", "store": true},
+      "language": {"type": "string", "store": true},
+      "image": {"type": "string", "store": true}
+    }
+  }
+}
+'
+
+# Put data
+#!/usr/bin/python
+
+import json
+import requests
+
+url = 'http://localhost:9200/geodata/event'
+
+#!/usr/bin/python
+with open('japanRows.json', 'r') as input:
+  for line in input:
+    parse = json.loads(line)
+    result = requests.post(url, json.dumps(parse))
+    print json.dumps(result.json())

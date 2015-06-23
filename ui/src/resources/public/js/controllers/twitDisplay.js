@@ -1,5 +1,5 @@
 /**
- * 
+ * Controller for the twitter display
  */
 controllers.controller('TwitDisplay', ['$scope', 'ElasticTwitter', function($scope, ElasticTwitter){
 	//Take the coordinates for the tweets and display them in a new window
@@ -13,15 +13,13 @@ controllers.controller('TwitDisplay', ['$scope', 'ElasticTwitter', function($sco
 	 * Load tweets into the twits[] array. Unless the language is null
 	 */
 	$scope.loadTweets = function(){
-		for(var i =0; i < $scope.records.hits.length; i++){
+		for(var i = $scope.records.hits.length-1; i > -1; i--){
 			var newDate = new Date($scope.records.hits[i].universal_time_stamp);
-			if($scope.records.hits[i].language !== null){
-				$scope.twits.push({
-					uname: $scope.records.hits[i].username,
-					tStamp: newDate,
-					text: $scope.records.hits[i].tweet_text
-				});
-			}
+			$scope.twits.push({
+				uname: $scope.records.hits[i].username,
+				tStamp: newDate,
+				text: $scope.records.hits[i].tweet_text
+			});
 		}
 	}
 	

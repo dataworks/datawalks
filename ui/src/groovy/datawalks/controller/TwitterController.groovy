@@ -19,6 +19,6 @@ class TwitterController {
 	@RequestMapping("/twitter/getTweets")
 	public def getTweets(@RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern= "yyyy-MM-dd HH:mm:ss") Date startDate,
 			@RequestParam(value = "stopDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date stopDate) {
-		esService.search([query: ["match_all":[] ] ] );
+		esService.search([query: [query_string: [query: "language: en"]]]);
 	}
 }

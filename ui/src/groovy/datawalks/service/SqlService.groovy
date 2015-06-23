@@ -67,7 +67,7 @@ class SqlService {
 							ON wdata.runid = wdetails.runid
 						WHERE calories != 0
 						GROUP BY deviceid, dtime, wrun
-						ORDER BY wrun, dtime""") {
+						ORDER BY wrun""") {
 			rows << [dtime: it.dtime, did: it.did, scal: it.scal, wrun: it.wrun]
 						
 		}

@@ -5,9 +5,6 @@
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
    		<meta charset="utf-8">
    		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-   		<script text = "text/javascript">
-           google.load("visualization", "1.1", {packages:["calendar"]});
-  		</script>
   		<script text = "text/javascript"> 
   			google.load("visualization", "1", {packages:["corechart"]});
   		</script>
@@ -22,15 +19,19 @@
 <body>
 	<ng-include src="'include.htm'"></ng-include>
 	<div class="contain">
-	      Rough sketch, until primary keys are added
-      </br>
-		<div class="top">
-    		<div ng-controller="Display">
-    		<div id="calTime"></div>
-    		<div class="invis"><div id="map-canvas"></div></div>
-    		<div class="invis"><div id="calendar_basic"></div></div>
-    		</div>  
+	<div ng-controller="Display">
+			
+			      Select the Watch ID's to view:
+			      </br>
+		        	<label ng-repeat = "index in deviceIds">{{index.index}}
+		               	<input type="radio" name = "index" ng-model = "index.value" 
+               			ng-click = "drawBarChart(index.index)" ng-value="{{index.value}}">
+		            </label><br/>
+		            <div id="calTime"></div>
+		    		   
+		</div> 
 		</div>
+    	<div class="invis"><div id='map-canvas'></div></div>
 
 	</div>
 </body>

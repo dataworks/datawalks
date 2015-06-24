@@ -11,6 +11,8 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
     $scope.deviceIds = [];
     $scope.lat = '';
     $scope.long = '';
+    var longTw;;
+    var latTw;
     //Example coordinates
     //40.748441
     //-73.985664    
@@ -18,6 +20,18 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
     	name: "average",
     	value: false
     };
+    
+    
+	/* twitterGeo
+	 * 
+	 * Launches a new page with the desired coordinates
+	 */
+	$scope.twitterGeo = function() { 
+		console.log("hello");
+		var left = (screen.width/2)-(750/2);
+		var top = (screen.height/2)-(750/2);
+		window.open("https://twitter.com/search?q=geocode%3A" + latTw + "%2C" + longTw +"%2C"+ 5 +"mi&src=typd&vertical=default&f=tweets", 'Tweets', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=no, width=750, height=750, top='+top+', left='+left);	
+	}
     
 	//Creates the heat map
 	$scope.loadMap = function() 
@@ -37,6 +51,8 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 	  
 		google.maps.event.addListener(myMarker, 'dragend', function(evt){
 		    document.getElementById('current').innerHTML = '<p>Marker dropped: Current Lat: ' + evt.latLng.lat().toFixed(3) + ' Current Lng: ' + evt.latLng.lng().toFixed(3) + '</p>';
+		    latTw = evt.latLng.lat().toFixed(3);
+		    longTw = evt.latLng.lng().toFixed(3);
 		});
 
 		google.maps.event.addListener(myMarker, 'dragstart', function(evt){

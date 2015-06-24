@@ -33,7 +33,8 @@ controllers.controller('TwitDisplay', ['$scope', 'ElasticTwitter', function($sco
 		if($scope.lat =='' || $scope.long=='')
 			window.alert("Please enter a latitude and longitude");
 		else
-			window.open("https://twitter.com/search?q=geocode%3A" + $scope.lat + "%2C" + $scope.long +"%2C"+ $scope.radius +"mi&src=typd&vertical=default&f=tweets", 'Tweets', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=no, width=750, height=750, top='+top+', left='+left);	
+			window.open("https://twitter.com/search?q=geocode%3A" + $scope.lat + "%2C" + $scope.long +"%2C"+ $scope.radius +"mi&src=typd&vertical=default&f=tweets", 
+					'Tweets', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=no, width=750, height=750, top='+top+', left='+left);	
 	}
 	
 	$scope.recordsLoaded = function(results){

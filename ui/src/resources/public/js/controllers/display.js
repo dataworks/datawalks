@@ -3,6 +3,8 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 	var pointarray;
 	var heatmap;
 	var heatmaps = [];
+	var myMarker = null;
+	var latLng = new google.maps.LatLng(38.942892, -77.334012);
     $scope.text = '';
     $scope.endtext = '';
     $scope.curr =[];
@@ -17,18 +19,37 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
     	value: false
     };
     
-	//Creates the heap map
+	//Creates the heat map
 	$scope.loadMap = function() 
 	{
 	  var mapOptions = {
-	    zoom: 8,
+	    zoom: 10,
 	   center: new google.maps.LatLng($scope.records.rows[0].latitude, $scope.records.rows[0].longitude)
 	  };
-	  $scope.loadIds();
+	  
 	  $scope.map = new google.maps.Map(document.getElementById('map-canvas'),
-	      mapOptions); 
+		      mapOptions); 
+	  
+	  myMarker = new google.maps.Marker({
+		    position: latLng,
+		    draggable: true,
+		});
+	  
+		google.maps.event.addListener(myMarker, 'dragend', function(evt){
+		    document.getElementById('current').innerHTML = '<p>Marker dropped: Current Lat: ' + evt.latLng.lat().toFixed(3) + ' Current Lng: ' + evt.latLng.lng().toFixed(3) + '</p>';
+		});
+
+		google.maps.event.addListener(myMarker, 'dragstart', function(evt){
+		    document.getElementById('current').innerHTML = '<p>Currently dragging marker...</p>';
+		});
+		
+	  myMarker.setMap($scope.map);
+		
+	  $scope.loadIds();
 	}
-	
+	 
+
+
 	$scope.avgPath = function(index)
 	{
 		var c = 1;
@@ -172,6 +193,7 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 	              data: pointArray
 	            });
 				heatmaps[index].setMap($scope.map);
+				
 			}
 			else
 			{

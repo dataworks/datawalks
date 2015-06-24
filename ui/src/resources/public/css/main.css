@@ -200,6 +200,7 @@ li.animate {
 	width: 50%;
 	margin: auto;
 	vertical-align: center;
+	height: 100%
 }
 .contain .top {
 	position: relative;
@@ -240,11 +241,12 @@ img {
 }
 
 .boxish {
-	height:400px;
+	height:300px;
 	width:100%;
 	overflow:auto;
-	position: fixed;
+	position: relative;
 }
+
 
 .tabs {
   position: relative;   

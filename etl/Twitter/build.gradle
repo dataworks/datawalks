@@ -80,3 +80,9 @@ jar {
 	baseName = 'datawalks-twitter'
 	version = '1.0'
 }
+
+task run(type: JavaExec) {
+	main = 'datawalks.twitter.TwitterJob'
+	args = "$RUN_PROPERTIES".split().toList()
+	classpath sourceSets.main.runtimeClasspath
+}

@@ -12,27 +12,28 @@
 		<script src="bower_components/angular/angular.js"></script>
 		<script src="bower_components/angular-resource/angular-resource.js"></script>    	
 		<script src="js/app.js"></script>
-    	<script src="js/services/twitter.js"></script>
+    	<script src="js/services/elasticTwitter.js"></script>
     	<script src="js/controllers/twitDisplay.js"></script>
         <link rel="stylesheet" href="css/main.css">     
 	</head>
 	<body>
 		<ng-include src="'include.htm'"></ng-include>
 		</br></br>
-		<div class="contain">		<!-- banana -->
+		<div class="contain">		
 		<form ng-submit = "twitterGeo()" ng-controller="TwitDisplay">
-		<div class="lefty">			<!-- pear -->
+		<div class="lefty">			
 			<input type="text" ng-model="lat"  placeholder="Latitude"  name="lat" style="width: 100%"/>
 				</br></br>
 			<input type="text" ng-model="long" placeholder="Longitude" name="long" style="width: 100%"/>
-			
-			</br></br>
+				</br></br>
+			<input type="text" ng-model="radius" placeholder="Radius of Tweets" name="radius" style="width: 100%"/>
+				</br></br>
 			
 			<input type="submit" value="View Tweets!" style="width: 100%"/>
 			
 			</br></br>
-		</div>						<!-- pear2 -->
-			<div class="righty boxish">	<!-- apple -->
+		</div>						
+			<div class="righty boxish">	
 			<div ng-repeat="twit in twits" style="border: 1px red">
 				<li><img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_2_reasonably_small.png" height="25" width="25">
 				<b>@{{twit.uname}}</b> </br>
@@ -41,9 +42,9 @@
 				<i>{{twit.tStamp}}</i>
 				</li>
 			</div>
-			</div>					<!-- apple2 -->	
+			</div>					
 		</form>	
-		</div> 						<!-- banana2 -->
+		</div> 						
 			</div>
 	</body>
 </html>

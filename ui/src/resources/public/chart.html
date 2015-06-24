@@ -5,48 +5,36 @@
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
    		<meta charset="utf-8">
    		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-   		<script text = "text/javascript">
-           google.load("visualization", "1.1", {packages:["calendar"]});
+   		
+  		<script text = "text/javascript"> 
+  			google.load("visualization", "1", {packages:['corechart','calendar']});
   		</script>
   		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=visualization"></script>
         <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-resource/angular-resource.js"></script>
        	<script src="js/app.js"></script>
        	<script src="js/services/aggregate.js"></script>
-       	<script src="js/controllers/display.js"></script>
+       	<script src="js/services/calories.js"></script>
+       	<script src="js/controllers/calDisplay.js"></script>
        	<script src="js/controllers/chartDisplay.js"></script>
        	<link rel="stylesheet" href="css/main.css">      
 </head>
 <body>
 	<ng-include src="'include.htm'"></ng-include>
-	<div class="contain">
-		<div class="top">
-    		<div ng-controller="ChartDisplay"> 
-    		Select the Watch ID's to view:</br>
-        	<label ng-repeat = "index in deviceIds">{{index.index}}
-               	<input type="radio" name = "index" ng-model = "index.value" 
-               	ng-click = "showIds(index.index)" ng-value="{{index.value}}">
-            </label><br/>
-    		<div id="calendar_basic"></div>
-    		</div>  
-		</div>
-		
-		<!-- 
-		<div class="bottom">
-			<form ng-app="MyApp" ng-controller="TwitterCtrl" ng-submit="initResults()">
-	  			<span>#</span>
-				<input type="text" ng-model="hashtag" placeholder="Hashtag" spellcheck="false" />
-  				<input type="submit" value="Start" />
-				<hr ng-class="progressClass" />
-				<ul id="tweets">
-	    			<li animate ng-repeat="tweet in tweets">
-		      			{{tweet.text}}
-		    		</li>
-	  			</ul>
-			</form>
-   		</div>
-   		 -->
-   		 
+	</br>
+	</br>
+	<div ng-controller="ChartDisplay">
+		Select the Watch ID's to view:</br> <label ng-repeat="index in deviceIds">{{index.index}}
+			<input type="radio" name="index" ng-model="index.value"
+			ng-click="showIds(index.index)"	ng-value="{{index.value}}">
+		</label><br />
+		<div id="calendar_basic"></div>
 	</div>
+	<div ng-controller="CalDisplay">
+		Calories: </br>
+		<br/>
+		<div id="calTime"></div>
+	</div>
+
 </body>
 </html>

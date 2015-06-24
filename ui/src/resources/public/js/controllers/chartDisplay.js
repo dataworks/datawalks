@@ -2,10 +2,13 @@
  * 
  */
 
-controllers.controller('ChartDisplay', ['$scope', 'Aggregate', function($scope, Aggregate) {
+controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate', 
+                                        function($scope, linker, Aggregate) {
 	//Draw the CalendarChart
 	$scope.deviceIds = [];
-	var dataTables = [];
+	$scope.globalIndex;
+	var dataTable = [];
+	$scope.portDate;
 	var chart = new google.visualization.Calendar(document.getElementById('calendar_basic'));
 	var options = 
  	{
@@ -31,19 +34,27 @@ controllers.controller('ChartDisplay', ['$scope', 'Aggregate', function($scope, 
 		}
 	}
 	
+	function selectHandler() {
+		var selection = chart.getSelection();
+		var message = '';
+		var it = selection;
+		$scope.portDate = selection[0].date;
+	}
+
 	$scope.showIds = function(index)
 	{
 		index--;
-		var dataTable = [];
+		$scope.globalIndex = index;
+		linker.getIndex($scope.globalIndex);
+		dataTable = [];
 	    dataTable = new google.visualization.DataTable();
 	    dataTable.addColumn({ type: 'date', id: 'Date' });
 	    dataTable.addColumn({ type: 'number', id: 'distance' });
-	       
 	 	for(var i = 0; i < $scope.records.aggs.length; i++)
 	 	{
 	 		if($scope.deviceIds[index].id == $scope.records.aggs[i].did)
 	 		{
-	 			dataTable.addRow( [ new Date(Date.parse($scope.records.aggs[i].dtime)), 
+	 			dataTable.addRow([ new Date(Date.parse($scope.records.aggs[i].dtime)), 
 	 			                            parseInt($scope.records.aggs[i].mdistance)] );
 	 		}
 	 	}
@@ -54,13 +65,15 @@ controllers.controller('ChartDisplay', ['$scope', 'Aggregate', function($scope, 
 	$scope.drawChart = function() 
 	{
 		$scope.loadIds();
-		
-		var dataTable = new google.visualization.DataTable();
+		dataTable = new google.visualization.DataTable();
 		
 		dataTable.addColumn({ type: 'date', id: 'Date' });
 	    dataTable.addColumn({ type: 'number', id: 'distance' });
 		chart.draw(dataTable, options);
 	}
+	
+	google.visualization.events.addListener(chart, 'select', selectHandler);
+	
 	$scope.recordsLoaded = function(results)
 	{
 	   //$scope.loadMap();

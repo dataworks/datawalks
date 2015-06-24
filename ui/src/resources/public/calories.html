@@ -19,17 +19,12 @@
 <body>
 	<ng-include src="'include.htm'"></ng-include>
 	<div class="contain">
-	<div ng-controller="CalDisplay">
-			
-			      Select the Watch ID's to view:
-			      </br>
-		        	<label ng-repeat = "index in deviceIds">{{index.index}}
-		               	<input type="radio" name = "index" ng-model = "index.value" 
-               			ng-click = "drawBarChart(index.index)" ng-value="{{index.value}}">
-		            </label><br/>
-		            <div id="calTime"></div>
-		    		   
-		</div> 
+		<div ng-controller="CalDisplay">
+			Select the Watch ID's to view: </br> <label ng-repeat="index in deviceIds">{{index.index}}
+				<input type="radio" name="index" ng-model="index.value"
+				ng-click="drawBarChart(index.index)" ng-value="{{index.value}}">
+			</label><br />
+			<div id="calTime"></div>
 		</div>
 	</div>
 </body>

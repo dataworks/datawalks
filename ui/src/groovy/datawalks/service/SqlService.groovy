@@ -62,7 +62,7 @@ class SqlService {
 		def rows = []
 		Sql sql = new Sql(dataSource)
 		sql.eachRow("""SELECT DISTINCT ON(wdata.runid) deviceid did, to_char(dtime,'yyyy-mm-dd') dtime, 
-						sum(wdetails.calories) scal, wdata.runid wrun, sum(wdetails.distance), sum.time stime
+						sum(wdetails.calories) scal, wdata.runid wrun, sum(wdetails.distance) sdist, sum.time stime
 						FROM workabledata wdata
 						JOIN workabledetails wdetails 
 							ON wdata.runid = wdetails.runid
@@ -71,7 +71,7 @@ class SqlService {
 						WHERE wdetails.calories != 0
 						GROUP BY deviceid, dtime, wrun, stime
 						ORDER BY wrun""") {
-			rows << [dtime: it.dtime, did: it.did, scal: it.scal, wrun: it.wrun]
+			rows << [dtime: it.dtime, did: it.did, scal: it.scal, wrun: it.wrun, sdist: it.sdist, stime: it.stime]
 						
 		}
 		return rows

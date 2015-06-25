@@ -38,7 +38,16 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 		var selection = chart.getSelection();
 		var message = '';
 		var it = selection;
-		$scope.portDate = selection[0].date;
+		var mon = new Date(selection[0].date);
+		mon = mon.getMonth()+1;
+		console.log(mon);
+		var date = dataTable.getFormattedValue(selection[0].row, 0);
+		$scope.portDate = date.replace(/,/, "");
+		var arr = $scope.portDate.split(" ");
+		console.log(arr);
+		var month = 
+		$scope.portDate = arr[2] + "-"+"0"+mon+"-"+arr[1];
+		console.log("ch" + $scope.portDate);
 		linker.getDate($scope.portDate);
 	}
 

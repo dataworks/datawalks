@@ -6,14 +6,18 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 	$scope.deviceIds = [];
 	$scope.localInd;
 	$scope.localDate;
+	var justInd = false;
+	var justDate = false;
 	
 	linker.onGetIndex($scope, function (message) {
         $scope.localInd = message.globalIndex;
         console.log($scope.localInd);
+        justInd = true;
         $scope.drawBarChart($scope.localInd);
     });
 	
 	linker.onGetDate($scope, function (message) {
+		justDate = true;
         $scope.localDate = message.globalDate;
         $scope.drawBarChart($scope.localInd);
     });
@@ -59,12 +63,13 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 		dataTable = new google.visualization.DataTable();
 		dataTable.addColumn('string', "Time");
 		dataTable.addColumn('number', "Calories");
-		if($scope.localDate != null)
+		if(justDate == true)
 		{
 			for(var i = 0; i< $scope.records.calories.length; i++){
 				if($scope.deviceIds[index].id == $scope.records.calories[i].did)
 				{
-					if($scope.localDate == $scope.records.calories[i].dtime)
+					console.log($scope.records.calories[i].dtime);
+					if($scope.localDate === $scope.records.calories[i].dtime)
 					{
 						newDate = new Date($scope.records.calories[i].dtime);
 						dataTable.addRow([ $scope.records.calories[i].dtime.substring(5), 
@@ -72,8 +77,9 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 					}					
 				}	
 			}
+			justDate = false;
 		}
-		else
+		else if(justInd == true)
 		{
 			for(var i = 0; i< $scope.records.calories.length; i++){
 				if($scope.deviceIds[index].id == $scope.records.calories[i].did)
@@ -82,6 +88,7 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 					dataTable.addRow([ $scope.records.calories[i].dtime.substring(5), $scope.records.calories[i].scal ]);
 				}	
 			}
+			justInd = false;
 		}
 		
 		chart.draw(dataTable, options);

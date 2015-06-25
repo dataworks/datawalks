@@ -9,6 +9,25 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 	var justInd = false;
 	var justDate = false;
 	
+	/* parseToMinutes(string)
+	 * 
+	 * Take a time interval as a string and convert it to the
+	 * an in as the total minutes. Seconds, and milliseconds are excluded
+	 */
+	var parseToMinutes = function(toParse){
+		toParse = toParse.split(/:|./);
+		var totalMinutes = 0;
+		if(toParse.length == 4){
+			totalMinutes += parseInt(toParse[0]);
+			totalMinutes += parseInt(toParse[1]);
+		}
+		else{
+			totalMinutes += parseInt(toParse[0]);
+		}
+		return totalMinutes;
+	}
+	
+	
 	linker.onGetIndex($scope, function (message) {
         $scope.localInd = message.globalIndex;
         justInd = true;

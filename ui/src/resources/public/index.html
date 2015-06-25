@@ -1,50 +1,71 @@
-<!doctype html>
+<!DOCTYPE HTML>
 <html ng-app="datawalks">
-	<head>
-		<title>Data Walks</title>
-		<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    	<meta charset="utf-8">
-    	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    	<script text = "text/javascript">
-   	 	google.load("visualization", "1.1", {packages:["calendar"]});
-    	</script>
-    	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=visualization"></script>
-		<script src="bower_components/angular/angular.js"></script>
-		<script src="bower_components/angular-resource/angular-resource.js"></script>    	
-		<script src="js/app.js"></script>
-    	<script src="js/services/elasticTwitter.js"></script>
-    	<script src="js/controllers/twitDisplay.js"></script>
-        <link rel="stylesheet" href="css/main.css">     
-	</head>
-	<body>
-		<ng-include src="'include.htm'"></ng-include>
-		</br></br>
-		<div class="contain">		
-		<form ng-submit = "twitterGeo()" ng-controller="TwitDisplay">
-		<div class="lefty">			
-			<input type="text" ng-model="lat"  placeholder="Latitude"  name="lat" style="width: 100%"/>
-				</br></br>
-			<input type="text" ng-model="long" placeholder="Longitude" name="long" style="width: 100%"/>
-				</br></br>
-			<input type="text" ng-model="radius" placeholder="Radius of Tweets" name="radius" style="width: 100%"/>
-				</br></br>
-			
-			<input type="submit" value="View Tweets!" style="width: 100%"/>
-			
-			</br></br>
-		</div>						
-			<div class="righty boxish">	
-			<div ng-repeat="twit in twits" style="border: 1px red">
-				<li><img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_2_reasonably_small.png" height="25" width="25">
-				<b>@{{twit.uname}}</b> </br>
-				{{twit.text}}
-				</br> 
-				<i>{{twit.tStamp}}</i>
-				</li>
-			</div>
-			</div>					
-		</form>	
-		</div> 						
-			</div>
-	</body>
+<head>
+	<title>Data Walks</title>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=yes">
+    <meta charset="utf-8">
+	<link rel="stylesheet" type=text/css href="/css/main.css">
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=visualization"></script>
+       <script src="bower_components/angular/angular.js"></script>
+       <script src="bower_components/angular-resource/angular-resource.js"></script>
+       <script src="js/app.js"></script>
+       <script src="js/services/watch.js"></script>
+       <script src="js/controllers/heatDisplay.js"></script>
+       <script src="js/services/elasticTwitter.js"></script>
+       <script src="js/controllers/twitDisplay.js"></script>
+       <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+       <link rel="stylesheet" href="css/main.css">      
+    </head>
+
+</head>
+<body>
+	<ng-include src="'include.htm'"></ng-include>
+	<div class="contain" ng>
+	
+		<div class="righty">
+				
+   				<div ng-controller="Display">
+        		<div class="col-md-2">
+        		
+        		Select the Watch ID's to view:</br>
+        		<label ng-repeat = "index in deviceIds">{{index.index}}
+               			<input type="checkbox" name = "index" ng-model = "index.value" 
+               			ng-click = "matchId(index.index-1)" ng-value="{{index.value}}">
+             	</label><br/></br>
+   			    <form ng-submit = "submit()">
+          			Enter the date YYYY-MM-DD:
+                 		<input type="text" ng-model="text"  placeholder="Start Day"  name="text" />
+                 		<input type="text" ng-model="endtext" placeholder="End Day" name="endtext"/>
+                 		<br/></br>
+                 		{{avg.name}}: 
+                 		<input type="checkbox" name = "avg.name" ng-model = "avg.value" 
+               			ng-value="{{avg.value}}">
+                 		<br/></br><br/>
+		             <input type="submit" id="submit" value="Submit"/>
+		         </form>
+		         <br>
+		         <br>
+		         <form ng-submit = "twitterGeo()">
+		   			<input type="submit" id="submit" value="View Tweets from the marker on the map!" style="width: 100%"/>
+		   		</form>
+		         </div>
+		   </div>
+		         <div class="boxish" ng-controller="TwitDisplay">	
+					<div ng-repeat="twit in twits" style="border: 1px red">
+						<li><img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_2_reasonably_small.png" height="25" width="25">
+						<b>@{{twit.uname}}</b> </br>
+						{{twit.text}}
+						</br> 
+						<i>{{twit.tStamp}}</i>
+						</li>
+					</div>
+				</div>
+		 </br></br>
+	</div>
+		<div class="lefty"></br>
+		   <div id="map-canvas"></div>
+		   	<div id="current">Nothing yet...</div> 
+    	</div>
+	</div>		
+</body>
 </html>

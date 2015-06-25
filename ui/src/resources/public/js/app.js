@@ -10,41 +10,48 @@ function linker($rootScope) {
 
     var globalIndex = 0;
     var passIndex = false;
-    var passed = "passed";
+    var passDate = false;
+    var passedI = "passed";
+    var passedD = "passed";
     var globalDate;
     
     var getIndex = function (index) {
-
-        $rootScope.$broadcast(passed, {
+    	passIndex = true;
+        $rootScope.$broadcast(passedI, {
             globalIndex: index
-        });
-        
+        });        
     };
     
     var onGetIndex = function ($scope, handler) {
-    	console.log("huh");
-        $scope.$on(passed, function (event, message) {
-        	console.log("ind " + globalIndex);
-        	console.log("slkdf"+message);
-            handler(message);
+    	$scope.$on(passedI, function (event, message) {
+    		if(passIndex == true)
+        	{
+    			handler(message);
+        		passIndex = false;
+        	}            
+        });       
+    };
+    
+    var getDate = function (date) {
+    	passDate = true;
+    	$rootScope.$broadcast(passedD, {
+            globalDate: date
         });
     };
-    var setIndex = function()
-    {
-    	return globalIndex;
+    var onGetDate = function ($scope, handler) {
+    	$scope.$on(passedD, function (event, message) {
+    		if(passDate == true)
+        	{
+    			handler(message);
+    			passDate = false;
+        	}            
+        });    	       
     };
-    var getDate = function (date) {
-    	globalDate = date;
-    };
-    var setDate = function()
-    {
-    	return globalDate;
-    };
-
+    
     return {
         getIndex: getIndex,
         onGetIndex: onGetIndex,
-        setIndex: setIndex,
-        passIndex: passIndex
+        getDate: getDate,
+        onGetDate: onGetDate
     };
 }

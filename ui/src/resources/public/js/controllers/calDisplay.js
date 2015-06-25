@@ -5,13 +5,18 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 	//Draw bar chart
 	$scope.deviceIds = [];
 	$scope.localInd;
+	$scope.localDate;
 	
 	linker.onGetIndex($scope, function (message) {
         $scope.localInd = message.globalIndex;
+        console.log($scope.localInd);
         $scope.drawBarChart($scope.localInd);
     });
 	
-	
+	linker.onGetDate($scope, function (message) {
+        $scope.localDate = message.globalDate;
+        $scope.drawBarChart($scope.localInd);
+    });
 	
 	var options = {
 			title: 'Calories Burned Over Time',
@@ -49,18 +54,36 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 	}
 	
 	$scope.drawBarChart = function(index) {
-		index--;
+		console.log(index);
 		var dataTable = [];
 		dataTable = new google.visualization.DataTable();
 		dataTable.addColumn('string', "Time");
 		dataTable.addColumn('number', "Calories");
-		for(var i = 0; i< $scope.records.calories.length; i++){
-			if($scope.deviceIds[index].id == $scope.records.calories[i].did)
-			{
-				newDate = new Date($scope.records.calories[i].dtime);
-				dataTable.addRow([ $scope.records.calories[i].dtime.substring(5), $scope.records.calories[i].scal ]);
-			}	
+		if($scope.localDate != null)
+		{
+			for(var i = 0; i< $scope.records.calories.length; i++){
+				if($scope.deviceIds[index].id == $scope.records.calories[i].did)
+				{
+					if($scope.localDate == $scope.records.calories[i].dtime)
+					{
+						newDate = new Date($scope.records.calories[i].dtime);
+						dataTable.addRow([ $scope.records.calories[i].dtime.substring(5), 
+						                   $scope.records.calories[i].scal ]);
+					}					
+				}	
+			}
 		}
+		else
+		{
+			for(var i = 0; i< $scope.records.calories.length; i++){
+				if($scope.deviceIds[index].id == $scope.records.calories[i].did)
+				{
+					newDate = new Date($scope.records.calories[i].dtime);
+					dataTable.addRow([ $scope.records.calories[i].dtime.substring(5), $scope.records.calories[i].scal ]);
+				}	
+			}
+		}
+		
 		chart.draw(dataTable, options);
 	}
 	$scope.recordsLoaded = function(results){

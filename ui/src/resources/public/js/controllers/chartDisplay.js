@@ -39,6 +39,7 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 		var message = '';
 		var it = selection;
 		$scope.portDate = selection[0].date;
+		linker.getDate($scope.portDate);
 	}
 
 	$scope.showIds = function(index)

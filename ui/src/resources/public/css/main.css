@@ -141,12 +141,9 @@ ul {
   list-style: none;
   display: inline;
 }
-.tabbies {
-	
-}
 li {
   width: 100%;
-  margin: 5px 0;
+  margin: 5px 0px;
   padding: 30px 40px;
   display: inline-block;
   background: rgb(248, 248, 248);
@@ -256,6 +253,7 @@ img {
 }
 .tab {
   float: right;
+  vertical-align: center;
 }
 .tab label {
   background: #eee; 
@@ -267,6 +265,8 @@ img {
 }
 .tab [type=radio] {
   display: none;   
+  vertical-align: center;
+  horizontal-align: center;s
 }
 [type=radio]:checked ~ label {
   background: white;

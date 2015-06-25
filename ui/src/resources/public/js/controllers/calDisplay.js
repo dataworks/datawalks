@@ -11,7 +11,6 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 	
 	linker.onGetIndex($scope, function (message) {
         $scope.localInd = message.globalIndex;
-        console.log($scope.localInd);
         justInd = true;
         $scope.drawBarChart($scope.localInd);
     });
@@ -27,7 +26,7 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 			subtitle: 'Time(Hr:Mn:Sd:Ms',
 			hAxis: {title: 'Calories Burned'},
 			vAxis: {title: 'Time Traveled', subtitle: 'H:M:S:MS'},
-			width: 600,
+			width: 1000,
 			height: 300,
 			bar: { groupWidth: '75%' }
 
@@ -49,7 +48,6 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 	
 	$scope.chartInit = function()
 	{
-		console.log("cal" + linker.passIndex);
 		$scope.loadIds();
 		var dataTable = new google.visualization.DataTable();
 		dataTable.addColumn('string', "Time");
@@ -58,7 +56,6 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 	}
 	
 	$scope.drawBarChart = function(index) {
-		console.log(index);
 		var dataTable = [];
 		dataTable = new google.visualization.DataTable();
 		dataTable.addColumn('string', "Time");
@@ -66,9 +63,8 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 		if(justDate == true)
 		{
 			for(var i = 0; i< $scope.records.calories.length; i++){
-				if($scope.deviceIds[index].id == $scope.records.calories[i].did)
+				if($scope.deviceIds[index].id === $scope.records.calories[i].did)
 				{
-					console.log($scope.records.calories[i].dtime);
 					if($scope.localDate === $scope.records.calories[i].dtime)
 					{
 						newDate = new Date($scope.records.calories[i].dtime);

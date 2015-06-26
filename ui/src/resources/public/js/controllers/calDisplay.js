@@ -71,7 +71,7 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 			hAxis: {title: 'Calories Burned'},
 			vAxis: {title: 'Time Traveled', subtitle: 'H:M:S:MS'},
 			width: 1000,
-			height: 300,
+			height: 500,
 			bar: { groupWidth: '75%' }
 
 	};

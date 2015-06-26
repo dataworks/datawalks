@@ -15,11 +15,10 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
  		title: "Distance",
  	    height: 300,
  	    width: 2000,
- 	    tooltip: 
- 	    {
-		   	isHtml: false
-		},
-		   	calendar: { cellSize: 25 }
+ 	   tooltip: {isHtml: true},
+		calendar: { 
+			cellSize: 25
+		}
  	 };
 	
 	$scope.loadIds = function()
@@ -65,6 +64,7 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 	    dataTable = new google.visualization.DataTable();
 	    dataTable.addColumn({ type: 'date', id: 'Date' });
 	    dataTable.addColumn({ type: 'number', id: 'distance' });
+	    dataTable.addColumn({ type: 'string', role: 'tooltip'});
 	    var offset;
 	 	for(var i = 0; i < $scope.records.aggs.length; i++)
 	 	{
@@ -73,7 +73,8 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 	 			offset = new Date($scope.records.aggs[i].dtime);
 	 			offset.setUTCHours(4); 
 	 			dataTable.addRow([ offset, 
-	 			                            parseInt($scope.records.aggs[i].mdistance)] );
+	 			                   parseInt($scope.records.aggs[i].mdistance),
+	 			                   'This tooltip'] );
 	 		}
 	 	}
 	 	chart.draw(dataTable, options);
@@ -87,18 +88,14 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 		
 		dataTable.addColumn({ type: 'date', id: 'Date' });
 	    dataTable.addColumn({ type: 'number', id: 'distance' });
+	    dataTable.addColumn({ type: 'string', role: 'tooltip'});
 		chart.draw(dataTable, options);
 	}
 	
 	google.visualization.events.addListener(chart, 'select', selectHandler);
 	
-	$scope.recordsLoaded = function(results)
-	{
-	   //$scope.loadMap();
-	  // $scope.loadTweets();
-	   $scope.drawChart(); 
-	   //$scope.drawBarChart();   
-	}
+	$scope.recordsLoaded = function(results){ $scope.drawChart(); }
+	
 	$scope.records = Aggregate.query({id: 1, startDate: '2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, 
 				$scope.recordsLoaded);
 }]);

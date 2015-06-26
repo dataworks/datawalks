@@ -151,7 +151,7 @@ li {
   font-weight: 300;
   line-height: 24px;
   text-decoration: none;
-  border: 1px solid #0000FF
+  border: 1px solid blue
   transition: background 1s;
   -moz-transition: background 1s;
   -webkit-transition: background 1s;

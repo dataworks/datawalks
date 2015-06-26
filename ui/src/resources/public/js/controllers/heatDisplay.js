@@ -27,7 +27,6 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 	 * Launches a new page with the desired coordinates
 	 */
 	$scope.twitterGeo = function() { 
-		console.log("hello");
 		var left = (screen.width/2)-(750/2);
 		var top = (screen.height/2)-(750/2);
 		window.open("https://twitter.com/search?q=geocode%3A" + latTw + "%2C" + longTw +"%2C"+ 5 +"mi&src=typd&vertical=default&f=tweets", 'Tweets', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=no, width=750, height=750, top='+top+', left='+left);	

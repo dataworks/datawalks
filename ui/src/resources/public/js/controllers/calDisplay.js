@@ -14,15 +14,18 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 	 * an in as the total minutes. Seconds, and milliseconds are excluded
 	 */
 	var parseToMinutes = function(toParse){
-		toParse = toParse.split(/:|./);
+		toParse = toParse.split(":");
 		var totalMinutes = 0;
-		if(toParse.length == 4){
-			totalMinutes += parseInt(toParse[0]);
+		if(toParse.length == 3){
+			totalMinutes += (parseInt(toParse[0]) * 60 );
+			console.log("hr" + totalMinutes);
 			totalMinutes += parseInt(toParse[1]);
+			console.log("hr+min"+totalMinutes);
 		}
 		else{
-			totalMinutes += parseInt(toParse[0]);
+			totalMinutes += (parseInt(toParse[0]));
 		}
+		console.log("tot" + totalMinutes);
 		return totalMinutes;
 	}
 	
@@ -41,17 +44,21 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 	{
 		var localDate = localDate
 		console.log(localDate);
-		console
 		for(var i = 0; i< $scope.records.calories.length; i++)
 		{
 			if($scope.deviceIds[index].id == $scope.records.calories[i].did)
 			{
 				if(localDate === $scope.records.calories[i].dtime)
 				{
-					var burnRate = $scope.records.calories[i].scal/$scope.records.calories[i].stime;
-					if(calBurnedRate <= burnRate)
+					var burnRate = $scope.records.calories[i].scal/
+						parseToMinutes($scope.records.calories[i].stime);
+					if(calBurnRate >= burnRate)
 					{
-						console.log("running")
+						
+					}
+					else
+					{
+						
 					}
 				}
 			}

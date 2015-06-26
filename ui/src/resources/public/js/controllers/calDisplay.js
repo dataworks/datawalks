@@ -6,7 +6,7 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 	$scope.deviceIds = [];
 	var localInd;
 	
-	var calBurnRate = 18;
+	var maxSpeedThreshold = .2;
 	
 	/* parseToMinutes(string)
 	 * 
@@ -38,8 +38,10 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 	linker.onGetDate($scope, function (message) {
         var localDate = message.globalDate;
         $scope.calRateAnalytics(localDate, localInd);
-    });
+	});
+
 	
+
 	$scope.calRateAnalytics = function(localDate, index)
 	{
 		var localDate = localDate
@@ -50,15 +52,15 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 			{
 				if(localDate === $scope.records.calories[i].dtime)
 				{
-					var burnRate = $scope.records.calories[i].scal/
+					var speed = $scope.records.calories[i].sdist/
 						parseToMinutes($scope.records.calories[i].stime);
-					if(calBurnRate >= burnRate)
+					if(maxSpeedThreshold >= speed)
 					{
-						
+						window.open();
 					}
 					else
 					{
-						
+						window.open();
 					}
 				}
 			}

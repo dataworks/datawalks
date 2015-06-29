@@ -18,7 +18,8 @@ controllers.controller('TwitDisplay', ['$scope', 'ElasticTwitter', function($sco
 			$scope.twits.push({
 				uname: $scope.records.hits[i].user,
 				tStamp: newDate,
-				text: $scope.records.hits[i].text
+				text: $scope.records.hits[i].text,
+				img: $scope.records.hits[i].image
 			});
 		}
 	}

@@ -14,13 +14,14 @@
        <script src="js/services/elasticTwitter.js"></script>
        <script src="js/controllers/twitDisplay.js"></script>
        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-       <link rel="stylesheet" href="css/main.css">      
+       <link rel="stylesheet" href="css/main.css"> 
+       <link href="multiple-select.css" rel="stylesheet"/>     
     </head>
 
 </head>
 <body>
 	<ng-include src="'include.htm'"></ng-include>
-	<div class="contain" ng>
+	<div class="contain">
 	
 		<div class="righty">
 				
@@ -28,10 +29,18 @@
         		<div class="col-md-2">
         		
         		Select the Watch ID's to view:</br>
-        		<label ng-repeat = "index in deviceIds">{{index.index}}
-               			<input type="checkbox" name = "index" ng-model = "index.value" 
-               			ng-click = "matchId(index.index-1)" ng-value="{{index.value}}">
-             	</label><br/></br>
+						
+							<select multiple="multiple" id="dropdownMenu">
+								<option ng-repeat="index in deviceIds" ng-model="index.value" ng-click="matchId()">
+									{{index.index}}
+								</option>
+							</select>
+							    <script src="jquery.multiple.select.js"></script>
+							    <script>
+							        $('select').multipleSelect();
+							    </script>
+						
+        		<br/></br>
    			    <form ng-submit = "submit()">
           			Enter the date YYYY-MM-DD:
                  		<input type="text" ng-model="text"  placeholder="Start Day"  name="text" />
@@ -52,10 +61,10 @@
 		   </div>
 		         <div class="boxish" ng-controller="TwitDisplay">	
 					<div ng-repeat="twit in twits" style="border: 10px red">
-						<li style="border: 10px red"><img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_2_reasonably_small.png" height="25" width="25">
-						<b>@{{twit.uname}}</b> </br>
-						{{twit.text}}
-						</br> 
+						<li style="border: 10px red">
+						<img ng-src="{{twit.img}}">
+						<b>@{{twit.user}}</b> </br>
+							{{twit.text}}</br> 
 						<i>{{twit.tStamp}}</i>
 						</li>
 					</div>

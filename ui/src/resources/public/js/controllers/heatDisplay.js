@@ -20,6 +20,10 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
     	name: "average",
     	value: false
     };
+    $scope.comp = {
+    	name: "compare",
+    	value: false
+    };
     
     
 	/* twitterGeo
@@ -61,8 +65,56 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 		
 	  $scope.loadIds();
 	}
-	 
-
+	
+	$scope.compare = function(index)
+	{
+		var c = 1;
+		var ind;
+		var avgLat = 0;
+		var avgLon = 0;
+		var avgData = [];
+		var pastCount = 0;
+		var currCount = 0;
+		
+		for(var i  = 0; i < $scope.records.rows.length; i++)//naive way to calculate divisor
+		{
+			if($scope.deviceIds[index].id == $scope.records.rows[i].deviceid)
+			{
+				pastCount++;
+			}
+			ind = i;
+		}
+		console.log(ind);
+		console.log("id " + $scope.records.rows[ind].deviceid + " " +$scope.records.rows[ind].dtime);
+		var date = moment.unix($scope.records.rows[ind].dtime/1000).format("YYYY/MM/DD");
+		console.log(date);
+		var unxTS = moment().format(date, "X");
+		console.log(unxTS);
+		var sqDiv = Math.round(Math.sqrt(divCount));
+		for(var i  = 0; i < $scope.records.rows.length; i++)//find average points on path
+		{
+			if($scope.deviceIds[index].id == $scope.records.rows[i].deviceid)
+			{
+				if(c == sqDiv)
+				{
+					avgLat = avgLat+$scope.records.rows[i].latitude;
+					avgLon = avgLon+$scope.records.rows[i].longitude;
+					avgLat = avgLat/sqDiv;
+					avgLon = avgLon/sqDiv;
+					avgData.push(new google.maps.LatLng(avgLat, avgLon));
+					avgLat = 0;
+					avgLon = 0;
+					c=1;
+				}
+				else
+				{
+					avgLat = avgLat+$scope.records.rows[i].latitude;
+					avgLon = avgLon+$scope.records.rows[i].longitude;
+					c++;
+				}
+			}
+		}		
+	}
 
 	$scope.avgPath = function(index)
 	{
@@ -169,6 +221,7 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 	$scope.matchId = function()
 	{
 		var watchData = [];
+
 		var e = document.getElementById("dropdownMenu");
 		var index = parseInt(e.options[e.selectedIndex].text);
 		$scope.deviceIds[index].value = true;

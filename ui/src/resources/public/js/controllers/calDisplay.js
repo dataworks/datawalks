@@ -5,8 +5,9 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 	//Draw bar chart
 	$scope.deviceIds = [];
 	var localInd;
-	
-	var calBurnRate = 18;
+	var table = new google.visualization.Table(document.getElementById('table_div'));
+	var analyticData;
+	var maxSpeedThreshold = .2;
 	
 	/* parseToMinutes(string)
 	 * 
@@ -14,19 +15,9 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 	 * an in as the total minutes. Seconds, and milliseconds are excluded
 	 */
 	var parseToMinutes = function(toParse){
-		toParse = toParse.split(":");
-		var totalMinutes = 0;
-		if(toParse.length == 3){
-			totalMinutes += (parseInt(toParse[0]) * 60 );
-			console.log("hr" + totalMinutes);
-			totalMinutes += parseInt(toParse[1]);
-			console.log("hr+min"+totalMinutes);
-		}
-		else{
-			totalMinutes += (parseInt(toParse[0]));
-		}
-		console.log("tot" + totalMinutes);
-		return totalMinutes;
+		totMin = moment.duration(toParse).asMinutes();
+		
+		return totMin;
 	}
 	
 	
@@ -38,31 +29,47 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 	linker.onGetDate($scope, function (message) {
         var localDate = message.globalDate;
         $scope.calRateAnalytics(localDate, localInd);
-    });
-	
+	});	
+
 	$scope.calRateAnalytics = function(localDate, index)
 	{
-		var localDate = localDate
-		console.log(localDate);
+		var localDate = localDate;
+		var run = false;
+		var analytics;
 		for(var i = 0; i< $scope.records.calories.length; i++)
 		{
 			if($scope.deviceIds[index].id == $scope.records.calories[i].did)
 			{
 				if(localDate === $scope.records.calories[i].dtime)
 				{
-					var burnRate = $scope.records.calories[i].scal/
+					var speed = $scope.records.calories[i].sdist/
 						parseToMinutes($scope.records.calories[i].stime);
-					if(calBurnRate >= burnRate)
+					if(maxSpeedThreshold >= speed)
 					{
-						
+						run = true;
+						analytics = [{
+							runId: $scope.records.calories[i].wrun,
+							run: run,
+							speed: speed,
+							dist: $scope.records.calories[i].sdist,
+							cal: $scope.records.calories[i].scal
+						}];
 					}
 					else
 					{
-						
+						run = false;
+						analytics = [{
+							runId: $scope.records.calories[i].wrun,
+							run: run,
+							speed: speed,
+							dist: $scope.records.calories[i].sdist,
+							cal: $scope.records.calories[i].scal
+						}];
 					}
 				}
 			}
 		}
+		drawAnalyticsTable(analytics);
 	}
 	
 	var options = {
@@ -88,6 +95,34 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 				value: false
 			});
 		}
+	}
+	var drawAnalyticsTable = function(analytics)
+	{
+		analyticsTable = new google.visualization.DataTable();
+		analyticsTable.addColumn('string', 'Run ID');
+		analyticsTable.addColumn('string', 'Mode of Transport');
+		analyticsTable.addColumn('string', 'Speed');
+		analyticsTable.addColumn('number', 'Distance');
+		analyticsTable.addColumn('number', 'Calories');
+		for(var i = 0; i < analytics.length; i++)
+		{
+			if(analytics[i].run == true)
+			{
+				analyticsTable.addRows([[analytics[i].runId.toString(), "On Foot",
+				                        analytics[i].speed.toFixed(2).toString(), analytics[i].dist,
+				                        analytics[i].cal],[analytics[i].runId.toString(), "On Foot",
+				                                           analytics[i].speed.toFixed(2).toString(), analytics[i].dist,
+				                                           analytics[i].cal]]);
+			}
+			else
+			{
+				analyticsTable.addRows([[analytics[i].runId.toString(), "Driving",
+				                        analytics[i].speed.toFixed(2).toString(), analytics[i].dist,
+				                        analytics[i].cal]]);
+			}			
+		}
+		
+		table.draw(analyticsTable);
 	}
 	
 	$scope.chartInit = function()

@@ -28,7 +28,7 @@
         		
         		Select the Watch ID's to view:</br>
 					<select multiple="multiple" id="dropdownMenu">
-						<option ng-repeat="index in deviceIds" ng-model="index.value" ng-change="matchId()">
+						<option ng-repeat="index in deviceIds" ng-model="index.value" ng-value="index.value" ng-click="matchId()">
 								{{index.index}}
 						</option>
 					</select>
@@ -54,7 +54,7 @@
 		         <div class="boxish" ng-controller="TwitDisplay">	
 					<div ng-repeat="twit in twits" style="border: 10px red">
 						<li style="border: 10px red">
-						<img ng-src="{{twit.img}}">
+						<img ng-src="{{twit.img}}"  height="50px" width="50px">
 						<b>@{{twit.user}}</b> </br>
 							{{twit.text}}</br> 
 						<i>{{twit.tStamp}}</i>

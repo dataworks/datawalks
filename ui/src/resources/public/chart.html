@@ -7,11 +7,12 @@
    		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
    		
   		<script text = "text/javascript"> 
-  			google.load("visualization", "1", {packages:['corechart','calendar']});
+  			google.load("visualization", "1", {packages:['corechart','calendar','table']});
   		</script>
   		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=visualization"></script>
         <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-resource/angular-resource.js"></script>
+        <script src="bower_components/momentjs/moment.js"></script>
        	<script src="js/app.js"></script>
        	<script src="js/services/aggregate.js"></script>
        	<script src="js/services/calories.js"></script>
@@ -24,16 +25,19 @@
 	</br>
 	</br>
 	<div ng-controller="ChartDisplay">
-		Select the Watch ID's to view:</br> 
-		<label ng-repeat="index in deviceIds">{{index.index}}
+		Select the Watch ID's to view:</br> <label ng-repeat="index in deviceIds">{{index.index}}
 			<input type="radio" name="index" ng-model="index.value"
-			ng-click="showIds(index.index)"	ng-value="{{index.value}}">
+			ng-click="showIds(index.index)" ng-value="{{index.value}}">
 		</label><br />
 		<div id="calendar_basic"></div>
 	</div>
-		Calories: </br>
-		<br/>
+	</br>
+	<div id="table_div"></div>
+	</br> Calories:
+	</br>
+	<br />
 	<div ng-controller="CalDisplay" id="calTime"></div>
+
 
 </body>
 </html>

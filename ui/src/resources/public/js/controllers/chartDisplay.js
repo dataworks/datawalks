@@ -37,21 +37,8 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 		var selection = chart.getSelection();
 		var message = '';
 		var it = selection;
-		var mon = new Date(selection[0].date);
-		mon = mon.getMonth()+1;
-		if(mon.toString().length == 1)
-		{
-			mon = "0"+mon;
-		}
-		var date = dataTable.getFormattedValue(selection[0].row, 0);
-		$scope.portDate = date.replace(/,/, "");
-		var arr = $scope.portDate.split(" ");
-		var day = arr[1];
-		if(day.toString().length ==1)
-		{
-			day = "0"+day;
-		}
-		$scope.portDate = arr[2] + "-"+mon+"-"+day;
+		var date = moment(selection[0].date).format("YYYY-MM-DD");
+		$scope.portDate = date;
 		linker.getDate($scope.portDate);
 	}
 
@@ -70,8 +57,8 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 	 	{
 	 		if($scope.deviceIds[index].id == $scope.records.aggs[i].did)
 	 		{
-	 			offset = new Date($scope.records.aggs[i].dtime);
-	 			offset.setUTCHours(4); 
+	 			offset = moment($scope.records.aggs[i].dtime).add(24, 'h').format("YYYY-MM-DD");
+	 			offset = new Date(offset);
 	 			dataTable.addRow([ offset, 
 	 			                   parseInt($scope.records.aggs[i].mdistance),
 	 			                   'This tooltip'] );

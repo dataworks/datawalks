@@ -4,3 +4,4 @@
 .cache-main
 .gradle
 run.properties
+runCommand.txt

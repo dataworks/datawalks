@@ -14,11 +14,11 @@ controllers.controller('TwitDisplay', ['$scope', 'ElasticTwitter', function($sco
 	 */
 	$scope.loadTweets = function(){
 		for(var i = $scope.records.hits.length-1; i > -1; i--){
-			var newDate = new Date($scope.records.hits[i].universal_time_stamp);
+			var newDate = new Date($scope.records.hits[i].date);
 			$scope.twits.push({
-				uname: $scope.records.hits[i].username,
+				uname: $scope.records.hits[i].user,
 				tStamp: newDate,
-				text: $scope.records.hits[i].tweet_text
+				text: $scope.records.hits[i].text
 			});
 		}
 	}

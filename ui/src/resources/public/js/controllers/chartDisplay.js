@@ -34,6 +34,7 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 	}
 	
 	function selectHandler() {
+		window.confirm("this");
 		var selection = chart.getSelection();
 		var message = '';
 		var it = selection;
@@ -78,7 +79,6 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 	 		}
 	 	}
 	 	chart.draw(dataTable, options);
-	 	//$scope.updateChart(index);
 	}
 	
 	$scope.drawChart = function() 

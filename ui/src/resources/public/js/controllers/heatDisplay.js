@@ -61,7 +61,6 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 		google.maps.event.addListener(myMarker, 'dragstart', function(evt){
 		    document.getElementById('current').innerHTML = '<p>Currently dragging marker...</p>';
 		});
-		
 	  myMarker.setMap($scope.map);
 		
 	  $scope.loadIds();
@@ -219,14 +218,19 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 		}
 	}
 	
-	$scope.matchId = function(index)
+	$scope.matchId = function()
 	{
 		var watchData = [];
-		if($scope.comp.value == true)
-		{
-			$scope.compare(index);
-		}
-		else if($scope.avg.value == true && $scope.deviceIds[index].value == true)
+
+		var e = document.getElementById("dropdownMenu");
+		var index = parseInt(e.options[e.selectedIndex].text);
+		index -= 1;
+		if( $scope.deviceIds[index].value == false)
+			$scope.deviceIds[index].value = true;
+		else
+			heatmaps[index].setMap(null);
+		console.log(index);
+		if($scope.avg.value == true && $scope.deviceIds[index].value == true)
 		{
 			$scope.avgPath(index);
 		}
@@ -240,7 +244,6 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 					{
 						if($scope.records.rows[i].deviceid == $scope.deviceIds[index].id)
 						{
-							//console.log(dt.getDate());
 							watchData.push(new google.maps.LatLng(
 								$scope.records.rows[i].latitude, $scope.records.rows[i].longitude));
 						}
@@ -286,8 +289,7 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 				selectDate: false,
 				avgShown: false,
 				value: false
-			});
-			
+			});	
 		}
 	}
 	

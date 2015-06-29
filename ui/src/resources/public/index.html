@@ -17,8 +17,6 @@
        <link rel="stylesheet" href="css/main.css"> 
        <link href="multiple-select.css" rel="stylesheet"/>     
     </head>
-
-</head>
 <body>
 	<ng-include src="'include.htm'"></ng-include>
 	<div class="contain">
@@ -29,17 +27,11 @@
         		<div class="col-md-2">
         		
         		Select the Watch ID's to view:</br>
-						
-							<select multiple="multiple" id="dropdownMenu">
-								<option ng-repeat="index in deviceIds" ng-model="index.value" ng-click="matchId()">
-									{{index.index}}
-								</option>
-							</select>
-							    <script src="jquery.multiple.select.js"></script>
-							    <script>
-							        $('select').multipleSelect();
-							    </script>
-						
+					<select multiple="multiple" id="dropdownMenu">
+						<option ng-repeat="index in deviceIds" ng-model="index.value" ng-change="matchId()">
+								{{index.index}}
+						</option>
+					</select>
         		<br/></br>
    			    <form ng-submit = "submit()">
           			Enter the date YYYY-MM-DD:

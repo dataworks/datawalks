@@ -225,10 +225,7 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 		var e = document.getElementById("dropdownMenu");
 		var index = parseInt(e.options[e.selectedIndex].text);
 		index -= 1;
-		if( $scope.deviceIds[index].value == false)
-			$scope.deviceIds[index].value = true;
-		else
-			heatmaps[index].setMap(null);
+		
 		console.log(index);
 		if($scope.avg.value == true && $scope.deviceIds[index].value == true)
 		{
@@ -274,6 +271,7 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 				heatmaps[index].setMap(null);
 			}
 		}
+		return true;
 		
 	}
 	

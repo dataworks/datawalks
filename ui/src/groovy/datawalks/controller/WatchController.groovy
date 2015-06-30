@@ -55,6 +55,7 @@ class WatchController {
 		[rows: points]
 	}
 
+
 	@RequestMapping("/watch/deviceIds")
 	public def deviceIds() {
 		def points = sqlService.getDeviceId()

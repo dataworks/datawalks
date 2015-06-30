@@ -12,7 +12,7 @@ class SqlService {
 	/* getGeoPoints(long, Date, Date)
 	 * 
 	 * Returns information from the workabledata table, used
-	 * for the google heatmap
+	 * for the google heat map
 	 */
 	def getGeoPoints(long watchId, Date startDate, Date stopDate) {
         def rows = []
@@ -132,8 +132,6 @@ class SqlService {
 		return rows
 	}
 	
-	
-	
 	/* getTotalDistance(long, Date, Date)
 	 * 
 	 * Returns the max distance for each day in the table workabledata
@@ -175,9 +173,8 @@ class SqlService {
 							ON datadetails.wrun = sum.runid
 						WHERE datadetails.scal != 0
 						GROUP BY did, dtime, wrun, stime, scal, sdist
-						ORDER BY wrun;""") {
-			rows << [did: it.did,dtime: it.dtime, scal: it.scal, wrun: it.wrun, sdist: it.sdist, stime: it.stime]
-						
+						ORDER BY dtime, wrun;""") {
+			rows << [did: it.did,dtime: it.dtime, scal: it.scal, wrun: it.wrun, sdist: it.sdist, stime: it.stime]				
 		}
 		return rows
 	}

@@ -34,7 +34,6 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 	}
 	
 	function selectHandler() {
-		window.confirm("this");
 		var selection = chart.getSelection();
 		var message = '';
 		var it = selection;

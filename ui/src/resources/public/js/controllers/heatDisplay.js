@@ -11,7 +11,7 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
     $scope.deviceIds = [];
     $scope.lat = '';
     $scope.long = '';
-    var longTw;;
+    var longTw;
     var latTw;
     //Example coordinates
     //40.748441
@@ -24,8 +24,7 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
     	name: "compare",
     	value: false
     };
-    
-    
+      
 	/* twitterGeo
 	 * 
 	 * Launches a new page with the desired coordinates
@@ -224,8 +223,13 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 
 		var e = document.getElementById("dropdownMenu");
 		var index = parseInt(e.options[e.selectedIndex].text);
-		$scope.deviceIds[index].value = true;
-		console.log(index);
+		index -= 1;
+		if($scope.deviceIds[index].value == true){
+			$scope.deviceIds[index].value = false;
+		}
+		else
+			$scope.deviceIds[index].value = true;
+		
 		if($scope.avg.value == true && $scope.deviceIds[index].value == true)
 		{
 			$scope.avgPath(index);
@@ -288,7 +292,6 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 			});	
 		}
 	}
-	
 	
 	 $scope.toggleSelection = function toggleSelection(identifier){
 		 	if($scope.test[identifier]){

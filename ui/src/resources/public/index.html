@@ -11,6 +11,7 @@
        <script src="bower_components/momentjs/moment.js"></script>
        <script src="js/app.js"></script>
        <script src="js/services/watch.js"></script>
+       <script src="js/services/newWatch.js"></script>
        <script src="js/controllers/heatDisplay.js"></script>
        <script src="js/services/elasticTwitter.js"></script>
        <script src="js/controllers/twitDisplay.js"></script>
@@ -29,7 +30,8 @@
         		
         		Select the Watch ID's to view:</br>
 					<select multiple="multiple" id="dropdownMenu">
-						<option ng-repeat="index in deviceIds" ng-model="index.value" ng-change="matchId()">
+						<option ng-repeat="index in deviceIds" 
+						ng-model="index.value" ng-value="index.value" ng-click="matchId(-1)">
 								{{index.index}}
 						</option>
 					</select>
@@ -46,7 +48,7 @@
                			<input type="checkbox" name = "comp.name" ng-model = "comp.value" 
                			ng-value="{{comp.value}}">
                  		<br/></br>
-		             <input type="submit" id="submit" value="Submit"/>
+		             <input type="submit" id="submit" value="Submit" ng-Disable = "comp.value"/>
 		         </form>
 		         <br>
 		         <br>
@@ -58,7 +60,7 @@
 		         <div class="boxish" ng-controller="TwitDisplay">	
 					<div ng-repeat="twit in twits" style="border: 10px red">
 						<li style="border: 10px red">
-						<img ng-src="{{twit.img}}">
+						<img ng-src="{{twit.img}}"  height="50px" width="50px">
 						<b>@{{twit.user}}</b> </br>
 							{{twit.text}}</br> 
 						<i>{{twit.tStamp}}</i>

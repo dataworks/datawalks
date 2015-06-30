@@ -61,7 +61,7 @@ class TwitterQuery {
      * Iteratively grab tweets with properties:
      * 
      *  user - Name of the user             handle - user's twitter handle
-     *  tweetId - tweet's numerical ID      text - text of grabbed tweet
+     *  id - tweet's numerical id           text - text of grabbed tweet
      *  date - date tweet was created       latitude - latitude of tweet
      *  longitude - longitude of tweet      image - get user's profile picture
      *  
@@ -72,7 +72,7 @@ class TwitterQuery {
         val hasGeoLocation = status.getGeoLocation() != null
         val record = Map("user" -> status.getUser().getName(),
           "handle" -> status.getUser().getScreenName(),
-          "tweetId" -> status.getId(),
+          "id" -> status.getId(),
           "text" -> status.getText(),
           "date" -> status.getCreatedAt(),
           "latitude" -> (if (hasGeoLocation) status.getGeoLocation().getLatitude() else null),

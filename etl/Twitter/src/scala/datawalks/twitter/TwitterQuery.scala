@@ -32,13 +32,17 @@ class TwitterQuery {
     val twitter = new TwitterFactory(config).getInstance();
 
     val locus = new GeoLocation(latitude, longitude)
-    var query = new Query(getDateQuery(date)).count(100)
-    query = query.geoCode(locus, 50, "mi")
+    var query = new Query(getDateQuery(date)).count(50)
+    query = query.geoCode(locus, 2, "mi")
     var result = twitter.search(query)
     do {
       result.getTweets().foreach { status =>
         val hasGeoLocation = status.getGeoLocation() != null
-        val record = Map("user" -> status.getUser().getName(), "text" -> status.getText(), "date" -> status.getCreatedAt(),
+        val record = Map("user" -> status.getUser().getName(),
+          "handle" -> status.getUser().getScreenName(),
+          "userID" -> status.getUser().getId(),
+          "text" -> status.getText(),
+          "date" -> status.getCreatedAt(),
           "latitude" -> (if (hasGeoLocation) status.getGeoLocation().getLatitude() else null),
           "longitude" -> (if (hasGeoLocation) status.getGeoLocation().getLongitude() else null),
           "image" -> status.getUser().getOriginalProfileImageURL)
@@ -46,7 +50,7 @@ class TwitterQuery {
         tweets += record
       }
       result = getNextResult(twitter, result)
-     } while (result != null)
+    } while (result != null)
 
     return tweets
   }
@@ -66,7 +70,7 @@ class TwitterQuery {
     return cal.getTime();
   }
 
-  private def getNextResult(twitter : Twitter, result : QueryResult) : QueryResult = {
+  private def getNextResult(twitter: Twitter, result: QueryResult): QueryResult = {
     if (result.hasNext()) {
       return twitter.search(result.nextQuery())
     }

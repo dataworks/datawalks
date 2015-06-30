@@ -56,7 +56,8 @@ class WatchController {
 				def points3 = sqlService.getDevice3Points(id, startDate, stopDate)
 				def points4 = sqlService.getDevice4Points(id, startDate, stopDate)
 				def points5 = sqlService.getDevice5Points(id, startDate, stopDate)
-				[rows1: points1, rows2: points2, rows3: points3, rows4: points4, rows5: points5, device: sqlService.getDeviceId(id, startDate, stopDate)]
+				[rows1: points1, rows2: points2, rows3: points3, 
+					rows4: points4, rows5: points5, device: sqlService.getDeviceId(id, startDate, stopDate)]
 		}
 		
 

@@ -41,8 +41,11 @@
                  		<br/></br>
                  		{{avg.name}}: 
                  		<input type="checkbox" name = "avg.name" ng-model = "avg.value" 
-               			ng-value="{{avg.value}}">
-                 		<br/></br><br/>
+               			ng-value="{{avg.value}}"><br/>
+               			{{comp.name}}:
+               			<input type="checkbox" name = "comp.name" ng-model = "comp.value" 
+               			ng-value="{{comp.value}}">
+                 		<br/></br>
 		             <input type="submit" id="submit" value="Submit"/>
 		         </form>
 		         <br>

@@ -20,7 +20,7 @@ repositories {
 
 dependencies {
 	compile 'org.postgresql:postgresql:9.4-1201-jdbc41'
-	compile 'org.twitter4j:twitter4j-core:4.0.3'
+	compile 'org.twitter4j:twitter4j-core:4.0.4'
 	compile ('org.elasticsearch:elasticsearch-hadoop:2.1.0.rc1') {
 		exclude group: 'org.apache.pig', module: 'pig'
 		exclude group: 'cascading', module: 'cascading-local'

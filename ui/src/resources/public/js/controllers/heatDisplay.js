@@ -1,4 +1,4 @@
-controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
+controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scope, Watch, WatchIds) {
 	$scope.map;
 	var pointarray;
 	var heatmap;
@@ -13,9 +13,9 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
     $scope.long = '';
     var longTw;
     var latTw;
-    //Example coordinates
-    //40.748441
-    //-73.985664    
+    // Example coordinates
+    // 40.748441
+    // -73.985664
     $scope.avg = {
     	name: "average",
     	value: false
@@ -25,7 +25,8 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
     	value: false
     };
       
-	/* twitterGeo
+	/*
+	 * twitterGeo
 	 * 
 	 * Launches a new page with the desired coordinates
 	 */
@@ -35,7 +36,7 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 		window.open("https://twitter.com/search?q=geocode%3A" + latTw + "%2C" + longTw +"%2C"+ 5 +"mi&src=typd&vertical=default&f=tweets", 'Tweets', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=no, width=750, height=750, top='+top+', left='+left);	
 	}
     
-	//Creates the heat map
+	// Creates the heat map
 	$scope.loadMap = function() 
 	{
 	  var mapOptions = {
@@ -75,7 +76,8 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 		var pastCount = 0;
 		var currCount = 0;
 		
-		for(var i  = 0; i < $scope.records.rows.length; i++)//naive way to calculate divisor
+		for(var i  = 0; i < $scope.records.rows.length; i++)// naive way to
+															// calculate divisor
 		{
 			if($scope.deviceIds[index].id == $scope.records.rows[i].deviceid)
 			{
@@ -90,7 +92,8 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 		var unxTS = moment().format(date, "X");
 		console.log(unxTS);
 		var sqDiv = Math.round(Math.sqrt(divCount));
-		for(var i  = 0; i < $scope.records.rows.length; i++)//find average points on path
+		for(var i  = 0; i < $scope.records.rows.length; i++)// find average
+															// points on path
 		{
 			if($scope.deviceIds[index].id == $scope.records.rows[i].deviceid)
 			{
@@ -126,7 +129,10 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 		{
 			if($scope.deviceIds[index].selectDate == false)
 			{
-				for(var i  = 0; i < $scope.records.rows.length; i++)//naive way to calculate divisor
+				for(var i  = 0; i < $scope.records.rows.length; i++)// naive way
+																	// to
+																	// calculate
+																	// divisor
 				{
 					if($scope.deviceIds[index].id == $scope.records.rows[i].deviceid)
 					{
@@ -134,7 +140,10 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 					}
 				}
 				var sqDiv = Math.round(Math.sqrt(divCount));
-				for(var i  = 0; i < $scope.records.rows.length; i++)//find average points on path
+				for(var i  = 0; i < $scope.records.rows.length; i++)// find
+																	// average
+																	// points on
+																	// path
 				{
 					if($scope.deviceIds[index].id == $scope.records.rows[i].deviceid)
 					{
@@ -169,7 +178,10 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 			}
 			else
 			{
-				for(var i  = 0; i < $scope.records.rows.length; i++)//naive way to calculate divisor
+				for(var i  = 0; i < $scope.records.rows.length; i++)// naive way
+																	// to
+																	// calculate
+																	// divisor
 				{
 					if($scope.records.rows[i].deviceid == $scope.deviceIds[index].id &&
 							$scope.deviceIds[index].stDate <= $scope.records.rows[i].dtime &&
@@ -179,7 +191,10 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 					}
 				}
 				var sqDiv = Math.round(Math.sqrt(divCount));
-				for(var i  = 0; i < $scope.records.rows.length; i++)//naive way to calculate divisor
+				for(var i  = 0; i < $scope.records.rows.length; i++)// naive way
+																	// to
+																	// calculate
+																	// divisor
 				{
 					if($scope.records.rows[i].deviceid == $scope.deviceIds[index].id &&
 							$scope.deviceIds[index].stDate <= $scope.records.rows[i].dtime &&
@@ -267,7 +282,6 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 	              data: pointArray
 	            });
 				heatmaps[index].setMap($scope.map);
-				
 			}
 			else
 			{
@@ -279,11 +293,11 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 	
 	$scope.loadIds = function()
 	{
-		for(var i = 0; i < $scope.records.device.length; i++)
+		for(var i = 0; i < $scope.selectedDeviceIds.length; i++)
 		{
 			$scope.deviceIds.push({
 				index: i+1,
-				id: $scope.records.device[i].device,
+				id: $scope.selectedDeviceIds[i],
 				stDate: 0,
 				enDate: 0,
 				selectDate: false,
@@ -295,11 +309,9 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
 	
 	 $scope.toggleSelection = function toggleSelection(identifier){
 		 	if($scope.test[identifier]){
-		 		console.log($scope.records.device[identifier]);
 		 		$scope.test[identifier]=false;
 		 	}
 		 	else{
-		 		console.log("Unselect");
 		 		$scope.test[identifier]=true;
 		 	}
 
@@ -311,9 +323,13 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
     	{
     		heatmaps[Number(this.endtext.substring(0,1))-1].setMap(null);
     	}
-    	var date = this.text.substring(3,13);//parse date yyyy-mm-dd
+    	var date = this.text.substring(3,13);// parse date yyyy-mm-dd
     	date = date.split("-");
-    	var newDate = date[0]+","+date[1]+","+date[2] + " 00:00:00 GMT+0400";//date with commas instead of -
+    	var newDate = date[0]+","+date[1]+","+date[2] + " 00:00:00 GMT+0400";// date
+																				// with
+																				// commas
+																				// instead
+																				// of -
     	$scope.deviceIds[Number(this.text.substring(0,1))-1].stDate = new Date(newDate).getTime();
     	var edate = this.endtext.substring(3,13);
     	edate = edate.split("-");
@@ -370,11 +386,28 @@ controllers.controller('Display', ['$scope', 'Watch', function($scope, Watch) {
   	   var parts = input.split('-');
   	   return new Date(parts[0], parts[1]-1, parts[2]); 
      }
+	 
+	  deviceSelected = function(){
+		   var arraySelected = []
+		   for (var i = 0; i < $scope.deviceIds.length;i++){
+			   if( $scope.deviceIds[i].value == true)
+				   arraySelected.push($scope.deviceIds[i].id);
+		   }
+		   return arraySelected;
+	   }
    
    $scope.recordsLoaded = function(results){
-	   $scope.loadMap();   
+	   $scope.loadMap();    
+   }
+	
+   $scope.devicesLoaded = function(results){
+	   $scope.selectedDeviceIds = []
+	   for(var i=0; i< results.rows.length; i++){
+		   $scope.selectedDeviceIds.push(results.rows[i].device);
+	   }
+	   $scope.records = Watch.query({id: $scope.selectedDeviceIds , startDate: '2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, 
+				$scope.recordsLoaded);
    }
    
-   $scope.records = Watch.query({id: 1, startDate: '2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, 
-			$scope.recordsLoaded);
+   WatchIds.query( {}, $scope.devicesLoaded );
 }]);

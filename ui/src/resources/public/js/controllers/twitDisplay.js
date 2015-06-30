@@ -19,7 +19,8 @@ controllers.controller('TwitDisplay', ['$scope', 'ElasticTwitter', function($sco
 				uname: $scope.records.hits[i].user,
 				tStamp: newDate,
 				text: $scope.records.hits[i].text,
-				img: $scope.records.hits[i].image
+				img: $scope.records.hits[i].image,
+				handle: $scope.records.hits[i].handle
 			});
 		}
 	}

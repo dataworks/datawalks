@@ -10,6 +10,7 @@
        <script src="bower_components/angular-resource/angular-resource.js"></script>
        <script src="bower_components/momentjs/moment.js"></script>
        <script src="js/app.js"></script>
+       <script src="js/services/watchIds.js"></script>
        <script src="js/services/watch.js"></script>
        <script src="js/controllers/heatDisplay.js"></script>
        <script src="js/services/elasticTwitter.js"></script>
@@ -29,7 +30,7 @@
         		
         		Select the Watch ID's to view:</br>
 					<select multiple="multiple" id="dropdownMenu">
-						<option ng-repeat="index in deviceIds" ng-model="index.value" ng-value="index.value" ng-click="matchId()">
+						<option ng-repeat="index in deviceIds" ng-model="index.value" ng-value="index.value" ng-click="matchId(-1)">
 								{{index.index}}
 						</option>
 					</select>
@@ -58,8 +59,11 @@
 		         <div class="boxish" ng-controller="TwitDisplay">	
 					<div ng-repeat="twit in twits" style="border: 10px red">
 						<li style="border: 10px red">
+						<p style="float: left;">
 						<img ng-src="{{twit.img}}"  height="50px" width="50px">
-						<b>@{{twit.user}}</b> </br>
+						 </p>
+						 <p><b>@{{twit.handle}}</b></p>
+						 	{{twit.uname}}
 							{{twit.text}}</br> 
 						<i>{{twit.tStamp}}</i>
 						</li>

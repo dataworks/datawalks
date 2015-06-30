@@ -13,7 +13,7 @@ class SqlService {
 	 * 
 	 * Returns information from the workabledata table, used
 	 * for the google heat map
-	 */
+	 
 	def getGeoPoints(long watchId, Date startDate, Date stopDate) {
         def rows = []
         Sql sql = new Sql(dataSource)
@@ -26,105 +26,23 @@ class SqlService {
         }
         return rows
     } 
+	*/
 	
-	/* getDevice1Points(long, Date, Date)
+	
+	/* getDevicePoints(long, Date, Date)
 	 *
 	 * Returns information from the workabledata table, used
 	 * for the google heatmap
 	 */
-	def getDevice1Points(long watchId, Date startDate, Date stopDate) {
+	def getDevicePoints(String watchId, Date startDate, Date stopDate) {
 		def rows = []
 		Sql sql = new Sql(dataSource)
 		sql.eachRow("""SELECT deviceid deviceid, latitude latitude,
 					            longitude longitude, dtime dtime,
 					            distancemeters distancemeters 
 					FROM workabledata
-					WHERE deviceid = 3897655761
-					ORDER by dtime""")
-		{
-			rows << [deviceid: it.deviceid, latitude: it.latitude,
-				longitude: it.longitude, dtime: it.dtime, distancemeters: it.distancemeters]
-		}
-		return rows
-	}
-	
-	/* getDevice2Points(long, Date, Date)
-	 *
-	 * Returns information from the workabledata table, used
-	 * for the google heatmap
-	 */
-	def getDevice2Points(long watchId, Date startDate, Date stopDate) {
-		def rows = []
-		Sql sql = new Sql(dataSource)
-		sql.eachRow("""SELECT deviceid deviceid, latitude latitude,
-					            longitude longitude, dtime dtime,
-					            distancemeters distancemeters 
-					FROM workabledata
-					WHERE deviceid = 3897655910
-					ORDER by dtime""")
-		{
-			rows << [deviceid: it.deviceid, latitude: it.latitude,
-				longitude: it.longitude, dtime: it.dtime, distancemeters: it.distancemeters]
-		}
-		return rows
-	}
-	
-	/* getDevice3Points(long, Date, Date)
-	 *
-	 * Returns information from the workabledata table, used
-	 * for the google heatmap
-	 */
-	def getDevice3Points(long watchId, Date startDate, Date stopDate) {
-		def rows = []
-		Sql sql = new Sql(dataSource)
-		sql.eachRow("""SELECT deviceid deviceid, latitude latitude,
-					            longitude longitude, dtime dtime,
-					            distancemeters distancemeters 
-					FROM workabledata
-					WHERE deviceid = 3897656017
-					ORDER by dtime""")
-		{
-			rows << [deviceid: it.deviceid, latitude: it.latitude,
-				longitude: it.longitude, dtime: it.dtime, distancemeters: it.distancemeters]
-		}
-		return rows
-	}
-	
-	/* getDevice4Points(long, Date, Date)
-	 *
-	 * Returns information from the workabledata table, used
-	 * for the google heatmap
-	 */
-	def getDevice4Points(long watchId, Date startDate, Date stopDate) {
-		def rows = []
-		Sql sql = new Sql(dataSource)
-		sql.eachRow("""SELECT deviceid deviceid, latitude latitude,
-					            longitude longitude, dtime dtime,
-					            distancemeters distancemeters 
-					FROM workabledata
-					WHERE deviceid = 3890500780
-					ORDER by dtime""")
-		{
-			rows << [deviceid: it.deviceid, latitude: it.latitude,
-				longitude: it.longitude, dtime: it.dtime, distancemeters: it.distancemeters]
-		}
-		return rows
-	}
-	
-	/* getDevice5Points(long, Date, Date)
-	 *
-	 * Returns information from the workabledata table, used
-	 * for the google heatmap
-	 */
-	def getDevice5Points(long watchId, Date startDate, Date stopDate) {
-		def rows = []
-		Sql sql = new Sql(dataSource)
-		sql.eachRow("""SELECT deviceid deviceid, latitude latitude,
-					            longitude longitude, dtime dtime,
-					            distancemeters distancemeters 
-					FROM workabledata
-					WHERE deviceid = 3890500495
-					ORDER by dtime""")
+					WHERE deviceid IN (:devicelist)
+					ORDER by dtime""".replaceAll(":devicelist", watchId))
 		{
 			rows << [deviceid: it.deviceid, latitude: it.latitude,
 				longitude: it.longitude, dtime: it.dtime, distancemeters: it.distancemeters]
@@ -150,7 +68,7 @@ class SqlService {
 	 * 
 	 * Returns one column of deviceid's for comparison purposes
 	 */
-	def getDeviceId(long watchId, Date startDate, Date stopDate){
+	def getDeviceId(){
 		def rows = []
 		Sql sql = new Sql(dataSource)
 		sql.eachRow("""SELECT DISTINCT deviceid deviceid FROM workabledata"""){

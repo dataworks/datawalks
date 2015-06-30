@@ -11,7 +11,7 @@ controllers.controller('Display', ['$scope', 'Watch','NewWatch', function($scope
     $scope.deviceIds = [];
     $scope.lat = '';
     $scope.long = '';
-    var longTw;;
+    var longTw;
     var latTw;
     //Example coordinates
     //40.748441
@@ -24,8 +24,7 @@ controllers.controller('Display', ['$scope', 'Watch','NewWatch', function($scope
     	name: "compare",
     	value: false
     };
-    
-    
+      
 	/* twitterGeo
 	 * 
 	 * Launches a new page with the desired coordinates
@@ -195,8 +194,12 @@ controllers.controller('Display', ['$scope', 'Watch','NewWatch', function($scope
 		{
 			index = ind;
 		}		
-		$scope.deviceIds[index].value = true;
-		console.log(index);
+		if($scope.deviceIds[index].value == true){
+			$scope.deviceIds[index].value = false;
+		}
+		else
+			$scope.deviceIds[index].value = true;
+
 		if($scope.comp.value == true)
 		{
 			$scope.compare(index);
@@ -221,8 +224,8 @@ controllers.controller('Display', ['$scope', 'Watch','NewWatch', function($scope
 					console.log("dev " + $scope.deviceIds[index].id);
 					var pointArray = new google.maps.MVCArray(watchData);
 					heatmaps[index] = new google.maps.visualization.HeatmapLayer({
-		              data: pointArray
-		            });
+						data: pointArray
+					});
 					heatmaps[index].setMap($scope.map);
 				}
 				else
@@ -231,7 +234,7 @@ controllers.controller('Display', ['$scope', 'Watch','NewWatch', function($scope
 				}				
 			}
 		}
-		
+
 	}
 
 	$scope.loadIds = function()
@@ -249,19 +252,6 @@ controllers.controller('Display', ['$scope', 'Watch','NewWatch', function($scope
 			});	
 		}
 	}
-
-
-	$scope.toggleSelection = function toggleSelection(identifier){
-		if($scope.test[identifier]){
-			console.log($scope.records.device[identifier]);
-			$scope.test[identifier]=false;
-		}
-		else{
-			console.log("Unselect");
-			$scope.test[identifier]=true;
-		}
-
-	};
 
 	$scope.submit = function() 
 	{

@@ -15,8 +15,7 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 	 * an in as the total minutes. Seconds, and milliseconds are excluded
 	 */
 	var parseToMinutes = function(toParse){
-		totMin = moment.duration(toParse).asMinutes();
-		
+		totMin = moment.duration(toParse).asMinutes();	
 		return totMin;
 	}
 	
@@ -144,7 +143,6 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 		{
 			if($scope.deviceIds[index].id == $scope.records.calories[i].did)
 			{
-				//newDate = new Date($scope.records.calories[i].dtime);
 				dataTable.addRow([ $scope.records.calories[i].dtime.substring(5), 
 				                   $scope.records.calories[i].scal ]);
 			}

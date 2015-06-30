@@ -64,7 +64,7 @@ object TwitterJob {
 
     //write current date to text file
     val pw = new PrintWriter(new File("recentDate.txt"))
-    val format = new SimpleDateFormat("yyyy-MM-dd")
+    val format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     pw.write(format.format(Calendar.getInstance().getTime()))
     pw.close()
 

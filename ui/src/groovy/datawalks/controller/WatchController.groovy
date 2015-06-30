@@ -47,6 +47,17 @@ class WatchController {
 				calories: sqlService.getCalorieInfo(id, startDate, stopDate)]
 	}
 		
+		@RequestMapping("/watch/devicePoints")
+		public def devicePoints(@RequestParam(value = "id", required = false, defaultValue = "0") long id,
+			@RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern= "yyyy-MM-dd HH:mm:ss") Date startDate,
+			@RequestParam(value = "stopDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date stopDate) {
+				def points1 = sqlService.getDevice1Points(id, startDate, stopDate)
+				def points2 = sqlService.getDevice2Points(id, startDate, stopDate)
+				def points3 = sqlService.getDevice3Points(id, startDate, stopDate)
+				def points4 = sqlService.getDevice4Points(id, startDate, stopDate)
+				def points5 = sqlService.getDevice5Points(id, startDate, stopDate)
+				[rows1: points1, rows2: points2, rows3: points3, rows4: points4, rows5: points5, device: sqlService.getDeviceId(id, startDate, stopDate)]
+		}
 		
 
 	

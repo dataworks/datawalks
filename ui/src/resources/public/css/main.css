@@ -1,6 +1,5 @@
-//green = 7eb900
-//blue = 0071c5
-
+/*green = #7eb900
+  blue = #0071c5*/
 table, th , td {
   border: 1px solid black;
   border-collapse: collapse;
@@ -10,11 +9,13 @@ table, th , td {
 table tr:nth-child(odd) {
   background-color: #f1f1f1;
 }
-.invis {
+.invis {s
 	display: none;
 	visibility: hidden;
 }
-
+h6 {
+	font-size: 20px;
+}
 
 table tr:nth-child(even) {
   background-color: #ffffff;
@@ -243,7 +244,9 @@ img {
 	overflow:auto;
 	position: relative;
 }
-
+.dropdownMenu {
+	color: red;
+}
 
 .tabs {
   position: relative;   
@@ -276,6 +279,34 @@ img {
 [type=radio]:checked ~ label ~ .content {
   z-index: 1;
 }
+
+															/*nav tabs for dropdown*/
+select { 
+	border: none;
+	color: black; 
+	background:transparent none repeat scroll 0 0;
+	font-size:20px; 
+	font-weight:bold; 
+	padding:2px 10px; 
+	width:100px;
+	text-overflow:'';
+}
+select:hover {
+  background: #A3A3A3 none repeat scroll 0 0;
+}
+#selectatron { 
+	overflow:hidden; 
+	width:80px;
+}
+select option:hover {
+	color: #7eb900;
+}
+select::-ms-expand {
+    display: none;
+}
+																/*end nav tabs*/
+
+
 
 @-webkit-keyframes progress {
   to { width: 100%; }

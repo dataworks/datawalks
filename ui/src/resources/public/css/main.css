@@ -292,7 +292,7 @@ select {
 	text-overflow:'';
 }
 select:hover {
-  background: #A3A3A3 none repeat scroll 0 0;
+  background: #e6e6e6 none repeat scroll 0 0;
 }
 #selectatron { 
 	overflow:hidden; 
@@ -303,6 +303,13 @@ select option:hover {
 }
 select::-ms-expand {
     display: none;
+}
+#options select.optionsMenu select{
+    display: none;
+    visibility: none;
+}
+#optionsMenuTree:hover > select {
+    display: block;
 }
 																/*end nav tabs*/
 

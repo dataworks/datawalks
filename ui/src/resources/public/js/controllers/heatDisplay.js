@@ -40,7 +40,7 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 	$scope.loadMap = function() 
 	{
 		var mapOptions = {
-				zoom: 10,
+				zoom: 4,
 				center: new google.maps.LatLng(38.942892, -77.334012)
 		};
 
@@ -73,12 +73,11 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 
 	$scope.avgPath = function(results, index)
 	{
-		var count = 0;
-		var avgData;
-		avgLat;
-		avgLon;
+		var count = 1;
+		var avgData = [];
+		var avgLat = 0;
+		var avgLon = 0;
 		var div = Math.floor(Math.sqrt(results.rows.length));
-		console.log(div);
 		for(var i = 0; i < results.rows.length; i++)
 		{
 			if($scope.deviceIds[index].stDate <= results.rows[i].dtime && 
@@ -88,8 +87,20 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 				{
 					avgLat = avgLat + results.rows[i].latitude;
 					avgLon = avgLon + results.rows[i].longitude;
-					avgData.push(new google.maps.LatLng(results.rows[i].latitude, 
-							results.rows[i].longitude));
+					avgLat = avgLat/count;
+					avgLon = avgLon/count;
+					avgData.push(new google.maps.LatLng(avgLat, avgLon));
+					count = 1;
+					avgLat = 0;
+					avgLon = 0;
+				}
+				else if(i == results.rows.length-1)
+				{
+					avgLat = avgLat + results.rows[i].latitude;
+					avgLon = avgLon + results.rows[i].longitude;
+					avgLat = avgLat/count;
+					avgLon = avgLon/count;
+					avgData.push(new google.maps.LatLng(avgLat, avgLon));
 				}
 				else 
 				{
@@ -99,6 +110,8 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 				}
 			}
 		}
+		console.log("avg " + avgData[0]);
+		return avgData;
 	}
 	
 	$scope.matchId = function(ind)
@@ -157,6 +170,7 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 				$scope.avg.value == true && $scope.deviceIds[index].value == true)
 		{
 			watchData = $scope.avgPath(results, index);
+			
 		}
 		else
 		{
@@ -169,7 +183,9 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 							results.rows[i].longitude));
 				}			
 			}
-		}		
+		}
+		console.log("watch " + watchData[watchData.length-1]);
+		console.log("ind " + index);
 		var pointArray = new google.maps.MVCArray(watchData);
 		heatmaps[index] = new google.maps.visualization.HeatmapLayer({
 			data: pointArray});

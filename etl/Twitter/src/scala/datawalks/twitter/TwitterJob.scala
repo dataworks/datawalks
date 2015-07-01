@@ -50,7 +50,7 @@ object TwitterJob {
      * set where Elasticsearch server information is located in properties file
      */
     val conf = new SparkConf().setAppName("Twitter").setMaster("local[2]")
-      .set("es.nodes", properties.getProperty("es.nodes"))
+      .set("es.nodes", properties.getProperty("es.nodes")).set("es.mapping.id", "id")
     val sc = new SparkContext(conf)
     val sqlContext = new SQLContext(sc)
 

@@ -212,7 +212,9 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 	
 	//Will do tomorrow
 	function loadHeatMap(watchData, index)
-	{	}
+	{
+		
+	}
 	
 	$scope.loadIds = function()
 	{
@@ -280,6 +282,7 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 			this.text = '';
 			this.endtext = '';
 		}
+	}
 	 
 	  deviceSelected = function(){
 		   var arraySelected = []
@@ -299,6 +302,7 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 	   for(var i=0; i< results.rows.length; i++){
 		   $scope.selectedDeviceIds.push(results.rows[i].device);
 	   }
+	   
 	   $scope.records = Watch.query({id: $scope.selectedDeviceIds , startDate: '2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, 
 				$scope.recordsLoaded);
    }

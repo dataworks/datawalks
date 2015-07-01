@@ -11,6 +11,7 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
     $scope.deviceIds = [];
     $scope.lat = '';
     $scope.long = '';
+    $scope.newRecords = [];
     var longTw;
     var latTw;
     // Example coordinates
@@ -62,7 +63,7 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 			document.getElementById('current').innerHTML = '<p>Currently dragging marker...</p>';
 		});
 		myMarker.setMap($scope.map);
-
+		buildRecs();
 		$scope.loadIds();
 	}
 
@@ -209,6 +210,19 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 		}
 
 	}
+	function buildRecs()
+	{
+		for(var i = 0; i < $scope.newRecords.length; i++)
+		{
+			for(var j = 0; j < $scope.records.rows.length; j++)
+			{
+				if($scope.newRecords[i] == $scope.records.rows[j].deviceid)
+				{
+					
+				}
+			}
+		}		
+	}
 	
 	//Will do tomorrow
 	function loadHeatMap(watchData, index)
@@ -229,6 +243,8 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 				avgShown: false,
 				value: false
 			});	
+			
+			$scope.newRecords[i] = $scope.selectedDeviceIds[i];
 		}
 	}
     

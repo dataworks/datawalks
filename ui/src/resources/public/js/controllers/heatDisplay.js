@@ -175,7 +175,6 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 	{
 		var e;
 		var index;
-		var watchData = [];
 		if(ind == -1)
 		{
 			e = document.getElementById("dropdownMenu");
@@ -185,7 +184,6 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 		{
 			index = ind;
 		}
-		console.log(index);
 		if($scope.deviceIds[index].value == true && $scope.deviceIds[index].selectDate == false){
 			$scope.deviceIds[index].value = false;
 		}
@@ -205,14 +203,42 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 		}
 		else
 		{
-			loadHeatMap(watchData, index);
+			loadHeatMap(index);
 		}
 
 	}
 	
 	//Will do tomorrow
-	function loadHeatMap(watchData, index)
-	{	}
+	function loadHeatMap(index)
+	{
+		console.log($scope.deviceIds[index]);
+		console.log("before len: " + $scope.records.rows.length);
+		console.log("lat lon" + $scope.records.rows[0].latitude);
+		console.log("old length: " + $scope.records.rows.length);	
+		$scope.records = Watch.query({id: $scope.deviceIds[index].id, 
+			startDate:'2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, devLoaded);		
+	}
+	var devLoaded = function(results){
+		var watchData = [];
+		var index;
+		for(var i = 0; i < results.rows.length; i++)
+		{
+			watchData.push(new google.maps.LatLng(results.rows[i].latitude, 
+					results.rows[i].longitude));
+		}
+		for(var i = 0; i < $scope.deviceIds.length; i++)
+		{
+			if($scope.deviceIds[i].id == results.rows[0].deviceId)
+			{
+				index = $scope.deviceIds[i].index-1;
+			}
+		}
+		var pointArray = new google.maps.MVCArray(watchData);
+		heatmaps[index] = new google.maps.visualization.HeatmapLayer({
+			data: pointArray});
+		heatmaps[index].setMap($scope.map);
+	}
+	
 	
 	$scope.loadIds = function()
 	{
@@ -280,8 +306,9 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 			this.text = '';
 			this.endtext = '';
 		}
+	}
 	 
-	  deviceSelected = function(){
+	deviceSelected = function(){
 		   var arraySelected = []
 		   for (var i = 0; i < $scope.deviceIds.length;i++){
 			   if( $scope.deviceIds[i].value == true)
@@ -297,10 +324,13 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
    $scope.devicesLoaded = function(results){
 	   $scope.selectedDeviceIds = []
 	   for(var i=0; i< results.rows.length; i++){
-		   $scope.selectedDeviceIds.push(results.rows[i].device);
+			$scope.selectedDeviceIds.push(results.rows[i].device);
 	   }
+	   
 	   $scope.records = Watch.query({id: $scope.selectedDeviceIds , startDate: '2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, 
 				$scope.recordsLoaded);
    }
+   
    WatchIds.query( {}, $scope.devicesLoaded );
+   
 }]);

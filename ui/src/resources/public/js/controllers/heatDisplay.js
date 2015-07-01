@@ -40,7 +40,7 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 	$scope.loadMap = function() 
 	{
 		var mapOptions = {
-				zoom: 4,
+				zoom: 8,
 				center: new google.maps.LatLng(38.942892, -77.334012)
 		};
 
@@ -77,7 +77,24 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 		var avgData = [];
 		var avgLat = 0;
 		var avgLon = 0;
-		var div = Math.floor(Math.sqrt(results.rows.length));
+		var div = 0;
+		if($scope.deviceIds[index].selectDate = true)
+		{
+			for(i = 0; i < results.rows.length; i++)
+			{
+				if($scope.deviceIds[index].stDate <= results.rows[i].dtime && 
+						$scope.deviceIds[index].enDate >= results.rows[i].dtime)
+				{
+					div++;
+				}
+			}
+			div = Math.floor(Math.sqrt(div));
+		}
+		else
+		{
+			div = Math.floor(Math.sqrt(results.rows.length));
+		}
+		
 		for(var i = 0; i < results.rows.length; i++)
 		{
 			if($scope.deviceIds[index].stDate <= results.rows[i].dtime && 
@@ -110,7 +127,6 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 				}
 			}
 		}
-		console.log("avg " + avgData[0]);
 		return avgData;
 	}
 	
@@ -184,8 +200,6 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 				}			
 			}
 		}
-		console.log("watch " + watchData[watchData.length-1]);
-		console.log("ind " + index);
 		var pointArray = new google.maps.MVCArray(watchData);
 		heatmaps[index] = new google.maps.visualization.HeatmapLayer({
 			data: pointArray});

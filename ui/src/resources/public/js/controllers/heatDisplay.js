@@ -208,13 +208,8 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 
 	}
 	
-	//Will do tomorrow
 	function loadHeatMap(index)
-	{
-		console.log($scope.deviceIds[index]);
-		console.log("before len: " + $scope.records.rows.length);
-		console.log("lat lon" + $scope.records.rows[0].latitude);
-		console.log("old length: " + $scope.records.rows.length);	
+	{	
 		$scope.records = Watch.query({id: $scope.deviceIds[index].id, 
 			startDate:'2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, devLoaded);		
 	}
@@ -238,7 +233,6 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 			data: pointArray});
 		heatmaps[index].setMap($scope.map);
 	}
-	
 	
 	$scope.loadIds = function()
 	{

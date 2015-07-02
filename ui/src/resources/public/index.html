@@ -63,10 +63,11 @@
 						<p style="float: left;">
 						<img ng-src="{{twit.img}}"  height="50px" width="50px">
 						 </p>
-						 <p><b>@{{twit.handle}}</b></p>
-						 	{{twit.uname}}
+						 <div id="#tweader">
+						 	<span style="font-style: bold;">{{twit.uname}}</span><span style="color: grey;"> @{{twit.handle}}</span>
+						</div></br>
 							{{twit.text}}</br> 
-						<i>{{twit.tStamp}}</i>
+						<span style="font-size: 12px">- {{twit.tStamp | date}}</span>
 						</li>
 					</div>
 				</div>

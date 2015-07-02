@@ -29,7 +29,7 @@ table tr:nth-child(even) {
   margin: 0;
   padding: 0;
   
-  -webkit-box-sizing: border-box;
+  -webkit-box-sizing: border-bo;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
@@ -346,6 +346,7 @@ blockquote.twitter-tweet {
 	horizontal-align: center;
 	height: 54px;
 	font-size:14px;
+	width: 40px;
 }
 blockquote.twitter-tweet p {
   font-size: 16px;

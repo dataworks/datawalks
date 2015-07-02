@@ -147,7 +147,6 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 				                   $scope.records.calories[i].scal ]);
 			}
 		}
-		
 		chart.draw(dataTable, options);
 	}
 	$scope.recordsLoaded = function(results){

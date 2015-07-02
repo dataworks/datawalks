@@ -17,8 +17,28 @@ class TwitterController {
 	@Autowired ElasticsearchService esService
 
 	@RequestMapping("/twitter/getTweets")
-	public def getTweets(@RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern= "yyyy-MM-dd HH:mm:ss") Date startDate,
-			@RequestParam(value = "stopDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date stopDate) {
-		esService.search([query: [match_all: []]]);
-	}
+	public def getTweets(@RequestParam(value = "latitude", required = false) String latitude,
+			@RequestParam(value = "longitude", required = false) String longitude) {
+		esService.search(
+			[query: [filtered: [
+					query: [match_all: []],
+					filter: [
+						geo_distance: [
+							distance: "2mi",
+							location: [
+								lat: latitude,
+								lon: longitude
+								]
+							]
+						 ]
+					]
+				],
+			from: 0,
+			size: 1000,
+			sort : [
+				[ date : [order : "desc"]]
+			]
+			]
+		)
+	}	
 }

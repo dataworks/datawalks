@@ -21,12 +21,9 @@
 <body>
 	<ng-include src="'include.htm'"></ng-include>
 	<div class="contain">
-	
-		<div class="righty">
-				
+		<div class="righty">	
    				<div ng-controller="Display">
         		<div class="col-md-2">
-        		
         		Select the Watch ID's to view:</br>
 					<select multiple="multiple" id="dropdownMenu">
 						<option ng-repeat="index in deviceIds" ng-model="index.value" 
@@ -63,7 +60,6 @@
 						 	<span style="font-style: bold;">{{twit.uname}}</span>
 						 	<span style="color: #4099FF;"><a href="https://twitter.com/{{twit.handle}}">@{{twit.handle}}</a>
 						</div></br>			
-						
 							{{twit.text}}</br> 
 						<span style="font-size: 12px">- {{twit.tStamp | date}}</span>
 						</blockquote>

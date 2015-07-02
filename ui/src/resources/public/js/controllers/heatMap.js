@@ -53,7 +53,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 			document.getElementById('current').innerHTML = '<p>Currently dragging marker...</p>';
 		});
 		myMarker.setMap($scope.map);
-		//buildRecs();
 		$scope.loadIds();
 	}
 	

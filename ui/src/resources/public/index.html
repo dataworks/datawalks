@@ -55,16 +55,16 @@
 		   </div>
 		         <div class="boxish" ng-controller="TwitDisplay" >      
 					<div ng-repeat="twit in twits" style="border: 10px red">
-						<li style="border: 10px red">
+						<blockquote class="twitter-tweet">
 						<p style="float: left;">
 						<img ng-src="{{twit.img}}"  height="50px" width="50px">
 						 </p>
-						 <p><b>@{{twit.handle}}</b></p>
-						 	{{twit.uname}}
-							{{twit.text}} 
-							{{twit.textlong}}</br> 
-						<i>{{twit.tStamp}}</i>
-						</li>
+						 <div id="#tweader">
+						 	<span style="font-style: bold;">{{twit.uname}}</span><span style="color: grey;"> @{{twit.handle}}</span>
+						</div></br>
+							{{twit.text}}</br> 
+						<span style="font-size: 12px">- {{twit.tStamp | date}}</span>
+						</blockquote>
 					</div>
 				</div>
 		 </br></br>

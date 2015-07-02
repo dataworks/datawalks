@@ -41,8 +41,7 @@ controllers.controller('TwitDisplay', ['$scope', 'linker', 'ElasticTwitter', fun
 					$scope.twits.push({
 						uname: $scope.records.hits[i].user,
 						tStamp: newDate,
-						text: $scope.records.hits[i].latitude,
-						textlong: $scope.records.hits[i].longitude,
+						text: $scope.records.hits[i].text
 						img: $scope.records.hits[i].image,
 						handle: $scope.records.hits[i].handle
 					});

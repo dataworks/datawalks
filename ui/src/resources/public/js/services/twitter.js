@@ -1,10 +1,7 @@
-/**
- * 
- */
 services.factory('Twitter', ['$resource', function($resource) {
-        return $resource('watch/:watchId', {}, {
+        return $resource('twitter/:getTweets', {}, {
             query: {
-                    url: 'watch/twitPoints?id=:id&startDate=:startDate&stopDate=:stopDate',
+                    url: 'twitter/getTweets?id=:id&startDate=:startDate&stopDate=:stopDate',
                     method: 'GET'
             }
         });

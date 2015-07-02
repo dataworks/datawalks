@@ -23,12 +23,7 @@ class WatchController {
 		[aggs: sqlService.getTotalDistance(id, startDate, stopDate),
 			device: sqlService.getDeviceId()]
 	}
-	@RequestMapping("/watch/twitPoints")
-	public def twitPoints(@RequestParam(value = "id", required = false, defaultValue = "0") long id,
-			@RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern= "yyyy-MM-dd HH:mm:ss") Date startDate,
-			@RequestParam(value = "stopDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date stopDate) {
-		[twitter: sqlService.getTweets(id, startDate, stopDate)]
-	}
+
 	@RequestMapping("/watch/calPoints")
 	public def calPoints(@RequestParam(value = "id", required = false, defaultValue = "0") long id,
 			@RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern= "yyyy-MM-dd HH:mm:ss") Date startDate,

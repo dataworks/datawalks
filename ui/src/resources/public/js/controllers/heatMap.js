@@ -181,65 +181,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		return avgData;
 	}
 	
-	$scope.matchId = function()
-    {
-        var watchData = [];
-
-        var e = document.getElementById("dropdownMenu");
-        var index = parseInt(e.options[e.selectedIndex].text);
-        index -= 1;
-        if($scope.deviceIds[index].value == true){
-            $scope.deviceIds[index].value = false;
-        }
-        else
-            $scope.deviceIds[index].value = true;
-        
-        if($scope.avg.value == true && $scope.deviceIds[index].value == true)
-        {
-            $scope.avgPath(index);
-        }
-        else
-        {
-            if($scope.deviceIds[index].value == true)
-            {
-                for(var i = 0; i < $scope.records.rows.length; i++)
-                {
-                    if($scope.deviceIds[index].selectDate == false)
-                    {
-                        if($scope.records.rows[i].deviceid == $scope.deviceIds[index].id)
-                        {
-                            watchData.push(new google.maps.LatLng(
-                                $scope.records.rows[i].latitude, $scope.records.rows[i].longitude));
-                        }
-                    }
-                    else
-                    {
-                        if($scope.records.rows[i].deviceid == $scope.deviceIds[index].id &&
-                                $scope.deviceIds[index].stDate <= $scope.records.rows[i].dtime &&
-                                $scope.deviceIds[index].enDate >= $scope.records.rows[i].dtime)
-                        {
-                            
-                            watchData.push(new google.maps.LatLng(
-                                $scope.records.rows[i].latitude, $scope.records.rows[i].longitude));
-                        }
-                    }
-                }
-                $scope.deviceIds[index].selectDate = false;
-                var pointArray = new google.maps.MVCArray(watchData);
-            
-                heatmaps[index] = new google.maps.visualization.HeatmapLayer({
-                  data: pointArray
-                });
-                heatmaps[index].setMap($scope.map);
-                
-            }
-            else
-            {
-                heatmaps[index].setMap(null);
-            }
-        }
-        
-    }
+	
 	$scope.matchId = function(ind)
 	{
 		var e;
@@ -279,12 +221,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 
 	}
 	
-	function loadHeatMap(index)
-	{
-		
-		$scope.records = Watch.query({id: $scope.deviceIds[index].id, 
-			startDate:'2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, devLoaded);
-	}
 	var devLoaded = function(results){
 		var watchData = [];
 		var index;

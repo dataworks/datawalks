@@ -64,8 +64,10 @@
 						<img ng-src="{{twit.img}}"  height="50px" width="50px">
 						 </p>
 						 <div id="#tweader">
-						 	<span style="font-style: bold;">{{twit.uname}}</span><span style="color: grey;"> @{{twit.handle}}</span>
-						</div></br>
+						 	<span style="font-style: bold;">{{twit.uname}}</span>
+						 	<span style="color: #4099FF;"><a href="https://twitter.com/{{twit.handle}}">@{{twit.handle}}</a>
+						</div></br>			
+						
 							{{twit.text}}</br> 
 						<span style="font-size: 12px">- {{twit.tStamp | date}}</span>
 						</blockquote>

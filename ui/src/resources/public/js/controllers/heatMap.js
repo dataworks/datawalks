@@ -30,7 +30,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 	$scope.loadMap = function() 
 	{
 		var mapOptions = {
-				zoom: 8,
+				zoom: 10,
 				center: new google.maps.LatLng(38.942892, -77.334012)
 		};
 
@@ -56,7 +56,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		//buildRecs();
 		$scope.loadIds();
 	}
-	
+	/*
 	function binSearch(val, results)
 	{
 		var low = 0;
@@ -67,7 +67,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 			var midVal = results.rows[mid];
 
 			if (midVal < val
-				low = mid + 1
+				low = mid + 1)
 				else if (midVal > val)
 					high = mid - 1;
 				else
@@ -75,7 +75,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		}
 		return -(low + 1);  // key not found.
 	}
-
+*/
 	$scope.compare = function(results, index)
 	{
 		var count = 1;

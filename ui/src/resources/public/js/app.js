@@ -9,11 +9,33 @@ app.factory(serviceId, ['$rootScope', linker]);
 function linker($rootScope) {
 
     var globalIndex = 0;
+    var latitude;
+    var longitude;
     var passIndex = false;
+    var passPoints = false;
     var passDate = false;
     var passedI = "passed";
     var passedD = "passed";
+    var passedL = "passed";
     var globalDate;
+    
+    var getLatLong = function(lat, long){
+    	passPoints = true;
+    	$rootScope.$broadcast(passedL, {
+    		latitude: lat,
+    		longitude: long
+    	});
+    	
+    };
+    
+    var onGetLatLong = function($scope, handler) {
+    	$scope.$on(passedL, function(event, message){
+    		if(passPoints == true){
+    			handler(message);
+    			passPoints = false;
+    		}
+    	});
+    };
     
     var getIndex = function (index) {
     	passIndex = true;
@@ -52,6 +74,8 @@ function linker($rootScope) {
         getIndex: getIndex,
         onGetIndex: onGetIndex,
         getDate: getDate,
-        onGetDate: onGetDate
+        onGetDate: onGetDate,
+        getLatLong: getLatLong,
+        onGetLatLong: onGetLatLong
     };
 }

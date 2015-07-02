@@ -1,4 +1,4 @@
-controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scope, Watch, WatchIds) {
+controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', function($scope, linker, Watch, WatchIds) {
 	$scope.map;
 	var pointarray;
 	var heatmap;
@@ -25,16 +25,6 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
     	value: false
     };
       
-	/*
-	 * twitterGeo
-	 * 
-	 * Launches a new page with the desired coordinates
-	 */
-	$scope.twitterGeo = function() { 
-		var left = (screen.width/2)-(750/2);
-		var top = (screen.height/2)-(750/2);
-		window.open("https://twitter.com/search?q=geocode%3A" + latTw + "%2C" + longTw +"%2C"+ 5 +"mi&src=typd&vertical=default&f=tweets", 'Tweets', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=no, width=750, height=750, top='+top+', left='+left);	
-	}
     
 	// Creates the heat map
 	$scope.loadMap = function() 
@@ -56,6 +46,7 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 			document.getElementById('current').innerHTML = '<p>Marker dropped: Current Lat: ' + evt.latLng.lat().toFixed(3) + ' Current Lng: ' + evt.latLng.lng().toFixed(3) + '</p>';
 			latTw = evt.latLng.lat().toFixed(3);
 			longTw = evt.latLng.lng().toFixed(3);
+			linker.getLatLong(latTw, longTw);
 		});
 
 		google.maps.event.addListener(myMarker, 'dragstart', function(evt){
@@ -190,6 +181,65 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 		return avgData;
 	}
 	
+	$scope.matchId = function()
+    {
+        var watchData = [];
+
+        var e = document.getElementById("dropdownMenu");
+        var index = parseInt(e.options[e.selectedIndex].text);
+        index -= 1;
+        if($scope.deviceIds[index].value == true){
+            $scope.deviceIds[index].value = false;
+        }
+        else
+            $scope.deviceIds[index].value = true;
+        
+        if($scope.avg.value == true && $scope.deviceIds[index].value == true)
+        {
+            $scope.avgPath(index);
+        }
+        else
+        {
+            if($scope.deviceIds[index].value == true)
+            {
+                for(var i = 0; i < $scope.records.rows.length; i++)
+                {
+                    if($scope.deviceIds[index].selectDate == false)
+                    {
+                        if($scope.records.rows[i].deviceid == $scope.deviceIds[index].id)
+                        {
+                            watchData.push(new google.maps.LatLng(
+                                $scope.records.rows[i].latitude, $scope.records.rows[i].longitude));
+                        }
+                    }
+                    else
+                    {
+                        if($scope.records.rows[i].deviceid == $scope.deviceIds[index].id &&
+                                $scope.deviceIds[index].stDate <= $scope.records.rows[i].dtime &&
+                                $scope.deviceIds[index].enDate >= $scope.records.rows[i].dtime)
+                        {
+                            
+                            watchData.push(new google.maps.LatLng(
+                                $scope.records.rows[i].latitude, $scope.records.rows[i].longitude));
+                        }
+                    }
+                }
+                $scope.deviceIds[index].selectDate = false;
+                var pointArray = new google.maps.MVCArray(watchData);
+            
+                heatmaps[index] = new google.maps.visualization.HeatmapLayer({
+                  data: pointArray
+                });
+                heatmaps[index].setMap($scope.map);
+                
+            }
+            else
+            {
+                heatmaps[index].setMap(null);
+            }
+        }
+        
+    }
 	$scope.matchId = function(ind)
 	{
 		var e;
@@ -226,18 +276,25 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 		{
 			heatmaps[index].setMap(null);
 		}
+
+	}
+	
+	function loadHeatMap(index)
+	{
+		
+		$scope.records = Watch.query({id: $scope.deviceIds[index].id, 
+			startDate:'2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, devLoaded);
 	}
 	var devLoaded = function(results){
 		var watchData = [];
 		var index;
 		for(var i = 0; i < $scope.deviceIds.length; i++)
 		{
-			if($scope.deviceIds[i].id == results.rows[0].deviceid)
+			if($scope.deviceIds[i].id == results.rows[0].deviceid)	
 			{
 				index = $scope.deviceIds[i].index-1;
 			}
 		}
-		
 		if($scope.comp.value == true)
 		{
 			watchData = $scope.compare(results, index);

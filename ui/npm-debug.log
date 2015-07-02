@@ -1,0 +1,108 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/nodejs', '/usr/bin/npm', 'install', 'bowser' ]
+2 info using npm@1.3.10
+3 info using node@v0.10.25
+4 verbose cache add [ 'bowser', null ]
+5 verbose cache add name=undefined spec="bowser" args=["bowser",null]
+6 verbose parsed url { protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: 'bowser',
+6 verbose parsed url   path: 'bowser',
+6 verbose parsed url   href: 'bowser' }
+7 silly lockFile 7e020271-bowser bowser
+8 verbose lock bowser /home/lindsay/.npm/7e020271-bowser.lock
+9 silly lockFile 7e020271-bowser bowser
+10 silly lockFile 7e020271-bowser bowser
+11 verbose addNamed [ 'bowser', '' ]
+12 verbose addNamed [ null, '*' ]
+13 silly lockFile 69913e7a-bowser bowser@
+14 verbose lock bowser@ /home/lindsay/.npm/69913e7a-bowser.lock
+15 silly addNameRange { name: 'bowser', range: '*', hasData: false }
+16 verbose url raw bowser
+17 verbose url resolving [ 'https://registry.npmjs.org/', './bowser' ]
+18 verbose url resolved https://registry.npmjs.org/bowser
+19 info trying registry request attempt 1 at 10:52:59
+20 http GET https://registry.npmjs.org/bowser
+21 http 200 https://registry.npmjs.org/bowser
+22 silly registry.get cb [ 200,
+22 silly registry.get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+22 silly registry.get     etag: '"W5PGLK4YVYAVHYQW8G579H3J"',
+22 silly registry.get     'content-type': 'application/json',
+22 silly registry.get     'cache-control': 'max-age=60',
+22 silly registry.get     'content-length': '25512',
+22 silly registry.get     'accept-ranges': 'bytes',
+22 silly registry.get     date: 'Mon, 29 Jun 2015 14:52:59 GMT',
+22 silly registry.get     via: '1.1 varnish',
+22 silly registry.get     age: '0',
+22 silly registry.get     connection: 'keep-alive',
+22 silly registry.get     'x-served-by': 'cache-jfk1022-JFK',
+22 silly registry.get     'x-cache': 'MISS',
+22 silly registry.get     'x-cache-hits': '0',
+22 silly registry.get     'x-timer': 'S1435589579.459982,VS0,VE84',
+22 silly registry.get     vary: 'Accept' } ]
+23 silly addNameRange number 2 { name: 'bowser', range: '*', hasData: true }
+24 silly addNameRange versions [ 'bowser',
+24 silly addNameRange   [ '0.0.1',
+24 silly addNameRange     '0.0.2',
+24 silly addNameRange     '0.0.3',
+24 silly addNameRange     '0.0.4',
+24 silly addNameRange     '0.0.5',
+24 silly addNameRange     '0.0.6',
+24 silly addNameRange     '0.0.7',
+24 silly addNameRange     '0.0.8',
+24 silly addNameRange     '0.0.9',
+24 silly addNameRange     '0.1.0',
+24 silly addNameRange     '0.2.0',
+24 silly addNameRange     '0.3.0',
+24 silly addNameRange     '0.3.1',
+24 silly addNameRange     '0.3.2',
+24 silly addNameRange     '0.3.3',
+24 silly addNameRange     '0.3.4',
+24 silly addNameRange     '0.3.5',
+24 silly addNameRange     '0.3.6',
+24 silly addNameRange     '0.3.7',
+24 silly addNameRange     '0.3.8',
+24 silly addNameRange     '0.3.9',
+24 silly addNameRange     '0.4.0',
+24 silly addNameRange     '0.5.0',
+24 silly addNameRange     '0.6.0',
+24 silly addNameRange     '0.7.1',
+24 silly addNameRange     '0.7.2',
+24 silly addNameRange     '0.7.3' ] ]
+25 verbose addNamed [ 'bowser', '0.7.3' ]
+26 verbose addNamed [ '0.7.3', '0.7.3' ]
+27 silly lockFile c821de82-bowser-0-7-3 bowser@0.7.3
+28 verbose lock bowser@0.7.3 /home/lindsay/.npm/c821de82-bowser-0-7-3.lock
+29 silly lockFile ba9c9970-pmjs-org-bowser-bowser-0-7-3-tgz https://registry.npmjs.org/bowser/-/bowser-0.7.3.tgz
+30 verbose lock https://registry.npmjs.org/bowser/-/bowser-0.7.3.tgz /home/lindsay/.npm/ba9c9970-pmjs-org-bowser-bowser-0-7-3-tgz.lock
+31 verbose addRemoteTarball [ 'https://registry.npmjs.org/bowser/-/bowser-0.7.3.tgz',
+31 verbose addRemoteTarball   '4fc0cb4e0e2bdd9b394df0d2038c32c2cc2712c8' ]
+32 silly lockFile ba9c9970-pmjs-org-bowser-bowser-0-7-3-tgz https://registry.npmjs.org/bowser/-/bowser-0.7.3.tgz
+33 silly lockFile ba9c9970-pmjs-org-bowser-bowser-0-7-3-tgz https://registry.npmjs.org/bowser/-/bowser-0.7.3.tgz
+34 silly lockFile c821de82-bowser-0-7-3 bowser@0.7.3
+35 silly lockFile c821de82-bowser-0-7-3 bowser@0.7.3
+36 silly lockFile 69913e7a-bowser bowser@
+37 silly lockFile 69913e7a-bowser bowser@
+38 error Error: EACCES, mkdir '/home/lindsay/tmp/npm-5606-f6JubmSZ'
+38 error  { [Error: EACCES, mkdir '/home/lindsay/tmp/npm-5606-f6JubmSZ']
+38 error   errno: 3,
+38 error   code: 'EACCES',
+38 error   path: '/home/lindsay/tmp/npm-5606-f6JubmSZ' }
+39 error Please try running this command again as root/Administrator.
+40 error System Linux 3.13.0-48-generic
+41 error command "/usr/bin/nodejs" "/usr/bin/npm" "install" "bowser"
+42 error cwd /dataworks/lindsay/workspace/internship-2015/ui
+43 error node -v v0.10.25
+44 error npm -v 1.3.10
+45 error path /home/lindsay/tmp/npm-5606-f6JubmSZ
+46 error code EACCES
+47 error errno 3
+48 error stack Error: EACCES, mkdir '/home/lindsay/tmp/npm-5606-f6JubmSZ'
+49 verbose exit [ 3, true ]

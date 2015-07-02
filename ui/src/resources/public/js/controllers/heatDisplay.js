@@ -65,10 +65,70 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 		//buildRecs();
 		$scope.loadIds();
 	}
+	
+	function binSearch(val, results)
+	{
+		var low = 0;
+		var high = results.rows.length - 1;
+
+		while (low <= high) {
+			var mid = low + ((high - low) / 2);
+			var midVal = results.rows[mid];
+
+			if (midVal < val
+				low = mid + 1
+				else if (midVal > val)
+					high = mid - 1;
+				else
+					return mid; // key found
+		}
+		return -(low + 1);  // key not found.
+	}
 
 	$scope.compare = function(results, index)
 	{
-
+		var count = 1;
+		var compData1 = [];
+		var compLat1 = 0;
+		var compLon1 = 0;
+		var div1 = 0;
+		
+		var splitDate;
+		var compData2 = [];
+		var compLat2 = 0;
+		var compLon2 = 0;
+		var div2 = 0;
+		var splitDate;
+		var splitInd;
+		
+		if($scope.deviceIds[index].selectDate == true)
+		{
+			splitDate = moment($scope.deviceIds[index].enDate).format("YYYY-MM-DD");
+			splitDate = new Date(splitDate).getTime();
+			
+			splitInd = (results.rows.length-1) - div2;
+			div1 = Math.floor(Math.sqrt(div1));
+			div2 = Math.floor(Math.sqrt(div2));
+		}
+		else
+		{
+			splitDate = moment(results.rows[results.rows.length-1].dtime).format("YYYY-MM-DD");
+			splitDate = new Date(splitDate).getTime();
+			for(var i = results.rows.length-1; i > 0; i--)
+			{
+				if(splitDate >= results.rows[i].dtime)
+				{
+					div2++;
+				}
+				else
+				{
+					break;
+				}
+			}
+			splitInd = (results.rows.length-1) - div2;
+			div1 = Math.floor(Math.sqrt(splitInd));
+			div2 = Math.floor(Math.sqrt(div2));
+		}
 	}
 
 	$scope.avgPath = function(results, index)
@@ -78,7 +138,7 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 		var avgLat = 0;
 		var avgLon = 0;
 		var div = 0;
-		if($scope.deviceIds[index].selectDate = true)
+		if($scope.deviceIds[index].selectDate == true)
 		{
 			for(i = 0; i < results.rows.length; i++)
 			{
@@ -227,12 +287,15 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
     
 	$scope.submit = function() 
 	{
+		console.log("why");
 		if(this.text == '' && this.endtext == '')
 		{
 			window.alert("enter date for at least 1 of them");
 		}
 		else
 		{
+			$scope.deviceIds[ind].value = true;
+			$scope.deviceIds[ind].selectDate = true;
 			var ind;
 			var date;
 			var edate;			
@@ -263,9 +326,6 @@ controllers.controller('Display', ['$scope', 'Watch', 'WatchIds', function($scop
 			{
 				heatmaps[ind].setMap(null);
 			}
-			
-			$scope.deviceIds[ind].value = true;
-			$scope.deviceIds[ind].selectDate = true;
 			
 			$scope.matchId(ind);
 			

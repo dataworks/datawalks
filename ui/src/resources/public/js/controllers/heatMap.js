@@ -56,26 +56,33 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		//buildRecs();
 		$scope.loadIds();
 	}
-	/*
-	function binSearch(val, results)
+	
+	/*function binSearch(val, results)
 	{
 		var low = 0;
 		var high = results.rows.length - 1;
 
 		while (low <= high) {
 			var mid = low + ((high - low) / 2);
+			var preMid results.rows[mid-1];
+			var posMid results.rows[mid+1];
 			var midVal = results.rows[mid];
-
-			if (midVal < val
-				low = mid + 1)
-				else if (midVal > val)
-					high = mid - 1;
-				else
-					return mid; // key found
+			if (midVal < val)
+			{
+				low = mid + 1;
+			}
+			else if (midVal > val)
+			{
+				high = mid - 1;
+			}				
+			else
+			{
+				return mid; // key found
+			}				
 		}
 		return -(low + 1);  // key not found.
-	}
-*/
+	}*/
+
 	$scope.compare = function(results, index)
 	{
 		var count = 1;
@@ -287,8 +294,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		}
 		else
 		{
-			$scope.deviceIds[ind].value = true;
-			$scope.deviceIds[ind].selectDate = true;
 			var ind;
 			var date;
 			var edate;			
@@ -319,6 +324,8 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 			{
 				heatmaps[ind].setMap(null);
 			}
+			$scope.deviceIds[ind].value = true;
+			$scope.deviceIds[ind].selectDate = true;
 			
 			$scope.matchId(ind);
 			

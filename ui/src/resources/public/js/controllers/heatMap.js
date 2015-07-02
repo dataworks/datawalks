@@ -30,7 +30,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 	$scope.loadMap = function() 
 	{
 		var mapOptions = {
-				zoom: 8,
+				zoom: 10,
 				center: new google.maps.LatLng(38.942892, -77.334012)
 		};
 
@@ -67,7 +67,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 			var preMid results.rows[mid-1];
 			var posMid results.rows[mid+1];
 			var midVal = results.rows[mid];
-
 			if (midVal < val)
 			{
 				low = mid + 1;

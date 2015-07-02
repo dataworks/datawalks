@@ -13,6 +13,7 @@ import java.util.Properties
 import twitter4j.conf.Configuration
 import twitter4j.QueryResult
 import twitter4j.Twitter
+import twitter4j.Status
 
 /*
  * Class to build a query against Twitter.
@@ -69,14 +70,12 @@ class TwitterQuery {
      */
     do {
       result.getTweets().foreach { status =>
-        val hasGeoLocation = status.getGeoLocation() != null
         val record = Map("user" -> status.getUser().getName(),
           "handle" -> status.getUser().getScreenName(),
           "id" -> status.getId(),
           "text" -> status.getText(),
           "date" -> status.getCreatedAt(),
-          "latitude" -> (if (hasGeoLocation) status.getGeoLocation().getLatitude() else null),
-          "longitude" -> (if (hasGeoLocation) status.getGeoLocation().getLongitude() else null),
+          "location" -> buildLocation(status),
           "image" -> status.getUser().getOriginalProfileImageURL)
 
         tweets += record
@@ -102,10 +101,10 @@ class TwitterQuery {
    * Method for adding Days to SimpleDateFormat Dates.
    */
   private def addDays(date: Date, days: Integer): Date = {
-    val cal = Calendar.getInstance();
-    cal.setTime(date);
-    cal.add(Calendar.DATE, days);
-    return cal.getTime();
+    val cal = Calendar.getInstance()
+    cal.setTime(date)
+    cal.add(Calendar.DATE, days)
+    return cal.getTime()
   }
 
   /*
@@ -114,6 +113,14 @@ class TwitterQuery {
   private def getNextResult(twitter: Twitter, result: QueryResult): QueryResult = {
     if (result.hasNext()) {
       return twitter.search(result.nextQuery())
+    }
+    return null
+  }
+  
+  private def buildLocation (status: Status) : Map[String, Any] = {
+    if (status.getGeoLocation() != null) {
+      return Map("lat" -> status.getGeoLocation().getLatitude(), 
+          "lon" -> status.getGeoLocation().getLongitude())
     }
     return null
   }

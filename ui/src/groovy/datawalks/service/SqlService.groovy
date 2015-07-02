@@ -9,23 +9,26 @@ import org.springframework.stereotype.Service
 class SqlService {
 	@Autowired DataSource dataSource
 	
-	/* getGeoPoints(long, Date, Date)
-	 * 
+	/* getDevicePoints(long, Date, Date)
+	 *
 	 * Returns information from the workabledata table, used
 	 * for the google heatmap
 	 */
-	def getGeoPoints(long watchId, Date startDate, Date stopDate) {
-        def rows = []
-        Sql sql = new Sql(dataSource)
-        sql.eachRow("""select deviceid deviceid, latitude latitude,
-            longitude longitude, dtime dtime,
-            distancemeters distancemeters from workabledata""")
-        {
-            rows << [deviceid: it.deviceid, latitude: it.latitude,
-                longitude: it.longitude, dtime: it.dtime, distancemeters: it.distancemeters]
-        }
-        return rows
-    } 
+	def getDevicePoints(String watchId, Date startDate, Date stopDate) {
+		def rows = []
+		Sql sql = new Sql(dataSource)
+		sql.eachRow("""SELECT deviceid deviceid, latitude latitude,
+					            longitude longitude, dtime dtime,
+					            distancemeters distancemeters 
+					FROM workabledata
+					WHERE deviceid IN (:devicelist)
+					ORDER by dtime""".replaceAll(":devicelist", watchId))
+		{
+			rows << [deviceid: it.deviceid, latitude: it.latitude,
+				longitude: it.longitude, dtime: it.dtime, distancemeters: it.distancemeters]
+		}
+		return rows
+	}
 	
 	/* getTotalDistance(long, Date, Date)
 	 * 
@@ -45,7 +48,7 @@ class SqlService {
 	 * 
 	 * Returns one column of deviceid's for comparison purposes
 	 */
-	def getDeviceId(long watchId, Date startDate, Date stopDate){
+	def getDeviceId(){
 		def rows = []
 		Sql sql = new Sql(dataSource)
 		sql.eachRow("""SELECT DISTINCT deviceid deviceid FROM workabledata"""){
@@ -68,9 +71,8 @@ class SqlService {
 							ON datadetails.wrun = sum.runid
 						WHERE datadetails.scal != 0
 						GROUP BY did, dtime, wrun, stime, scal, sdist
-						ORDER BY wrun;""") {
-			rows << [did: it.did,dtime: it.dtime, scal: it.scal, wrun: it.wrun, sdist: it.sdist, stime: it.stime]
-						
+						ORDER BY dtime, wrun;""") {
+			rows << [did: it.did,dtime: it.dtime, scal: it.scal, wrun: it.wrun, sdist: it.sdist, stime: it.stime]				
 		}
 		return rows
 	}

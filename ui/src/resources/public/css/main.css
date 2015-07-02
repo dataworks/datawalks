@@ -1,5 +1,6 @@
 /*green = #7eb900
   blue = #0071c5*/
+
 table, th , td {
   border: 1px solid black;
   border-collapse: collapse;
@@ -147,7 +148,7 @@ li {
   margin: 5px 0px;
   padding: 30px 40px;
   display: inline-block;
-  background: rgb(248, 248, 248);
+  background: #000000248248248;
   font-size: 18px;
   font-weight: 300;
   line-height: 24px;

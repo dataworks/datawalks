@@ -12,8 +12,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
     $scope.long = '';
     var longTw;
     var latTw;
-    var displayNames = ["Lindsay", "Bobby", "Hayato", "Chuck", "Danny", "Dave"];
-
+    var displayNames = ["Dave", "Lindsay", "Bobby", "Hayato", "Chuck", "Danny"];
     $scope.avg = {
     	name: "average",
     	value: false

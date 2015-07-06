@@ -13,6 +13,7 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 	var options = 
  	{
  		title: "Distance",
+ 		subtitle: "(Meters)",
  	    height: 300,
  	    width: 2000,
  	   tooltip: {isHtml: true},
@@ -51,17 +52,16 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 	    dataTable = new google.visualization.DataTable();
 	    dataTable.addColumn({ type: 'date', id: 'Date' });
 	    dataTable.addColumn({ type: 'number', id: 'distance' });
-	    dataTable.addColumn({ type: 'string', role: 'tooltip'});
+	    
 	    var offset;
 	 	for(var i = 0; i < $scope.records.aggs.length; i++)
 	 	{
 	 		if($scope.deviceIds[index].id == $scope.records.aggs[i].did)
 	 		{
-	 			offset = moment($scope.records.aggs[i].dtime).add(24, 'h').format("YYYY-MM-DD");
+	 			offset = moment($scope.records.aggs[i].dtime).add(12, 'h').format("YYYY-MM-DD");
 	 			offset = new Date(offset);
 	 			dataTable.addRow([ offset, 
-	 			                   parseInt($scope.records.aggs[i].mdistance),
-	 			                   'This tooltip'] );
+	 			                   parseInt($scope.records.aggs[i].mdistance)] );
 	 		}
 	 	}
 	 	chart.draw(dataTable, options);
@@ -74,7 +74,6 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 		
 		dataTable.addColumn({ type: 'date', id: 'Date' });
 	    dataTable.addColumn({ type: 'number', id: 'distance' });
-	    dataTable.addColumn({ type: 'string', role: 'tooltip'});
 		chart.draw(dataTable, options);
 	}
 	

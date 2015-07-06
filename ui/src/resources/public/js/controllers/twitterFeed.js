@@ -2,14 +2,12 @@
  * Controller for the twitter display
  */
 controllers.controller('TwitDisplay', ['$scope', 'linker', 'Twitter', function($scope, linker, Twitter){
-	//Take the coordinates for the tweets and display them in a new window
 	$scope.twits = [];
-	$scope.lat = '';
-	$scope.long = '';
 	$scope.radius = '';
-	var localLat = 38.942892; //starting location for tweets
+	
+	//starting location for tweets
+	var localLat = 38.942892; 
 	var localLong = -77.334012;
-	var kmRadius = 0.08; //Roughly 5 miles
 	
 	linker.onGetLatLong($scope, function (message) {
         localLat = message.latitude;

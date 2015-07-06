@@ -7,15 +7,13 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 	var latLng = new google.maps.LatLng(38.942892, -77.334012);
     $scope.text = '';
     $scope.endtext = '';
-    $scope.curr =[];
     $scope.deviceIds = [];
     $scope.lat = '';
     $scope.long = '';
     var longTw;
     var latTw;
-    // Example coordinates
-    // 40.748441
-    // -73.985664
+    var displayNames = ["Lindsay", "Bobby", "Hayato", "Chuck", "Danny", "Dave"];
+
     $scope.avg = {
     	name: "average",
     	value: false
@@ -55,32 +53,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		myMarker.setMap($scope.map);
 		$scope.loadIds();
 	}
-	
-	/*function binSearch(val, results)
-	{
-		var low = 0;
-		var high = results.rows.length - 1;
-
-		while (low <= high) {
-			var mid = low + ((high - low) / 2);
-			var preMid results.rows[mid-1];
-			var posMid results.rows[mid+1];
-			var midVal = results.rows[mid];
-			if (midVal < val)
-			{
-				low = mid + 1;
-			}
-			else if (midVal > val)
-			{
-				high = mid - 1;
-			}				
-			else
-			{
-				return mid; // key found
-			}				
-		}
-		return -(low + 1);  // key not found.
-	}*/
 
 	$scope.compare = function(results, index)
 	{
@@ -195,7 +167,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		if(ind == -1)
 		{
 			e = document.getElementById("dropdownMenu");
-			index = parseInt(e.options[e.selectedIndex].text)-1;
+			index = displayNames.indexOf(e.options[e.selectedIndex].text);
 		}		
 		else
 		{
@@ -230,13 +202,11 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 	var devLoaded = function(results){
 		var watchData = [];
 		var index;
+		
 		for(var i = 0; i < $scope.deviceIds.length; i++)
-		{
 			if($scope.deviceIds[i].id == results.rows[0].deviceid)	
-			{
 				index = $scope.deviceIds[i].index-1;
-			}
-		}
+
 		if($scope.comp.value == true)
 		{
 			watchData = $scope.compare(results, index);
@@ -279,17 +249,17 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 				enDate: Number.MAX_VALUE,
 				selectDate: false,
 				avgShown: false,
-				value: false
+				value: false,
+				name: displayNames[i]
 			});	
 		}
 	}
     
 	$scope.submit = function() 
 	{
-		console.log("why");
 		if(this.text == '' && this.endtext == '')
 		{
-			window.alert("enter date for at least 1 of them");
+			window.alert("Enter a date for at least one of the fields!");
 		}
 		else
 		{
@@ -304,7 +274,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 			else
 			{
 				ind = Number(this.text.substring(0,1))-1;
-				date = moment(this.text.substring(3,13)).format("YYYY,MM,DD");//parse date yyyy-mm-dd
+				date = moment(this.text.substring(3,13)).format("YYYY,MM,DD");
 				$scope.deviceIds[ind].stDate = new Date(date).getTime();
 			}		
 			if(this.endtext == '')

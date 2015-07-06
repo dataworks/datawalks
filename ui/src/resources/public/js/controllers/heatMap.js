@@ -295,6 +295,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		}
 		else
 		{
+			$('#jqxCalendar').jqxCalendar('clear'); 
 			heatmaps[index].setMap(null);
 		}
 
@@ -315,8 +316,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		else if($scope.comp.value == false && 
 				$scope.avg.value == true && $scope.deviceIds[index].value == true)
 		{
-			watchData = $scope.avgPath(results, index);
-			
+			watchData = $scope.avgPath(results, index);			
 		}
 		else
 		{
@@ -325,6 +325,9 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 				if($scope.deviceIds[index].stDate <= results.rows[i].dtime && 
 						$scope.deviceIds[index].enDate >= results.rows[i].dtime)
 				{
+					var date1 = new Date();
+					date1.setDate(results.rows[i].dtime);
+					$("#jqxCalendar").jqxCalendar('addSpecialDate', date1, '', 'run');
 					watchData.push(new google.maps.LatLng(results.rows[i].latitude, 
 							results.rows[i].longitude));
 				}			
@@ -334,6 +337,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		heatmaps[index] = new google.maps.visualization.HeatmapLayer({
 			data: pointArray});
 		heatmaps[index].setMap($scope.map);
+		
 		$scope.deviceIds[index].stDate = 0;
 		$scope.deviceIds[index].enDate = Number.MAX_VALUE;
 		$scope.deviceIds[index].selectDate = false;

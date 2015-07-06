@@ -1,6 +1,7 @@
 controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', function($scope, linker, Watch, WatchIds) {
 	$scope.map;
 	var pointarray;
+	var arr = [4, 6, 12, 15.1, 15.5, 15.8, 19.1, 19.4, 19.9, 21, 28, 30];
 	var heatmap;
 	var heatmaps = [];
 	var myMarker = null;
@@ -11,6 +12,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
     $scope.deviceIds = [];
     $scope.lat = '';
     $scope.long = '';
+    $scope.calendar;
     var longTw;
     var latTw;
     // Example coordinates
@@ -52,36 +54,55 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		google.maps.event.addListener(myMarker, 'dragstart', function(evt){
 			document.getElementById('current').innerHTML = '<p>Currently dragging marker...</p>';
 		});
+		/*$(document).ready(function () {                
+			// create jqxcalendar.
+			$("#jqxCalendar").jqxCalendar({width: 240, height: 220, selectionMode: 'range'});
+			$('#jqxCalendar').on('change', function (event) {
+				var selection = event.args.range;
+				console.log(selection.from.toLocaleDateString());
+			});
+		});*/
+		
 		myMarker.setMap($scope.map);
 		//buildRecs();
 		$scope.loadIds();
 	}
 	
-	/*function binSearch(val, results)
+	$(document).ready(function () {                
+		// create jqxcalendar.
+		$("#jqxCalendar").jqxCalendar({width: 240, height: 220, 
+			selectionMode: 'range', theme: 'energyblue'});
+		$('#jqxCalendar').on('change', function (event) {
+			var selection = event.args.range;
+			console.log(selection.from.toLocaleDateString());
+		});
+	});
+	
+	function binSearch(val, results)
 	{
 		var low = 0;
 		var high = results.rows.length - 1;
 
 		while (low <= high) {
-			var mid = low + ((high - low) / 2);
-			var preMid results.rows[mid-1];
-			var posMid results.rows[mid+1];
-			var midVal = results.rows[mid];
-			if (midVal < val)
-			{
-				low = mid + 1;
+			var mid = Math.floor(low + ((high - low) / 2));
+			
+			var midVal = results.rows[mid].dtime;
+					
+			if ((results.rows[mid-1].dtime <= val && results.rows[mid+1].dtime >= val))
+			{				
+				return mid;				
 			}
 			else if (midVal > val)
 			{
 				high = mid - 1;
 			}				
-			else
+			else if(midVal < val)
 			{
-				return mid; // key found
+				low = mid + 1;
 			}				
 		}
 		return -(low + 1);  // key not found.
-	}*/
+	}
 
 	$scope.compare = function(results, index)
 	{
@@ -97,36 +118,90 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		var compLon2 = 0;
 		var div2 = 0;
 		var splitDate;
+		var stDate;
 		var splitInd;
+		var startInd;
+		var endInd;
 		
 		if($scope.deviceIds[index].selectDate == true)
 		{
-			splitDate = moment($scope.deviceIds[index].enDate).format("YYYY-MM-DD");
-			splitDate = new Date(splitDate).getTime();
+			for(var i = 0; i < results.rows.length; i++)
+			{
+				if($scope.deviceIds[index].enDate > results.rows[i].dtime
+						&&$scope.deviceIds[index].stDate < results.rows[i].dtime)
+				{
+					console.log(results.rows[i].dtime + 
+							moment(results.rows[i].dtime).format("YYYY-MM-DD"));
+				}
+			}
 			
-			splitInd = (results.rows.length-1) - div2;
-			div1 = Math.floor(Math.sqrt(div1));
-			div2 = Math.floor(Math.sqrt(div2));
+			if($scope.deviceIds[index].enDate < results.rows[results.rows.length-1].dtime)
+			{
+				console.log("end " + $scope.deviceIds[index].enDate)
+				endInd = binSearch($scope.deviceIds[index].enDate, results);
+				console.log("b " + moment(results.rows[endInd-1].dtime).format("YYYY-MM-DD") + 
+						" " + moment($scope.deviceIds[index].enDate).format("YYYY-MM-DD"));		
+				
+			}
+			else if($scope.deviceIds[index].enDate < results.rows[0].dtime)
+			{
+				window.alert("date doesnt exist");
+			}
+			else
+			{
+				endInd = results.rows[results.rows.length-1].dtime;
+			}
+			splitDate = moment(results.rows[endInd-1]).format("YYYY-MM-DD");
+			splitDate = new Date(splitDate).getTime();
+			console.log(splitDate + " " + moment(splitDate).format("YYYY-MM-DD"));
+			if($scope.deviceIds[index].stDate > results.rows[0].dtime)
+			{
+				stDate = moment($scope.deviceIds[index].stDate).format("YYYY-MM-DD");
+				stDate = new Date(stDate).getTime();
+				
+				startInd = binSearch(stDate, results);
+			}
+			else if($scope.deviceIds[index].stDate > results.rows[results.rows.length-1].dtime)
+			{
+				window.alert("date doesnt exist");
+			}
+			else if($scope.deviceIds[index].stDate < results.rows[0].dtime)
+			{
+				stDate = results.rows[0].dtime;
+				startInd = 0;
+			}
+			if(splitDate < results.rows[0].dtime|| 
+					splitDate > results.rows[results.rows.length-1].dtime)
+			{
+				window.alert("entry doesnt exist");
+			}
+			else
+			{
+				console.log("spD " + splitDate + " " + moment(splitDate).format("YYYY-MM-DD"));
+				splitInd = binSearch(splitDate, results);
+			}
+			div1 = Math.floor(Math.sqrt(splitInd - startInd));
+			div2 = Math.floor(Math.sqrt(endInd - splitInd));
 		}
 		else
 		{
 			splitDate = moment(results.rows[results.rows.length-1].dtime).format("YYYY-MM-DD");
 			splitDate = new Date(splitDate).getTime();
-			for(var i = results.rows.length-1; i > 0; i--)
-			{
-				if(splitDate >= results.rows[i].dtime)
-				{
-					div2++;
-				}
-				else
-				{
-					break;
-				}
-			}
-			splitInd = (results.rows.length-1) - div2;
+			splitInd = binSearch(splitDate, results);
+			startInd = 0;
+			endInd = results.rows.length-1;
 			div1 = Math.floor(Math.sqrt(splitInd));
-			div2 = Math.floor(Math.sqrt(div2));
+			div2 = Math.floor(Math.sqrt(endInd - splitInd));
 		}
+		console.log("st " + startInd + " split " + splitInd + " end " + endInd);
+		console.log("stv " + results.rows[startInd].dtime + 
+				" spv " + results.rows[splitInd].dtime + 
+				" env " + results.rows[endInd-1].dtime);
+		console.log("stv " + moment(results.rows[startInd].dtime).format("YYYY-MM-DD") + 
+				" spv " + moment(results.rows[splitInd].dtime).format("YYYY-MM-DD") + 
+				" env " + moment(results.rows[endInd].dtime).format("YYYY-MM-DD"));
+		
+		console.log("div1 " + div1 + " div2 "+ div2);
 	}
 
 	$scope.avgPath = function(results, index)

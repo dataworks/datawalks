@@ -294,7 +294,9 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		}
 		else
 		{
-			$('#jqxCalendar').jqxCalendar('clear'); 
+			var sD = $("#jqxCalendar").jqxCalendar('specialDates');
+            sD = [];
+            $("#jqxCalendar").jqxCalendar({ specialDates: sD });
 			heatmaps[index].setMap(null);
 		}
 
@@ -324,13 +326,19 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 				if($scope.deviceIds[index].stDate <= results.rows[i].dtime && 
 						$scope.deviceIds[index].enDate >= results.rows[i].dtime)
 				{
-					var date1 = new Date();
-					date1.setDate(results.rows[i].dtime);
-					$("#jqxCalendar").jqxCalendar('addSpecialDate', date1, '', 'run');
+					
 					watchData.push(new google.maps.LatLng(results.rows[i].latitude, 
 							results.rows[i].longitude));
 				}			
 			}
+			for(var i = 0; i < results.uniqueDates.length; i++)
+			{
+				if(results.uniqueDates[i].devid === $scope.deviceIds[index].id)
+				{
+					var date1 = new Date(results.uniqueDates[i].dtime);
+					$("#jqxCalendar").jqxCalendar('addSpecialDate', date1, '', 'run');
+				}		
+			}			
 		}
 		var pointArray = new google.maps.MVCArray(watchData);
 		heatmaps[index] = new google.maps.visualization.HeatmapLayer({

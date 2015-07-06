@@ -76,20 +76,4 @@ class SqlService {
 		}
 		return rows
 	}
-	
-	/* getTweets(long, Date, Date)
-	 * 
-	 * Returns the tweet information that are specified as English.
-	 * There are several inappropriate tweets in this sample
-	 */
-	def getTweets(long watchId, Date startDate, Date stopDate){
-		def rows = []
-		Sql sql = new Sql(dataSource)
-		sql.eachRow("""Select username uname, Universal_Time_Stamp uni, tweet_text tweettext, Image img 
-						From japanesetweets
-						WHERE language = 'en';"""){
-			rows << [uname: it.uname, uni: it.uni, tweettext: it.tweettext, img: it.img]
-		}
-		return rows
-	}
 }

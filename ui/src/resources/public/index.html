@@ -23,7 +23,7 @@
        <script src="js/services/watch.js"></script>
        <script src="js/services/watchIds.js"></script>
        <script src="js/controllers/heatMap.js"></script>
-       <script src="js/services/elasticTwitter.js"></script>
+       <script src="js/services/twitter.js"></script>
        <script src="js/controllers/twitterFeed.js"></script>
        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
        <link rel="stylesheet" href="css/main.css">    
@@ -31,17 +31,14 @@
 <body>
 	<ng-include src="'include.htm'"></ng-include>
 	<div class="contain">
-	
-		<div class="righty">
-				
+		<div class="righty">	
    				<div ng-controller="Display">
         		<div class="col-md-2">
-        		
         		Select the Watch ID's to view:</br>
 					<select multiple="multiple" id="dropdownMenu">
 						<option ng-repeat="index in deviceIds" ng-model="index.value" 
 						ng-value="index.value" ng-click="matchId(-1)">
-								{{index.index}}
+								{{index.name}}
 						</option>
 					</select>
         		<br/></br>
@@ -67,7 +64,6 @@
 						 	<span style="font-style: bold;">{{twit.uname}}</span>
 						 	<span style="color: #4099FF;"><a href="https://twitter.com/{{twit.handle}}">@{{twit.handle}}</a>
 						</div></br>			
-						
 							{{twit.text}}</br> 
 						<span style="font-size: 12px">- {{twit.tStamp | date}}</span>
 						</blockquote>

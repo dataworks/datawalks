@@ -51,14 +51,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		google.maps.event.addListener(myMarker, 'dragstart', function(evt){
 			document.getElementById('current').innerHTML = '<p>Currently dragging marker...</p>';
 		});
-		/*$(document).ready(function () {                
-			// create jqxcalendar.
-			$("#jqxCalendar").jqxCalendar({width: 240, height: 220, selectionMode: 'range'});
-			$('#jqxCalendar').on('change', function (event) {
-				var selection = event.args.range;
-				console.log(selection.from.toLocaleDateString());
-			});
-		});*/
 		
 		myMarker.setMap($scope.map);
 		$scope.loadIds();

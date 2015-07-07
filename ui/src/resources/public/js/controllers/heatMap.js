@@ -13,6 +13,8 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
     $scope.calendar;
     var longTw;
     var latTw;
+    var longSum = 0;
+    var latSum = 0;
     $scope.ownerNames = [];
     $scope.avg = {
     	name: "average",
@@ -22,6 +24,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
     	name: "compare",
     	value: false
     };
+    
       
     
 	// Creates the heat map
@@ -115,7 +118,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 			for(var i = 0; i < results.rows.length; i++)
 			{
 				if($scope.deviceIds[index].enDate > results.rows[i].dtime
-						&&$scope.deviceIds[index].stDate < results.rows[i].dtime)
+						&& $scope.deviceIds[index].stDate < results.rows[i].dtime)
 				{
 					console.log(results.rows[i].dtime + 
 							moment(results.rows[i].dtime).format("YYYY-MM-DD"));
@@ -180,15 +183,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 			div1 = Math.floor(Math.sqrt(splitInd));
 			div2 = Math.floor(Math.sqrt(endInd - splitInd));
 		}
-		console.log("st " + startInd + " split " + splitInd + " end " + endInd);
-		console.log("stv " + results.rows[startInd].dtime + 
-				" spv " + results.rows[splitInd].dtime + 
-				" env " + results.rows[endInd-1].dtime);
-		console.log("stv " + moment(results.rows[startInd].dtime).format("YYYY-MM-DD") + 
-				" spv " + moment(results.rows[splitInd].dtime).format("YYYY-MM-DD") + 
-				" env " + moment(results.rows[endInd].dtime).format("YYYY-MM-DD"));
-		
-		console.log("div1 " + div1 + " div2 "+ div2);
 	}
 
 	$scope.avgPath = function(results, index)
@@ -291,6 +285,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 	var devLoaded = function(results){
 		var watchData = [];
 		var index;
+		var latlngBounds = new google.maps.LatLngBounds();
 		
 		for(var i = 0; i < $scope.deviceIds.length; i++)
 			if($scope.deviceIds[i].id == results.rows[0].deviceid)	
@@ -315,8 +310,11 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 					
 					watchData.push(new google.maps.LatLng(results.rows[i].latitude, 
 							results.rows[i].longitude));
+					longSum += results.rows[i].longitude;
+					latSum += results.rows[i].latitude;
 				}			
 			}
+			
 			for(var i = 0; i < results.uniqueDates.length; i++)
 			{
 				if(results.uniqueDates[i].devid === $scope.deviceIds[index].id)
@@ -326,11 +324,19 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 				}		
 			}			
 		}
+		for (var i = 0; i < watchData.length; i++) {
+			  latlngBounds.extend(watchData[i]);
+			}
+		
 		var pointArray = new google.maps.MVCArray(watchData);
 		heatmaps[index] = new google.maps.visualization.HeatmapLayer({
 			data: pointArray});
 		heatmaps[index].setMap($scope.map);
-		
+
+		//Fit the map to show all points 
+		$scope.map.setCenter(latlngBounds.getCenter());
+		$scope.map.fitBounds(latlngBounds);
+
 		$scope.deviceIds[index].stDate = 0;
 		$scope.deviceIds[index].enDate = Number.MAX_VALUE;
 		$scope.deviceIds[index].selectDate = false;

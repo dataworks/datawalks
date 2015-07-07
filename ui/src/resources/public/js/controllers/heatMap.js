@@ -1,7 +1,6 @@
 controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', function($scope, linker, Watch, WatchIds) {
 	$scope.map;
 	var pointarray;
-	var arr = [4, 6, 12, 15.1, 15.5, 15.8, 19.1, 19.4, 19.9, 21, 28, 30];
 	var heatmap;
 	var heatmaps = [];
 	var myMarker = null;
@@ -14,7 +13,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
     $scope.calendar;
     var longTw;
     var latTw;
-    var displayNames = ["Dave", "Lindsay", "Bobby", "Hayato", "Chuck", "Danny"];
+    $scope.ownerNames = [];
     $scope.avg = {
     	name: "average",
     	value: false
@@ -256,15 +255,10 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 	{
 		var e;
 		var index;
-		if(ind == -1)
-		{
-			e = document.getElementById("dropdownMenu");
-			index = displayNames.indexOf(e.options[e.selectedIndex].text);
-		}		
-		else
-		{
-			index = ind;
-		}
+
+		e = document.getElementById("dropdownMenu");
+		index = $scope.ownerNames.indexOf(e.options[e.selectedIndex].text);
+
 		if($scope.deviceIds[index].value == true && $scope.deviceIds[index].selectDate == false)
 		{
 			$scope.deviceIds[index].value = false;
@@ -354,7 +348,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 				selectDate: false,
 				avgShown: false,
 				value: false,
-				name: displayNames[i]
+				name: $scope.ownerNames[i]
 			});	
 		}
 	}
@@ -417,7 +411,9 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 	   }
    
    $scope.recordsLoaded = function(results){
-	   $scope.loadMap();    
+	   for(var i =0; i < results.ownerNames.length; i++)
+		   $scope.ownerNames.push(results.ownerNames[i].ownerName);
+	   $scope.loadMap();      
    }
 	
    $scope.devicesLoaded = function(results){

@@ -40,43 +40,27 @@ object CleanserJob {
 
     val stopWords = List("the","and","a","an","to","too")
      
-    val tokenizerText = new Tokenizer()
+    val tokenizer = new Tokenizer()
       .setInputCol("text")
       .setOutputCol("words")
-    val tokenizerUser = new Tokenizer()
-      .setInputCol("user")
-      .setOutputCol("wordsUser")
-    val tokenizerHandle = new Tokenizer()
-      .setInputCol("handle")
-      .setOutputCol("wordsHandle")
-    val hashingTFtext = new HashingTF()
+    val hashingTF = new HashingTF()
       .setNumFeatures(1000)
-      .setInputCol(tokenizerText.getOutputCol)
-      .setOutputCol("featuresText")
-    val hashingTFuser = new HashingTF()
-      .setNumFeatures(1000)
-      .setInputCol(tokenizerUser.getOutputCol)
-      .setOutputCol("featuresUser")
-    val hashingTFhandle = new HashingTF()
-      .setNumFeatures(1000)
-      .setInputCol(tokenizerHandle.getOutputCol)
-      .setOutputCol("featuresHandle")
+      .setInputCol(tokenizer.getOutputCol)
+      .setOutputCol("features")
     val lr = new LogisticRegression()
       .setMaxIter(10)
       .setRegParam(0.001)
     val pipeline = new Pipeline()
-      .setStages(Array(tokenizerText, hashingTFtext, lr))
-    pipeline.setStages(Array(tokenizerUser, hashingTFuser, lr))
-    pipeline.setStages(Array(tokenizerHandle, hashingTFhandle, lr))
+      .setStages(Array(tokenizer, hashingTF, lr))
 
     val model = pipeline.fit(training.toDF())
 
     model.transform(rdd.toDF())
-      .select("id", "text", "user", "handle", "probability", "prediction")
+      .select("id", "text", "probability", "prediction")
       .collect()
       .foreach {
-        case Row(id: Long, text: String, user: String, handle: String, prob: Vector, prediction: Double) =>
-          println(s"entry: text: $text, user:$user, handle: $handle, prob=$prob, prediction=$prediction")
+        case Row(id: Long, text: String, prob: Vector, prediction: Double) =>
+          println(s"text: $text, prob=$prob, prediction=$prediction")
       }
 
     sc.stop()

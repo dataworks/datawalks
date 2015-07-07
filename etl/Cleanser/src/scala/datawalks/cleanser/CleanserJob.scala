@@ -11,10 +11,14 @@ import org.apache.spark.mllib.feature.Word2Vec
 import org.apache.spark.mllib.linalg.Vector
 import org.apache.spark.rdd.RDD
 import org.elasticsearch.spark._
-import org.elasticsearch.hadoop.mr.EsInputFormat
-import java.text.BreakIterator
+import org.apache.spark.sql.SQLContext
+import scala.beans.BeanInfo
+import org.apache.spark.sql.Row
 
-case class LabeledDocument(id: Long, text: String, label: Double)
+@BeanInfo
+case class LabeledDocument(text: String, label: Double)
+
+@BeanInfo
 case class Document(id: Long, text: String)
 
 /*
@@ -26,71 +30,67 @@ object CleanserJob {
     val conf = new SparkConf().setAppName("CleanserJob").setMaster("local[2]")
       .set("es.nodes", "es-server:9200").set("es.resource", "twitter/tweet")
     val sc = new SparkContext(conf)
-    val rdd = sc.esRDD("twitter/tweet", "?q=match_all").collect()
+    val rdd = sc.esRDD("twitter/tweet").map(row => getData(row))
+    val sqlContext = new SQLContext(sc)
+    import sqlContext.implicits._
 
-    val stopWords = "/dataworks/internship-2015/etl/Cleanser/naughty.txt"
+    // .txt file containing bad words. OPEN AT OWN RISK
+    val training = sc.textFile("/dataworks/internship-2015/etl/Cleanser/naughty.csv")
+      .map(line => getRow(line))
 
-    //shortest length of word allowed
-    val minWordLen = 3
+    val stopWords = List("the","and","a","an","to","too")
+     
+    val tokenizerText = new Tokenizer()
+      .setInputCol("text")
+      .setOutputCol("words")
+    val tokenizerUser = new Tokenizer()
+      .setInputCol("user")
+      .setOutputCol("wordsUser")
+    val tokenizerHandle = new Tokenizer()
+      .setInputCol("handle")
+      .setOutputCol("wordsHandle")
+    val hashingTFtext = new HashingTF()
+      .setNumFeatures(1000)
+      .setInputCol(tokenizerText.getOutputCol)
+      .setOutputCol("featuresText")
+    val hashingTFuser = new HashingTF()
+      .setNumFeatures(1000)
+      .setInputCol(tokenizerUser.getOutputCol)
+      .setOutputCol("featuresUser")
+    val hashingTFhandle = new HashingTF()
+      .setNumFeatures(1000)
+      .setInputCol(tokenizerHandle.getOutputCol)
+      .setOutputCol("featuresHandle")
+    val lr = new LogisticRegression()
+      .setMaxIter(10)
+      .setRegParam(0.001)
+    val pipeline = new Pipeline()
+      .setStages(Array(tokenizerText, hashingTFtext, lr))
+    pipeline.setStages(Array(tokenizerUser, hashingTFuser, lr))
+    pipeline.setStages(Array(tokenizerHandle, hashingTFhandle, lr))
 
-    val tokenizer = new SimpleTokenizer(sc, stopWords)
-    val tokenized: RDD[(Long, IndexedSeq[String])] = rdd.zipWithIndex().map {
-      case (text, id) =>
-        id -> tokenizer.getWords(text)
-    }
-    tokenized.cache()
+    val model = pipeline.fit(training.toDF())
+
+    model.transform(rdd.toDF())
+      .select("id", "text", "user", "handle", "probability", "prediction")
+      .collect()
+      .foreach {
+        case Row(id: Long, text: String, user: String, handle: String, prob: Vector, prediction: Double) =>
+          println(s"entry: text: $text, user:$user, handle: $handle, prob=$prob, prediction=$prediction")
+      }
 
     sc.stop()
   }
-  private class SimpleTokenizer(sc: SparkContext, stopwordFile: String) extends Serializable {
 
-    val stopwords: Set[String] = if (stopwordFile.isEmpty) {
-      Set.empty[String]
-    } else {
-      val stopwordText = sc.textFile(stopwordFile).collect()
-      stopwordText.flatMap(_.stripMargin.split("\\s+")).toSet
-    }
-
-    // Matches sequences of Unicode letters
-    private val allWordRegex = "^(\\p{L}*)$".r
-
-    // Ignore words shorter than this length.
-    private val minWordLength = 3
-
-    def getWords(text: String): IndexedSeq[String] = {
-
-      val words = new mutable.ArrayBuffer[String]()
-
-      // Use Java BreakIterator to tokenize text into words.
-      val wb = BreakIterator.getWordInstance
-      wb.setText(text)
-
-      // current,end index start,end of each word
-      var current = wb.first()
-      var end = wb.next()
-      while (end != BreakIterator.DONE) {
-        // Convert to lowercase
-        val word: String = text.substring(current, end).toLowerCase
-        // Remove short words and strings that aren't only letters
-        word match {
-          case allWordRegex(w) if w.length >= minWordLength && !stopwords.contains(w) =>
-            words += w
-          case _ =>
-        }
-
-        current = end
-        try {
-          end = wb.next()
-        } catch {
-          case e: Exception =>
-            // Ignore remaining text in line.
-            // This is a known bug in BreakIterator (for some Java versions),
-            // which fails when it sees certain characters.
-            end = BreakIterator.DONE
-        }
-      }
-      words
-    }
+  private def getData(row: (String, scala.collection.Map[String, AnyRef])): Document = {
+    var text = row._2.get("text").toString()
+    text += " " + row._2.get("user").toString()
+    text += " " + row._2.get("handle").toString()
+    return Document(row._1.toLong, text)
   }
-
+  
+  private def getRow(row: String) : LabeledDocument = {
+    val values = row.split(",")
+    return LabeledDocument(values(0), values(1).toDouble)
+  }
 }

@@ -14,6 +14,10 @@ header {
 	position: relative;
 	font-size: 30px;
 }
+.banner {
+	height: 50px;
+	background: purple;
+}
 
 body {
   font-size: 100%;
@@ -28,7 +32,7 @@ div .dw-tabs {
 	padding: 0px;
 }
 ul.dw-tabs-content {
-	height: auto;
+	height: 1000;
 	padding: 5px 5px 5px 5px;
 	margin: 0px;
 	background: #ffffff;
@@ -37,14 +41,13 @@ ul.dw-tabs-content {
 	/*margin: 5px 5px 5px 5px;*/
 	position: relative;
 	width: 100%;
-	height: 500px;
+	height: 1000px;
 	padding: 0px;
 }
 .contain .lefty {
 	position: relative;
 	float: left;
 	width: 50%;
-	height: auto;
 	vertical-align: center;
 }
 .contain .righty {
@@ -53,7 +56,7 @@ ul.dw-tabs-content {
 	width: 50%;
 	height: auto;
 	vertical-align: center;
-	height: 100%;
+	height: inherit;
 	/*padding: 1em auto;*/ /*find better way to format*/
 }
 .contain .mini {
@@ -68,7 +71,7 @@ div {
 										
 #map-canvas {
 	position: relative;
-    height: 600px;
+    height: 800px;
     width: 100%;
 }
 #panel {

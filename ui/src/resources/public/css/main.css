@@ -284,7 +284,7 @@ img {
 }
 
 															/*nav tabs for dropdown*/
-select { 
+/*select { 
 	border: none;
 	color: black; 
 	background:transparent none repeat scroll 0 0;
@@ -319,6 +319,7 @@ select::-ms-expand {
 #optionsMenuTree:hover > select {
     display: block;
 }
+*/
 																/*end nav tabs*/
 
 

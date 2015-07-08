@@ -17,7 +17,15 @@
       <script src="js/services/twitter.js"></script>
       <script src="js/controllers/twitterFeed.js"></script>
       <script type="text/javascript" src="https://www.google.com/jsapi"></script>   
-   </head>
+    <link rel="stylesheet" href="../../jqwidgets/styles/jqx.base.css" type="text/css" />
+   <!-- <script type="text/javascript" src="../../scripts/gettheme.js"></script>
+    <script type="text/javascript" src="../../scripts/jquery-1.8.2.min.js"></script>-->
+    <script type="text/javascript" src="bower_components/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src=".bower_components/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="bower_components/jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="bower_components/jqwidgets/jqxlistbox.js"></script>
+    <script type="text/javascript" src="bower_components/jqwidgets/jqxdropdownlist.js"></script>
+</head>
 <body>
 	<header>
 		<h1><img src="dw_white.png" style="height: 50px; width:70px">  Data Walks</h1>
@@ -32,7 +40,37 @@
 		<ul class="dw-tabs-content">
 			<li data-content="heatMap" class="selected">
 				<div class="contain">
-					<!-- calendar chart -->
+					   <div id='content'>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var source = [
+                    "Affogato",
+                    "Americano",
+                    "Bicerin",
+                    "Breve",
+                    "Café Bombón",
+                    "Café au lait",
+                    "Caffé Corretto",
+                    "Café Crema",
+                    "Caffé Latte",
+		        ];
+                // Create a jqxDropDownList
+                $("#jqxdropdownlist").jqxDropDownList({ source: source, selectedIndex: 0, width: '200px', height: '25px' });
+                // disable the sixth item.
+                $("#jqxdropdownlist").jqxDropDownList('disableAt', 5);
+                // bind to 'select' event.
+                $('#jqxdropdownlist').bind('select', function (event) {
+                    var args = event.args;
+                    var item = $('#jqxdropdownlist').jqxDropDownList('getItem', args.index);
+                    alert('Selected: ' + item.label);
+                });
+            });
+        </script>
+        <div id='jqxdropdownlist'>
+        </div>
+    </div>
+					<!--
+					<!-- calendar chart 
 					<div ng-controller="ChartDisplay">
 						Select the Watch ID's to view:</br> 
 						<label ng-repeat="index in deviceIds">{{index.index}}
@@ -42,10 +80,10 @@
 						<div id="calendar_basic"></div>
 					</div>
 					
-					<!-- calories chart -->
+					<!-- calories chart 
 					<div id="table_div"></div>
 					</br> Calories: </br> </br>
-					<div ng-controller="CalDisplay" id="calTime"></div>
+					<div ng-controller="CalDisplay" id="calTime"></div>-->
 				</div>
 			</li>
 		</ul> 

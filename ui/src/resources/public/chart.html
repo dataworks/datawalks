@@ -1,29 +1,44 @@
-<!doctype html>
+<!DOCTYPE HTML>
 <html ng-app="datawalks">
 <head>
-        <title>Data Walks</title>
-        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-   		<meta charset="utf-8">
-   		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-   		
-  		<script text = "text/javascript"> 
-  			google.load("visualization", "1", {packages:['corechart','calendar','table']});
-  		</script>
-  		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=visualization"></script>
-        <script src="bower_components/angular/angular.js"></script>
-        <script src="bower_components/angular-resource/angular-resource.js"></script>
-        <script src="bower_components/momentjs/moment.js"></script>
-       	<script src="js/app.js"></script>
-       	<script src="js/services/aggregate.js"></script>
-       	<script src="js/services/calories.js"></script>
-       	<script src="js/controllers/caloriesChart.js"></script>
-       	<script src="js/controllers/calendarChart.js"></script>
-       	<link rel="stylesheet" href="css/main.css">      
+	<title>Data Walks</title>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=yes">
+    <meta charset="utf-8">
+	<link rel="stylesheet" type=text/css href="/css/plain.css">
+	<link rel="stylesheet" href="bower_components/jqwidgets/styles/jqx.base.css"
+	type="text/css" />
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=visualization"></script>
+       <script src="bower_components/angular/angular.js"></script>
+       <script src="bower_components/angular-resource/angular-resource.js"></script>
+       <script src="bower_components/momentjs/moment.js"></script>
+       <script src="bower_components/jquery/dist/jquery.min.js"></script>
+       <script src="bower_components/jquery/dist/jquery.js"></script>
+       <script src="bower_components/jqwidgets/jqxcore.js"></script>
+       <script src="bower_components/jqwidgets/jqxdatetimeinput.js"></script>
+       <script src="bower_components/jqwidgets/jqxcalendar.js"></script>
+	   <script src="bower_components/jqwidgets/jqxtooltip.js"></script>
+	   <script src="bower_components/jqwidgets/globalization/globalize.js"></script>
+       <script src="js/app.js"></script>
+       <script src="js/services/watch.js"></script>
+       <script src="js/services/watchIds.js"></script>
+       <script src="js/controllers/heatMap.js"></script>
+       <script src="js/services/twitter.js"></script>
+       <script src="js/controllers/twitterFeed.js"></script>
+       <script type="text/javascript" src="https://www.google.com/jsapi"></script> 
 </head>
 <body>
-	<ng-include src="'include.htm'"></ng-include>
-	</br>
-	</br>
+	<header>
+		<h1><img src="dw_white.png" style="height: 50px; width:70px">  Data Walks</h1>
+	</header>
+	<div class="dw-tabs">
+		<nav>
+			<ul class="dw-tabs-navigation">
+				<li><a data-content="heatMap" href="index.html">Heat Map</a></li>
+				<li><a data-content="distCals" class="selected" href="chart.html">Distance / Calories</a></li>
+			</ul>
+		</nav>
+		<ul class="dw-tabs-content">
+			<li data-content="distCals" class="selected">
 	<div ng-controller="ChartDisplay">
 		Select the Watch ID's to view:</br> <label ng-repeat="index in deviceIds">{{index.index}}
 			<input type="radio" name="index" ng-model="index.value"
@@ -37,7 +52,7 @@
 	</br>
 	<br />
 	<div ng-controller="CalDisplay" id="calTime"></div>
-
-
+	</li>
+	</ul>
 </body>
 </html>

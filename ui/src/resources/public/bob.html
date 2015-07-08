@@ -4,12 +4,21 @@
     <title>Data Walks</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=yes">
     <meta charset="utf-8">
+    <link rel="stylesheet" href="bower_components/jqwidgets/styles/jqx.base.css" type="text/css" />
     <link rel="stylesheet" type=text/css href="/css/plain.css">
     <link rel="stylesheet" type=text/css hreff="/css/misc.css">
+    <link rel="stylesheet" href="bower_components/jqwidgets/styles/jqx.base.css" type="text/css" />
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=visualization"></script>
-      <script src="bower_components/angular/angular.js"></script>
-      <script src="bower_components/angular-resource/angular-resource.js"></script>
-      <script src="bower_components/momentjs/moment.js"></script>
+       <script src="bower_components/angular/angular.js"></script>
+       <script src="bower_components/angular-resource/angular-resource.js"></script>
+       <script src="bower_components/momentjs/moment.js"></script>
+       <script src="bower_components/jquery/dist/jquery.min.js"></script>
+       <script src="bower_components/jquery/dist/jquery.js"></script>
+       <script src="bower_components/jqwidgets/jqxcore.js"></script>
+       <script src="bower_components/jqwidgets/jqxdatetimeinput.js"></script>
+       <script src="bower_components/jqwidgets/jqxcalendar.js"></script>
+	   <script src="bower_components/jqwidgets/jqxtooltip.js"></script>
+	   <script src="bower_components/jqwidgets/globalization/globalize.js"></script>
       <script src="js/app.js"></script>
       <script src="js/services/watch.js"></script>
       <script src="js/services/watchIds.js"></script>
@@ -17,7 +26,13 @@
       <script src="js/services/twitter.js"></script>
       <script src="js/controllers/twitterFeed.js"></script>
       <script type="text/javascript" src="https://www.google.com/jsapi"></script>   
-   </head>
+      <!-- new -->
+    <script type="text/javascript" src="bower_components/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="bower_components/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="bower_components/jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="bower_components/jqwidgets/jqxlistbox.js"></script>
+    <script type="text/javascript" src="bower_components/jqwidgets/jqxdropdownlist.js"></script>
+</head>
 <body>
 	<header>
 		<h1><img src="dw_white.png" style="height: 50px; width:70px">  Data Walks</h1>
@@ -31,29 +46,87 @@
 		</nav>
 		<ul class="dw-tabs-content">
 			<li data-content="heatMap" class="selected">
+				<div class="banner">
+					
+        		
+        		
+        <select multiple="multiple" id="dropdownMenu">
+			<option ng-repeat="index in deviceIds" ng-model="index.value" 
+				ng-value="index.value" ng-click="matchId(-1)">
+				{{index.name}}
+			</option>
+		</select>		
+        		
+        		
+        		
+        		
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var source = [
+                    "Lindsay",
+                    "Hayato",
+                    "Danny",
+                    "Bobby",
+                    "Dave"
+		        ];
+                // Create a jqxDropDownList
+                $("#jqxdropdownlist").jqxDropDownList({ source: source, selectedIndex: 0, width: '200px', height: '25px' });
+                // disable the sixth item.
+                $("#jqxdropdownlist").jqxDropDownList('disableAt', 5);
+                // bind to 'select' event.
+                $('#jqxdropdownlist').bind('select', function (event) {
+                    var args = event.args;
+                    var item = $('#jqxdropdownlist').jqxDropDownList('getItem', args.index);
+                    <!--alert('Selected: ' + item.label);-->
+                });
+            });
+        </script>
+        <div id='jqxdropdownlist'></div>
+				
+				
+					<!-- put all extra drop down and special content 
+					<div ng-controller="Display">
+					<!--<div id='jqxCalendar'></div>
+        					<div class="col-md-2">
+		        				Select the Watch ID's to view:</br>
+								<select multiple="multiple" id="dropdownMenu">
+									<option ng-repeat="index in deviceIds" ng-model="index.value" 
+										ng-value="index.value" ng-click="matchId(-1)">
+									 	{{index.name}}
+									</option>
+								</select>				<br/></br>
+		        				<div id='jqxCalendar'></div>
+								<form>
+									{{avg.name}}: <input type="checkbox" name="avg.name"
+									ng-model="avg.value" ng-value="{{avg.value}}"><br />
+									{{comp.name}}: <input type="checkbox" name="comp.name"
+									ng-model="comp.value" ng-value="{{comp.value}}">
+								</form>				 </br> </br>
+		         			</div>
+		  				 </div>
+				</div>
 				<div class="contain">
 					<div class="lefty"></br>
-						<div ng-controller="Display">
-		   					<div id="map-canvas"></div>
-		   					<div id="current">Nothing yet...</div> 
-		   				</div>
+		   				<div id="map-canvas"></div>
+		   				<div id="current">Nothing yet...</div> 
     				</div>
-    				<div class="righty">
-						<div class="boxish" ng-controller="TwitDisplay" >      
+    				<div class="righty">	
+    					<div id='jqxCalendar'></div>
+		         		<!--<div class="boxish" ng-controller="TwitDisplay" >      
 							<div ng-repeat="twit in twits" style="border: 10px red">
 								<blockquote class="twitter-tweet">
 								<p style="float: left;">
 								<img ng-src="{{twit.img}}"  height="50px" width="50px">
-								</p>
-								<div id="#tweader">
-							 		<span style="font-style: bold;">{{twit.uname}}</span>
-							 		<span style="color: #4099FF;"><a href="https://twitter.com/{{twit.handle}}">@{{twit.handle}}</a>
+								 </p>
+								 <div id="#tweader">
+								 	<span style="font-style: bold;">{{twit.uname}}</span>
+								 	<span style="color: #4099FF;"><a href="https://twitter.com/{{twit.handle}}">@{{twit.handle}}</a>
 								</div></br>			
 									{{twit.text}}</br> 
 								<span style="font-size: 12px">- {{twit.tStamp | date}}</span>
 								</blockquote>
 							</div>
-						</div>
+						</div>		-->			 </br></br>
 					</div>
 				</div>
 			</li>

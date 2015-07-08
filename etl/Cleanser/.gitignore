@@ -1,0 +1,8 @@
+/bin/
+/build/
+.cache
+.cache-main
+.gradle
+naughty.txt
+test.txt
+naughty.csv

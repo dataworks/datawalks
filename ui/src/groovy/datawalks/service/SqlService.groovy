@@ -9,7 +9,25 @@ import org.springframework.stereotype.Service
 class SqlService {
 	@Autowired DataSource dataSource
 	
+	/* getLookupName()
+	 * 
+	 * Return IDs and the associated name
+	 */
+	def getLookupName(){
+		def rows = []
+		Sql sql = new Sql(dataSource)
+		sql.eachRow("""SELECT deviceid deviceid, name ownerName 
+						FROM workable_device_lookup 
+						ORDER BY deviceid"""){
+			rows << [deviceid: it.deviceid, ownerName: it.ownerName]
+		}
+		return rows
+	}
 	
+	/* getDatePerDevice()
+	 * 
+	 * Return the dates per the device
+	 */
 	def getDatePerDevice(){
 		def rows = []
 		Sql sql = new Sql(dataSource)
@@ -63,7 +81,9 @@ class SqlService {
 	def getDeviceId(){
 		def rows = []
 		Sql sql = new Sql(dataSource)
-		sql.eachRow("""SELECT DISTINCT deviceid deviceid FROM workabledata"""){
+		sql.eachRow("""SELECT DISTINCT deviceid deviceid
+						FROM workabledata
+						ORDER BY deviceid"""){
 			rows << [device: it.deviceid]
 		}
 		return rows

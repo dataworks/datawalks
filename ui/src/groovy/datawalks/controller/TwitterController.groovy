@@ -18,7 +18,8 @@ class TwitterController {
 
 	@RequestMapping("/twitter/getTweets")
 	public def getTweets(@RequestParam(value = "latitude", required = false) String latitude,
-			@RequestParam(value = "longitude", required = false) String longitude) {
+			@RequestParam(value = "longitude", required = false) String longitude,
+			@RequestParam(value = "date", required = false) String date) {
 		esService.search(
 			[query: [filtered: [
 					query: [match_all: []],

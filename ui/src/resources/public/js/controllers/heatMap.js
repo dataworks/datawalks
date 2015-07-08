@@ -423,8 +423,9 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
    }
 	
    $scope.devicesLoaded = function(results){
-	   $scope.selectedDeviceIds = []
+	   $scope.selectedDeviceIds = [];
 	   for(var i=0; i< results.rows.length; i++){
+		   console.log("dev: " + results.rows[i].device);
 			$scope.selectedDeviceIds.push(results.rows[i].device);
 	   }
 	   

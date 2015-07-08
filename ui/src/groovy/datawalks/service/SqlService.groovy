@@ -16,7 +16,9 @@ class SqlService {
 	def getLookupName(){
 		def rows = []
 		Sql sql = new Sql(dataSource)
-		sql.eachRow("""SELECT deviceid deviceid, name ownerName FROM workable_device_lookup"""){
+		sql.eachRow("""SELECT deviceid deviceid, name ownerName 
+						FROM workable_device_lookup 
+						ORDER BY deviceid"""){
 			rows << [deviceid: it.deviceid, ownerName: it.ownerName]
 		}
 		return rows
@@ -79,7 +81,9 @@ class SqlService {
 	def getDeviceId(){
 		def rows = []
 		Sql sql = new Sql(dataSource)
-		sql.eachRow("""SELECT DISTINCT deviceid deviceid FROM workabledata"""){
+		sql.eachRow("""SELECT DISTINCT deviceid deviceid
+						FROM workabledata
+						ORDER BY deviceid"""){
 			rows << [device: it.deviceid]
 		}
 		return rows

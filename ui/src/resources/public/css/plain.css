@@ -1,0 +1,304 @@
+/*color scheme: 
+blue 	#000047
+green 	#7EB900
+grey	#8F8F8F */
+
+
+html {
+	background: #000047;
+}
+
+header {
+	text-align: center;
+	color: white;
+	position: relative;
+	font-size: 30px;
+}
+
+body {
+  font-size: 100%;
+  font-family: "Montserrat","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+}
+
+a {
+  color: #ffffff; 
+  text-decoration: none;
+}
+div .dw-tabs {
+	padding: 0px;
+}
+ul.dw-tabs-content {
+	height: auto;
+	padding: 5px 5px 5px 5px;
+	margin: 0px;
+	background: #ffffff;
+}
+.contain {
+	/*margin: 5px 5px 5px 5px;*/
+	position: relative;
+	width: 100%;
+	height: 500px;
+	padding: 0px;
+}
+.contain .lefty {
+	position: relative;
+	float: left;
+	width: 50%;
+	height: auto;
+	vertical-align: center;
+}
+.contain .righty {
+	position: relative;
+	float: right;
+	width: 50%;
+	height: auto;
+	vertical-align: center;
+	height: 100%;
+	/*padding: 1em auto;*/ /*find better way to format*/
+}
+.contain .mini {
+	display:inline;
+}
+/*	messes up everything
+div {
+	display: inline-block;
+	padding: 5px;
+}*/ 
+										/*			map essentials		*/
+										
+#map-canvas {
+	position: relative;
+    height: 600px;
+    width: 100%;
+}
+#panel {
+        position: absolute;
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+}
+.boxish {
+	height:600px;
+	width:100%;
+	overflow: auto;
+	position: relative;
+	/*display: inline;*/
+}
+
+
+										/*			nav bars			*/
+.dw-tabs {
+  position: relative;
+  height: 800px;
+  width: 93%; 
+  margin: 1em auto;
+  background: transparent;
+}
+.dw-tabs-navigation {
+  width: auto;
+  background-color: #8f8f8f;
+  box-shadow: inset 0 -2px 3px rgba(203, 196, 130, 0.06); 
+  list-style: none;
+}
+.dw-tabs-navigation a {
+  position: relative;
+  display: block;
+  height: 60px;
+  width: auto;
+  line-height: 60px;
+  text-align: center;
+  font-size: 12px;
+  font-size: 0.875rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 700;
+  padding: 0 2.8em 0 4.6em;
+}
+.dw-tabs-navigation a.selected {
+  background-color: #ffffff !important; 
+  box-shadow: inset 0 2px 0 #7eb900;  
+  color: #000047; 
+}
+*, *::after, *::before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*::after, *::before {
+  content: '';
+}
+.dw-tabs-navigation a::before {
+  position: absolute;
+  top: 50%;
+  left: 38px;
+  display: inline-block;
+  height: 20px; 
+  width: 20px;
+  background: #7eb900; 
+  background-repeat: no-repeat;
+}
+.dw-tabs-navigation a::before {
+    top: 50%;
+    margin-top: -10px;
+    margin-left: 0;
+    left: 38px;
+}
+.dw-tabs-navigation li {
+  float: left; 
+}
+.dw-tabs-content {
+  margin: auto;
+  background: white;
+  height: 900px;
+  width: 100%;
+}
+.dw-tabs:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.dw-tabs::after { 
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 60px;
+  width: 50px;
+  z-index: 1;
+  pointer-events: none;
+  /*background: -webkit-linear-gradient( right , #f8f7ee, rgba(248, 247, 238, 0));
+  background: linear-gradient(to left, #f8f7ee, rgba(248, 247, 238, 0));*/
+  visibility: visible;
+  opacity: 1;
+  -webkit-transition: opacity .3s 0s, visibility 0s 0s;
+  -moz-transition: opacity .3s 0s, visibility 0s 0s;
+  transition: opacity .3s 0s, visibility 0s 0s;
+}
+.no-cssgradients .dw-tabs::after {
+  display: none;
+}
+.dw-tabs-navigation:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.dw-tabs.is-ended::after {
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: opacity .3s 0s, visibility 0s .3s;
+  -moz-transition: opacity .3s 0s, visibility 0s .3s;
+  transition: opacity .3s 0s, visibility 0s .3s;
+}
+.dw-tabs nav {
+  width: auto;
+  overflow: none;
+  -webkit-overflow-scrolling: touch;
+  background: white;
+  box-shadow: inset 0 -2px 3px rgba(203, 196, 130, 0.06);
+}
+.no-touch .dw-tabs-navigation a:hover {
+  color: #29324e;
+  background-color: rgba(233, 230, 202, 0.3);
+}
+.dw-tabs-navigation a[data-content='heatMap']::before {
+  background-position: 0 0;
+}
+.dw-tabs-navigation a[data-content='distCals']::before {
+  background-position: -20px 0;
+}
+.dw-tabs-content li {
+  display: none;
+  /*padding: 1.4em;*/
+}
+.dw-tabs-content li.selected {
+  margin: 0px; /* change so it has 0 margins*/
+  display: block;
+}
+.dw-tabs-content li p {
+  font-size: 14px;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: #8493bf;
+  margin-bottom: 2em;
+}
+
+													/*twitter junk*/
+blockquote.twitter-tweet {
+ background: #ffffff ;
+ /*display: inline-block;*/
+ font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+ font-size: 12px;
+ font-weight: bold;
+ line-height: 16px;
+ border-color: #eee #ddd #bbb;
+ border-radius: 5px;
+ border-style: solid;
+ border-width: 1px;
+ box-shadow: 0 1px 3px #B8B8B8 ;
+ margin: 10px 5px;
+ padding: 10px 10px 10px 10px;
+ max-width: 468px;
+}
+#tweader {
+    horizontal-align: center;
+    height: 54px;
+    font-size:14px;
+    width: 40px;
+}
+blockquote.twitter-tweet p {
+ font-size: 16px;
+ font-weight: normal;
+ line-height: 20px;
+}
+
+blockquote.twitter-tweet a {
+ color: inherit;
+ font-weight: normal;
+ text-decoration: none;
+ outline: 0 none;
+}
+
+blockquote.twitter-tweet a:hover,
+blockquote.twitter-tweet a:focus {
+ text-decoration: underline;
+}                                                                
+                                                        
+                                                                /*end twitter*/
+
+
+
+@-webkit-keyframes dw-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-moz-keyframes dw-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes dw-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .dw-tabs-content {
+    min-height: 480px;
+  }
+  .dw-tabs-content li {
+    /*padding: 1em 1em 1em 1em;*/
+  }
+}

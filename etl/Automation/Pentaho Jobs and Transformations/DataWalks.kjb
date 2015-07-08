@@ -9,7 +9,7 @@
   <created_user>-</created_user>
   <created_date>2015&#x2f;06&#x2f;10 10&#x3a;22&#x3a;22.489</created_date>
   <modified_user>charles.wild</modified_user>
-  <modified_date>2015&#x2f;06&#x2f;16 14&#x3a;30&#x3a;40.422</modified_date>
+  <modified_date>2015&#x2f;07&#x2f;07 14&#x3a;23&#x3a;15.252</modified_date>
     <parameters>
     </parameters>
     <slaveservers>
@@ -54,8 +54,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>383</xloc>
-      <yloc>24</yloc>
+      <xloc>384</xloc>
+      <yloc>26</yloc>
       </entry>
     <entry>
       <name>START</name>
@@ -149,8 +149,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>527</xloc>
-      <yloc>190</yloc>
+      <xloc>554</xloc>
+      <yloc>187</yloc>
       </entry>
     <entry>
       <name>Create Universal Directory</name>
@@ -195,41 +195,47 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>679</xloc>
-      <yloc>190</yloc>
+      <xloc>710</xloc>
+      <yloc>173</yloc>
       </entry>
     <entry>
-      <name>Transformation</name>
+      <name>Nulls No More&#x21;</name>
       <description/>
-      <type>TRANS</type>
-      <specification_method>filename</specification_method>
-      <trans_object_id/>
-      <filename/>
-      <transname/>
+      <type>SQL</type>
+      <sql>UPDATE summary&#xa;SET &#x22;Elevation Gain&#x22; &#x3d; 0&#xa;WHERE &#x22;Elevation Gain&#x22; IS NULL&#x3b;&#xa;&#xa;UPDATE summary&#xa;SET &#x22;Elevation Loss&#x22; &#x3d; 0&#xa;WHERE &#x22;Elevation Loss&#x22; IS NULL&#x3b;&#xa;&#xa;UPDATE summary&#xa;SET &#x22;Avg Pace&#x22; &#x3d; 0&#xa;WHERE &#x22;Avg Pace&#x22; &#x3d; &#x27;--&#x3a;--&#x27;&#x3b;&#xa;&#xa;UPDATE summary&#xa;SET &#x22;Avg Moving Pace&#x22; &#x3d; 0&#xa;WHERE &#x22;Avg Moving Pace&#x22; &#x3d; &#x27;--&#x3a;--&#x27;&#x3b;&#xa;&#xa;UPDATE summary&#xa;SET &#x22;Best Pace&#x22; &#x3d; 0&#xa;WHERE &#x22;Best Pace&#x22; &#x3d; &#x27;--&#x3a;--&#x27;&#x3b;&#xa;&#xa;UPDATE workabledetails&#xa;SET &#x22;Elevation Gain&#x22; &#x3d; 0&#xa;WHERE &#x22;Elevation Gain&#x22; &#x3d; &#x27;--&#x27;&#x3b;&#xa;&#xa;UPDATE workabledetails&#xa;SET &#x22;Elevation Loss&#x22; &#x3d; 0&#xa;WHERE &#x22;Elevation Loss&#x22; &#x3d; &#x27;--&#x27;&#x3b;&#xa;&#xa;UPDATE workabledetails&#xa;SET &#x22;Avg Pace&#x22; &#x3d; 0&#xa;WHERE &#x22;Avg Pace&#x22; &#x3d; &#x27;--&#x27;&#x3b;&#xa;&#xa;UPDATE workabledetails&#xa;SET &#x22;Avg Pace&#x22; &#x3d; 0&#xa;WHERE &#x22;Avg Pace&#x22; IS NULL&#x3b;&#xa;&#xa;UPDATE workabledetails&#xa;SET &#x22;Avg Moving Pace&#x22; &#x3d; 0&#xa;WHERE &#x22;Avg Moving Pace&#x22; &#x3d; &#x27;--&#x27;&#x3b;&#xa;&#xa;UPDATE workabledetails&#xa;SET &#x22;Best Pace&#x22; &#x3d; 0&#xa;WHERE &#x22;Best Pace&#x22; &#x3d; &#x27;--&#x27;&#x3b;</sql>
+      <useVariableSubstitution>F</useVariableSubstitution>
+      <sqlfromfile>F</sqlfromfile>
+      <sqlfilename/>
+      <sendOneStatement>T</sendOneStatement>
+      <connection>Geolocation Data</connection>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>843</xloc>
+      <yloc>26</yloc>
+      </entry>
+    <entry>
+      <name>End of File Character</name>
+      <description/>
+      <type>SHELL</type>
+      <filename>&#x2f;dataworks&#x2f;EndOfFile.sh</filename>
+      <work_directory/>
       <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
       <exec_per_row>N</exec_per_row>
-      <clear_rows>N</clear_rows>
-      <clear_files>N</clear_files>
       <set_logfile>N</set_logfile>
       <logfile/>
+      <set_append_logfile>N</set_append_logfile>
       <logext/>
       <add_date>N</add_date>
       <add_time>N</add_time>
+      <insertScript>N</insertScript>
+      <script/>
       <loglevel>Basic</loglevel>
-      <cluster>N</cluster>
-      <slave_server_name/>
-      <set_append_logfile>N</set_append_logfile>
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <create_parent_folder>N</create_parent_folder>
-      <logging_remote_work>N</logging_remote_work>
-      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
-      </parameters>      <parallel>N</parallel>
+      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1017</xloc>
-      <yloc>321</yloc>
+      <xloc>450</xloc>
+      <yloc>134</yloc>
       </entry>
   </entries>
   <hops>
@@ -248,8 +254,8 @@
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
+      <evaluation>N</evaluation>
+      <unconditional>Y</unconditional>
     </hop>
     <hop>
       <from>START</from>
@@ -271,6 +277,33 @@
     </hop>
     <hop>
       <from>Execute Auto Downloader </from>
+      <to>Auto Download TCX and CSV into PG-Admin</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>N</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Auto Download TCX and CSV into PG-Admin</from>
+      <to>Nulls No More&#x21;</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Execute Auto Downloader </from>
+      <to>End of File Character</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>End of File Character</from>
       <to>Auto Download TCX and CSV into PG-Admin</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>

@@ -8,6 +8,7 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 	var table = new google.visualization.Table(document.getElementById('table_div'));
 	var analyticData;
 	var maxSpeedThreshold = .2;
+	var analytics = [];
 	
 	/* parseToMinutes(string)
 	 * 
@@ -34,12 +35,11 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 	{
 		var localDate = localDate;
 		var run = false;
-		var analytics;
 		for(var i = 0; i< $scope.records.calories.length; i++)
 		{
 			if($scope.deviceIds[index].id == $scope.records.calories[i].did)
 			{
-				if(localDate === $scope.records.calories[i].dtime)
+				if(localDate == $scope.records.calories[i].dtime)
 				{
 					var speed = $scope.records.calories[i].sdist/
 						parseToMinutes($scope.records.calories[i].stime);
@@ -72,10 +72,10 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 	}
 	
 	var options = {
+			tooltip: {isHtml: true},
 			title: 'Calories Burned Over Time',
-			subtitle: 'Time(Hr:Mn:Sd:Ms',
 			hAxis: {title: 'Calories Burned'},
-			vAxis: {title: 'Time Traveled', subtitle: 'H:M:S:MS'},
+			vAxis: {title: 'Date'},
 			width: 1000,
 			height: 500,
 			bar: { groupWidth: '75%' }
@@ -103,6 +103,7 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 		analyticsTable.addColumn('string', 'Speed');
 		analyticsTable.addColumn('number', 'Distance');
 		analyticsTable.addColumn('number', 'Calories');
+		console.log(analytics.length);
 		for(var i = 0; i < analytics.length; i++)
 		{
 			if(analytics[i].run == true)
@@ -128,7 +129,7 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 	{
 		$scope.loadIds();
 		var dataTable = new google.visualization.DataTable();
-		dataTable.addColumn('string', "Time");
+		dataTable.addColumn('string', "Date");
 		dataTable.addColumn('number', "Calories");
 		chart.draw(dataTable, options);
 	}
@@ -136,7 +137,7 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 	$scope.drawBarChart = function(index) {
 		var dataTable = [];
 		dataTable = new google.visualization.DataTable();
-		dataTable.addColumn('string', "Time");
+		dataTable.addColumn('string', "Date");
 		dataTable.addColumn('number', "Calories");
 
 		for(var i = 0; i< $scope.records.calories.length; i++)

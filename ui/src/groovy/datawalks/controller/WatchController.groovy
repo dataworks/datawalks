@@ -37,7 +37,7 @@ class WatchController {
 			@RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern= "yyyy-MM-dd HH:mm:ss") Date startDate,
 			@RequestParam(value = "stopDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date stopDate) {
 		def points = sqlService.getDevicePoints(id, startDate, stopDate)
-		[rows: points]
+		[rows: points, uniqueDates: sqlService.getDatePerDevice(), ownerNames: sqlService.getLookupName()]
 	}
 
 	@RequestMapping("/watch/deviceIds")

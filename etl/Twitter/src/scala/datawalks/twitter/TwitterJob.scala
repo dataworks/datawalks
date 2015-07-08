@@ -24,9 +24,9 @@ object TwitterJob {
 
   //SQL statement to grab information from Postgres
   private var DB_QUERY = """(SELECT * FROM(
-    SELECT round(cast(latitude AS NUMERIC), 4) latitude, round(cast(longitude AS NUMERIC), 4) longitude, TO_CHAR(dtime, 'YYYY-MM-DD') dtime, COUNT(*) frequency, dateinserted dateinserted FROM workabledata  
+    SELECT round(cast(latitude AS NUMERIC), 3) latitude, round(cast(longitude AS NUMERIC), 3) longitude, TO_CHAR(dtime, 'YYYY-MM-DD') dtime, COUNT(*) frequency, dateinserted dateinserted FROM workabledata  
     WHERE dateinserted > 'DATE_INSERTED'
-    GROUP BY round(cast(latitude AS NUMERIC), 4), round(cast(longitude AS NUMERIC), 4), TO_CHAR(dtime, 'YYYY-MM-DD'), dateinserted
+    GROUP BY round(cast(latitude AS NUMERIC), 3), round(cast(longitude AS NUMERIC), 3), TO_CHAR(dtime, 'YYYY-MM-DD'), dateinserted
     ORDER BY COUNT(*) DESC) AS toppoints
     WHERE frequency >= 5) dbquery"""
 

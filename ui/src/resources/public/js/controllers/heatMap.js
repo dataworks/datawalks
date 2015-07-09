@@ -16,8 +16,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
     var endDate="2016-06-01T00:00:00";
     var longTw;
     var latTw;
-    var longSum = 0;
-    var latSum = 0;
     $scope.ownerNames = [];
     $scope.avg = {
     	name: "average",
@@ -372,23 +370,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 			$scope.records = Watch.query({id: $scope.deviceIds[index].id, 
 				startDate:'2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, devLoaded);
 	}
-	function loadCalendar(index)
-	{
-		console.log("loadCla " + specDateHolder[index].length)
-		if($scope.deviceIds[index].selectDate == false)
-		{
-							
-			var sD = $("#jqxCalendar").jqxCalendar('specialDates');
-	        sD = [];
-	        $("#jqxCalendar").jqxCalendar({ specialDates: sD });
-			
-			for(var i = 0; i < specDateHolder[index].length; i++)
-			{
-				$("#jqxCalendar").jqxCalendar('addSpecialDate', specDateHolder[index][i], 
-						'jqx-calendar-cell-specialDate1', 'run');
-			}
-		}
-	}
 	
 	var devLoaded = function(results){
 		
@@ -417,19 +398,15 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 			{
 				st = binStPrep($scope.deviceIds[index].stDate, results);
 				en = binEnPrep($scope.deviceIds[index].enDate, results);
-				console.log("dev st " + st + " en " + en);
 			}
-			
+			console.log()
 			for(var i = st; i < en; i++)
 			{
 				if($scope.deviceIds[index].stDate <= results.rows[i].dtime && 
 						$scope.deviceIds[index].enDate >= results.rows[i].dtime)
 				{
-					
 					watchData.push(new google.maps.LatLng(results.rows[i].latitude, 
 							results.rows[i].longitude));
-					longSum += results.rows[i].longitude;
-					latSum += results.rows[i].latitude;
 				}			
 			}			
 		}

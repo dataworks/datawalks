@@ -82,7 +82,8 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 			var i = 0;
 			for(var k = 0; k < $scope.deviceIds.length; k++)
 			{
-				if($scope.deviceIds[k].active == true)
+				console.log($scope.deviceIds[k].active);
+				if($scope.deviceIds[k].active === true)
 				{
 					i = k;
 				}
@@ -90,19 +91,16 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 			console.log("i " + i);
 			if($scope.deviceIds.length != 0)
 			{
-				$scope.deviceIds[i].value = true;
+				//$scope.deviceIds[i].value = true;
 				console.log("i " + i + " " + $scope.deviceIds[i].value);
-				if($scope.deviceIds[i].value == true)
+				if(specDateHolder[i].length != 0)
 				{
-					console.log("st " + selection.from.toLocaleDateString() + 
-							" END " + selection.to.toLocaleDateString() + " " + specDateHolder[i][0]);
 					var stCheck = 
 						binSearch(new Date(selection.from.toLocaleDateString()).getTime()
 								, specDateHolder[i]);
 					var enCheck = 
 						binSearch(new Date(selection.to.toLocaleDateString()).getTime()
 								, specDateHolder[i]);
-					console.log("b " + stCheck + " "  + enCheck)
 					if(stCheck < 0 || enCheck < 0)
 					{
 						window.alert("please select date with entries")
@@ -115,6 +113,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 								).add(23, 'h').add(59 , 'm');
 						$scope.deviceIds[i].enDate = new Date(en).getTime();
 						$scope.deviceIds[i].selectDate = true;
+						$scope.deviceIds[i].value = true;
 						$scope.matchId(i);
 						//$scope.deviceIds[i].selectDate = false;
 					}										
@@ -137,7 +136,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 			var midPlus;
 			if (results[mid].hasOwnProperty("dtime") == true)
 			{
-				console.log("dtime");
 				midVal = results[mid].dtime;
 				midSub = results[mid-1].dtime;
 				midPlus = results[mid+1].dtime;
@@ -148,11 +146,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 				midVal = new Date(midVal).getTime();
 				midSub = null;
 				midPlus = null;
-			}
-			console.log(moment(midVal).format("YYYY-MM-DD") + " " +
-					moment(val).format("YYYY-MM-DD"));
-			console.log("there " + mid + " mv " + midVal + " " + val);
-					
+			}					
 			if ((midSub <= val && midPlus >= val)
 					||midVal == val)
 			{				
@@ -370,6 +364,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 			e = document.getElementById("dropdownMenu");
 			index = $scope.ownerNames.indexOf(e.options[e.selectedIndex].text);
 			$scope.deviceIds[index].active = true;
+			console.log("matchId " + ctr + " "+ holder[ctr] + " " + index);
 			holder.push(index);
 			if(holder[ctr] != index)
 			{
@@ -386,7 +381,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		{
 			index = ind;
 		}
-		
+		$scope.deviceIds[index].value = true;
 		if(heatmaps[index].length === 0)
 		{
 			$scope.deviceIds[index].value = true;
@@ -400,14 +395,15 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		if($scope.deviceIds[index].value = true 
 				&& $scope.deviceIds[index].selectDate == false)
 		{
+			console.log("why");
 			updateCalendar(index);
 		}
 	}
 	
 	function loadHeatMap(index)
-	{	
-			$scope.records = Watch.query({id: $scope.deviceIds[index].id, 
-				startDate:'2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, devLoaded);
+	{
+		$scope.records = Watch.query({id: $scope.deviceIds[index].id, 
+			startDate:'2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, devLoaded);
 	}
 
 	function updateCalendar(index)
@@ -425,7 +421,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 
 	
 	var devLoaded = function(results){
-		console.log("kdljslf");
 		var watchData = [];
 		var index;
 		var latlngBounds = new google.maps.LatLngBounds();
@@ -514,9 +509,11 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 	
 	$scope.clear = function()
 	{
+		console.log("ljadl");
+		console.log($scope.deviceIds.length);
 		for(var i = 0; i < $scope.deviceIds.length; i++)
 		{
-			if($scope.deviceIds[i].value == true)
+			if(specDateHolder[i].length != 0)
 			{				
 				specDateHolder[i] = [];
 				var sD = $("#jqxCalendar").jqxCalendar('specialDates');

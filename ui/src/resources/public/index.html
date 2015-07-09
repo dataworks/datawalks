@@ -33,27 +33,27 @@
 	<div class="contain">
 		<div class="righty">	
    				<div ng-controller="Display">
-        		<div class="col-md-2">
-        		Select the Watch ID's to view:</br>
-					<select multiple="multiple" id="dropdownMenu">
-						<option ng-repeat="index in deviceIds" ng-model="index.value" 
-						ng-value="index.value" ng-click="matchId(-1)">
-							 {{index.name}}
-						</option>
-					</select>
-        		<br/></br>
-        		<div id='jqxCalendar'></div>
+
+				<div class="col-md-2">
+					Select the Watch ID's to view:</br> <select multiple="multiple"
+						id="dropdownMenu">
+						<option ng-repeat="index in deviceIds" ng-model="index.value"
+							ng-value="index.value" ng-click="matchId(-1)">
+							{{index.name}}</option>
+					</select> <br /></br>
+					<div id='jqxCalendar'></div>
 					<form>
 						{{avg.name}}: <input type="checkbox" name="avg.name"
 							ng-model="avg.value" ng-value="{{avg.value}}"><br />
 						{{comp.name}}: <input type="checkbox" name="comp.name"
 							ng-model="comp.value" ng-value="{{comp.value}}">
 					</form>
-					<br>
-		         <br>
-		         
-		         </div>
-		   </div>
+					<br> <br>
+					<form ng-submit="clear()">
+						clear: <input type="submit" id="clear" value="Clear" />
+					</form>
+				</div>
+			</div>
 		         <div class="boxish" ng-controller="TwitDisplay" >      
 					<div ng-repeat="twit in twits" style="border: 10px red">
 						<blockquote class="twitter-tweet">

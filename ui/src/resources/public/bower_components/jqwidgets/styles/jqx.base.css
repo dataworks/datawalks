@@ -2012,8 +2012,18 @@ button.jqx-button, input[type=button].jqx-button,  input[type=submit].jqx-button
 /*applied to a calendar cell when the cell's date is a special date(holiday, vacation, birthay. See the SpecialDates demo).*/
 .jqx-calendar-cell-specialDate
 {
-    color: #FF0000 !important;
-    background-color: transparent;
+    color:#003399 !important;
+    font-weight: bold;
+    background-color: hsla(240, 100%, 75%, 0.3);
+    border: 1px solid #fff;
+    margin: 0 0 0 0;
+    cursor: pointer;
+}
+.jqx-calendar-cell-specialDate1
+{
+    color:#FF3399 !important;
+    font-weight: bold;
+    background-color: hsla(240, 100%, 75%, 0.3);
     border: 1px solid #fff;
     margin: 0 0 0 0;
     cursor: pointer;

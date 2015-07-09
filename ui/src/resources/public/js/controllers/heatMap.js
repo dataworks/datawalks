@@ -1,7 +1,5 @@
 controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', function($scope, linker, Watch, WatchIds) {
 	$scope.map;
-	var pointarray;
-	var heatmap;
 	var heatmaps = [];
 	var specDateHolder = [];
 	var myMarker = null;
@@ -14,9 +12,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
     $scope.calendar;
     var longTw;
     var latTw;
-    var longSum = 0;
-    var latSum = 0;
-    $scope.ownerNames = [];
+    var displayNames = ["Dave", "Lindsay", "Bobby", "Hayato", "Chuck", "Danny"];
     $scope.avg = {
     	name: "average",
     	value: false
@@ -25,7 +21,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
     	name: "compare",
     	value: false
     };
-    
       
     
 	// Creates the heat map
@@ -65,35 +60,42 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		$('#jqxCalendar').on('change', function (event) {
 			var selection = event.args.range;
 			
-			for(var i = 0; i < $scope.deviceIds.length; i++)
-			{				
-				if($scope.deviceIds[i].value == true)
+			var i;
+			for(var k = 0; k < $scope.deviceIds.length; k++)
+			{
+				if($scope.deviceIds[k].active == true)
 				{
-					console.log("st " + selection.from.toLocaleDateString() + 
-							" END " + selection.to.toLocaleDateString() + " " + specDateHolder[i][0]);
-					var stCheck = 
-						binSearch(new Date(selection.from.toLocaleDateString()).getTime()
-								, specDateHolder[i]);
-					var enCheck = 
-						binSearch(new Date(selection.to.toLocaleDateString()).getTime()
-								, specDateHolder[i]);
-					console.log("b " + stCheck + " "  + enCheck)
-					if(stCheck < 0 || enCheck < 0)
-					{
-						window.alert("please select date with entries")
-					}
-					else
-					{
-						$scope.deviceIds[i].stDate = 
-							new Date(selection.from.toLocaleDateString()).getTime();
-						var en = moment(selection.to.toLocaleDateString()
-								).add(23, 'h').add(59 , 'm');
-						$scope.deviceIds[i].enDate = new Date(en).getTime();
-						$scope.deviceIds[i].selectDate = true;
-						$scope.matchId(i);
-					}										
+					i = k;
 				}
-			}					
+			}
+			
+			if($scope.deviceIds[i].value == true)
+			{
+				console.log("st " + selection.from.toLocaleDateString() + 
+						" END " + selection.to.toLocaleDateString() + " " + specDateHolder[i][0]);
+				var stCheck = 
+					binSearch(new Date(selection.from.toLocaleDateString()).getTime()
+							, specDateHolder[i]);
+				var enCheck = 
+					binSearch(new Date(selection.to.toLocaleDateString()).getTime()
+							, specDateHolder[i]);
+				console.log("b " + stCheck + " "  + enCheck)
+				if(stCheck < 0 || enCheck < 0)
+				{
+					window.alert("please select date with entries")
+				}
+				else
+				{
+					console.log("???");
+					$scope.deviceIds[i].stDate = 
+						new Date(selection.from.toLocaleDateString()).getTime();
+					var en = moment(selection.to.toLocaleDateString()
+							).add(23, 'h').add(59 , 'm');
+					$scope.deviceIds[i].enDate = new Date(en).getTime();
+					$scope.deviceIds[i].selectDate = true;
+					$scope.matchId(i);
+				}										
+			}			
 		});	
 	});
 	
@@ -227,17 +229,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		
 		if($scope.deviceIds[index].selectDate == true)
 		{
-
 			endInd = binEnPrep($scope.deviceIds[index].enDate, results);
-			for(var i = 0; i < results.rows.length; i++)
-			{
-				if($scope.deviceIds[index].enDate > results.rows[i].dtime
-						&& $scope.deviceIds[index].stDate < results.rows[i].dtime)
-				{
-					console.log(results.rows[i].dtime + 
-							moment(results.rows[i].dtime).format("YYYY-MM-DD"));
-				}
-			}
 			
 			splitDate = moment(results.rows[endInd]).format("YYYY-MM-DD");
 			splitDate = new Date(splitDate).getTime();
@@ -258,6 +250,15 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 			div1 = Math.floor(Math.sqrt(splitInd));
 			div2 = Math.floor(Math.sqrt(endInd - splitInd));
 		}
+		console.log("st " + startInd + " split " + splitInd + " end " + endInd);
+		console.log("stv " + results.rows[startInd].dtime + 
+				" spv " + results.rows[splitInd].dtime + 
+				" env " + results.rows[endInd-1].dtime);
+		console.log("stv " + moment(results.rows[startInd].dtime).format("YYYY-MM-DD") + 
+				" spv " + moment(results.rows[splitInd].dtime).format("YYYY-MM-DD") + 
+				" env " + moment(results.rows[endInd].dtime).format("YYYY-MM-DD"));
+		
+		console.log("div1 " + div1 + " div2 "+ div2);
 	}
 
 	$scope.avgPath = function(results, index)
@@ -315,7 +316,8 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		return avgData;
 	}
 	
-	
+	var holder = [];
+	var ctr = 0;
 	$scope.matchId = function(ind)
 	{
 		var e;
@@ -324,6 +326,18 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		{
 			e = document.getElementById("dropdownMenu");
 			index = displayNames.indexOf(e.options[e.selectedIndex].text);
+			$scope.deviceIds[index].active = true;
+			holder.push(index);
+			if(holder[ctr] != index)
+			{
+				$scope.deviceIds[holder[ctr]].active = false;
+			}
+			if(holder.length > 3)
+			{
+				holder.shift();
+				ctr--;
+			}
+			ctr++;
 		}		
 		else
 		{
@@ -332,20 +346,17 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		
 		if(heatmaps[index].length === 0)
 		{
-			console.log("hlhj");
 			$scope.deviceIds[index].value = true;
 			loadHeatMap(index);
 		}
-		else if($scope.deviceIds[index].selectDate = true)
+		else if($scope.deviceIds[index].selectDate == true)
 		{
-			heatmaps[index].setMap(null);
 			loadHeatMap(index);
 		}
-		if($scope.deviceIds[index].selectDate == false)
+		if($scope.deviceIds[index].value = true)
 		{
-			loadCalendar(index);
+			updateCalendar(index);
 		}
-		
 	}
 	
 	function loadHeatMap(index)
@@ -353,21 +364,16 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 			$scope.records = Watch.query({id: $scope.deviceIds[index].id, 
 				startDate:'2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, devLoaded);
 	}
-	function loadCalendar(index)
+	function updateCalendar(index)
 	{
-		console.log("loadCla " + specDateHolder[index].length)
-		if($scope.deviceIds[index].selectDate == false)
+		var sD = $("#jqxCalendar").jqxCalendar('specialDates');
+        sD = [];
+        $("#jqxCalendar").jqxCalendar({ specialDates: sD });
+		
+		for(var i = 0; i < specDateHolder[index].length; i++)
 		{
-							
-			var sD = $("#jqxCalendar").jqxCalendar('specialDates');
-	        sD = [];
-	        $("#jqxCalendar").jqxCalendar({ specialDates: sD });
-			
-			for(var i = 0; i < specDateHolder[index].length; i++)
-			{
-				$("#jqxCalendar").jqxCalendar('addSpecialDate', specDateHolder[index][i], 
-						'jqx-calendar-cell-specialDate1', 'run');
-			}
+			$("#jqxCalendar").jqxCalendar('addSpecialDate', specDateHolder[index][i], 
+					'jqx-calendar-cell-specialDate1', 'run');
 		}
 	}
 	
@@ -375,8 +381,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		
 		var watchData = [];
 		var index;
-		var latlngBounds = new google.maps.LatLngBounds();
-
 		for(var i = 0; i < $scope.deviceIds.length; i++)
 			if($scope.deviceIds[i].id == results.rows[0].deviceid)	
 				index = $scope.deviceIds[i].index-1;
@@ -398,21 +402,12 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 			{
 				st = binStPrep($scope.deviceIds[index].stDate, results);
 				en = binEnPrep($scope.deviceIds[index].enDate, results);
-				console.log("dev st " + st + " en " + en);
 			}
-			
+
 			for(var i = st; i < en; i++)
-			{
-				if($scope.deviceIds[index].stDate <= results.rows[i].dtime && 
-						$scope.deviceIds[index].enDate >= results.rows[i].dtime)
-				{
-					
-					watchData.push(new google.maps.LatLng(results.rows[i].latitude, 
-							results.rows[i].longitude));
-					longSum += results.rows[i].longitude;
-					latSum += results.rows[i].latitude;
-				}			
-<<<<<<< HEAD
+			{		
+				watchData.push(new google.maps.LatLng(results.rows[i].latitude, 
+						results.rows[i].longitude));		
 			}			
 		}
 		if($scope.deviceIds[index].selectDate == false)
@@ -432,37 +427,21 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 					}		
 				}
 	        }
-			loadCalendar(index);
-		}
-=======
-			}
+			var sD = $("#jqxCalendar").jqxCalendar('specialDates');
+	        sD = [];
+	        $("#jqxCalendar").jqxCalendar({ specialDates: sD });
 			
-			for(var i = 0; i < results.uniqueDates.length; i++)
+			for(var i = 0; i < specDateHolder[index].length; i++)
 			{
-				if(results.uniqueDates[i].devid === $scope.deviceIds[index].id)
-				{
-					var date1 = new Date(results.uniqueDates[i].dtime);
-					$("#jqxCalendar").jqxCalendar('addSpecialDate', date1, '', 'run');
-				}		
-			}			
-		}
-		for (var i = 0; i < watchData.length; i++) {
-			  latlngBounds.extend(watchData[i]);
+				$("#jqxCalendar").jqxCalendar('addSpecialDate', specDateHolder[index][i], 
+						'jqx-calendar-cell-specialDate1', 'run');
 			}
->>>>>>> 52637323a9a3e7d41ab3d59e0c957e32efcddf62
+		}
 		
 		var pointArray = new google.maps.MVCArray(watchData);
 		heatmaps[index] = new google.maps.visualization.HeatmapLayer({
 			data: pointArray});
 		heatmaps[index].setMap($scope.map);
-<<<<<<< HEAD
-=======
-
-		//Fit the map to show all points 
-		$scope.map.setCenter(latlngBounds.getCenter());
-		$scope.map.fitBounds(latlngBounds);
-
->>>>>>> 52637323a9a3e7d41ab3d59e0c957e32efcddf62
 		$scope.deviceIds[index].stDate = 0;
 		$scope.deviceIds[index].enDate = Number.MAX_VALUE;
 		$scope.deviceIds[index].selectDate = false;
@@ -479,6 +458,8 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		        sD = [];
 		        $("#jqxCalendar").jqxCalendar({ specialDates: sD });
 				heatmaps[i].setMap(null);
+				heatmaps[i] = [];
+				$scope.deviceIds[i].value = false;
 			}
 		}
 	}
@@ -495,14 +476,13 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 				selectDate: false,
 				avgShown: false,
 				value: false,
+				active: false,
 				name: displayNames[i]
 			});
-			name: $scope.ownerNames[i]
-		});
-		specDateHolder[i] = [];
-		heatmaps[i] = [];
+			specDateHolder[i] = [];
+			heatmaps[i] = [];
+		}
 	}
-
 	 
 	deviceSelected = function(){
 		   var arraySelected = []
@@ -514,15 +494,12 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 	   }
    
    $scope.recordsLoaded = function(results){
-	   for(var i =0; i < results.ownerNames.length; i++)
-		   $scope.ownerNames.push(results.ownerNames[i].ownerName);
-	   $scope.loadMap();      
+	   $scope.loadMap();    
    }
 	
    $scope.devicesLoaded = function(results){
-	   $scope.selectedDeviceIds = [];
+	   $scope.selectedDeviceIds = []
 	   for(var i=0; i< results.rows.length; i++){
-		   console.log("dev: " + results.rows[i].device);
 			$scope.selectedDeviceIds.push(results.rows[i].device);
 	   }
 	   

@@ -30,7 +30,6 @@
        
   			google.load("visualization", "1", {packages:['corechart','calendar','table']});
   		</script>
-  		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=visualization"></script>
         <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-resource/angular-resource.js"></script>
         <script src="bower_components/momentjs/moment.js"></script>
@@ -54,7 +53,7 @@
 		<ul class="dw-tabs-content">
 			<li data-content="distCals" class="selected">
 				<div ng-controller="ChartDisplay">
-					Select the Watch ID's to view:</br> <label ng-repeat="index in deviceIds">{{index.index}}
+					Select the Watch ID's to view:</br> <label ng-repeat="index in deviceIds">{{index.name}}
 						<input type="radio" name="index" ng-model="index.value"
 						ng-click="showIds(index.index)" ng-value="{{index.value}}">
 					</label><br />

@@ -6,6 +6,7 @@ grey	#8F8F8F */
 
 html {
 	background: #000047;
+	font-family: "Montserrat","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
 }
 
 header {
@@ -17,6 +18,7 @@ header {
 .banner {
 	height: 50px;
 	background: purple;
+	display: inline-block;
 }
 
 body {
@@ -62,11 +64,11 @@ ul.dw-tabs-content {
 .contain .mini {
 	display:inline;
 }
-/*	messes up everything
-div {
-	display: inline-block;
-	padding: 5px;
-}*/ 
+#clear {
+	background: white;
+	border: 1px solid #000049;
+	color: #7eb900;
+}
 										/*			map essentials		*/
 										
 #map-canvas {

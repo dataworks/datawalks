@@ -57,7 +57,7 @@
 			   			<div ng-controller="Display">
 				<div class="col-md-2">
 					Select Watch ID to view:
-					<select id="dropdownMenu">
+					<select id="dropdownMenu" multiple ="multiple">
 						<option ng-repeat="index in deviceIds" ng-model="index.value"
 							ng-value="index.value" ng-click="matchId(-1)">
 							{{index.name}}</option>
@@ -69,7 +69,8 @@
 						{{comp.name}}: <input type="checkbox" name="comp.name"
 							ng-model="comp.value" ng-value="{{comp.value}}">
 					</form>
-					<form ng-submit="clear()" class="clear">
+					
+					 <form ng-submit="clear()" class="clear">
 						<input type="submit" id="clear" value="Clear" style="width: 100px;"/>
 					</form>
 				</div>

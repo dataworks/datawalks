@@ -25,6 +25,20 @@
        <script src="js/services/twitter.js"></script>
        <script src="js/controllers/twitterFeed.js"></script>
        <script type="text/javascript" src="https://www.google.com/jsapi"></script> 
+       <script text = "text/javascript"> 
+       <!-- new -->
+       
+  			google.load("visualization", "1", {packages:['corechart','calendar','table']});
+  		</script>
+  		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=visualization"></script>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-resource/angular-resource.js"></script>
+        <script src="bower_components/momentjs/moment.js"></script>
+       	<script src="js/app.js"></script>
+       	<script src="js/services/aggregate.js"></script>
+       	<script src="js/services/calories.js"></script>
+       	<script src="js/controllers/caloriesChart.js"></script>
+       	<script src="js/controllers/calendarChart.js"></script>
 </head>
 <body>
 	<header>
@@ -33,8 +47,8 @@
 	<div class="dw-tabs">
 		<nav>
 			<ul class="dw-tabs-navigation">
-				<li><a data-content="heatMap" href="index.html">Heat Map</a></li>
-				<li><a data-content="distCals" class="selected" href="chart.html">Distance / Calories</a></li>
+				<li><a data-content="heatMap" href="bob.html">Heat Map</a></li>
+				<li><a data-content="distCals" class="selected" href="larry.html">Distance / Calories</a></li>
 			</ul>
 		</nav>
 		<ul class="dw-tabs-content">
@@ -45,7 +59,8 @@
 						ng-click="showIds(index.index)" ng-value="{{index.value}}">
 					</label><br />
 					<div id="calendar_basic"></div>
-				</div>			</br>
+				</div>
+				</br>
 				<div id="table_div"></div>
 				</br> Calories:
 				<div ng-controller="CalDisplay" id="calTime"></div>

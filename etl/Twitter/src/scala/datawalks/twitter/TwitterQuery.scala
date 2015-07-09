@@ -48,12 +48,15 @@ class TwitterQuery {
 
     //using lat and lon parameters, build the GeoLocation to be searched around
     val locus = new GeoLocation(latitude, longitude)
+    
+    //radius around locus to pull tweets from
+    val radius = 2
 
     //initialize query using date passed, 50 tweets per page 
     var query = new Query(getDateQuery(date)).count(50)
 
     //add the geolocation, radius, and unit of measurement to the query
-    query = query.geoCode(locus, 2, "mi")
+    query = query.geoCode(locus, radius, "mi")
 
     //execute search
     var result = twitter.search(query)

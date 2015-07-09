@@ -11,19 +11,25 @@ function linker($rootScope) {
     var globalIndex = 0;
     var latitude;
     var longitude;
+    var fromDate;
+    var endDate;
     var passIndex = false;
     var passPoints = false;
     var passDate = false;
     var passedI = "passed";
     var passedD = "passed";
     var passedL = "passed";
+    var passedT = "passed";
     var globalDate;
     
-    var getLatLong = function(lat, long){
+    
+    var getLatLong = function(lat, long, from, end){
     	passPoints = true;
     	$rootScope.$broadcast(passedL, {
     		latitude: lat,
-    		longitude: long
+    		longitude: long,
+    		fromDate: from,
+    		endDate: end
     	});
     	
     };

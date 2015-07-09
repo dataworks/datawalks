@@ -42,15 +42,13 @@
 							{{index.name}}</option>
 					</select> <br /></br>
 					<div id='jqxCalendar'></div>
-					<form>
+					<form ng-submit="clear()">
 						{{avg.name}}: <input type="checkbox" name="avg.name"
 							ng-model="avg.value" ng-value="{{avg.value}}"><br />
 						{{comp.name}}: <input type="checkbox" name="comp.name"
 							ng-model="comp.value" ng-value="{{comp.value}}">
-					</form>
-					<br> <br>
-					<form ng-submit="clear()">
-						clear: <input type="submit" id="clear" value="Clear" />
+							<br> <br>
+						<input type="submit" id="clear" value="Clear" />
 					</form>
 				</div>
 			</div>

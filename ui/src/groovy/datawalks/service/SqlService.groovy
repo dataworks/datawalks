@@ -98,12 +98,12 @@ class SqlService {
 		Sql sql = new Sql(dataSource)
 		sql.eachRow("""
 						SELECT did, dtime, scal, wrun, sdist, sum.time stime
-						FROM datadetails			
+						FROM myfastview			
 						JOIN summary sum
-							ON datadetails.wrun = sum.runid
-						WHERE datadetails.scal != 0
+							ON myfastview.wrun = sum.runid
+						WHERE myfastview.scal != 0
 						GROUP BY did, dtime, wrun, stime, scal, sdist
-						ORDER BY dtime, wrun;""") {
+						ORDER BY dtime, wrun""") {
 			rows << [did: it.did,dtime: it.dtime, scal: it.scal, wrun: it.wrun, sdist: it.sdist, stime: it.stime]				
 		}
 		return rows

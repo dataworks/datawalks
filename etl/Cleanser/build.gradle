@@ -19,6 +19,8 @@ repositories {
 }
 
 dependencies {
+	compile 'org.apache.lucene:lucene-analyzers-common:5.2.1'
+	compile 'org.apache.lucene:lucene-core:5.2.1'
 	compile ('org.elasticsearch:elasticsearch-hadoop:2.1.0.rc1') {
 		exclude group: 'org.apache.pig', module: 'pig'
 		exclude group: 'cascading', module: 'cascading-local'

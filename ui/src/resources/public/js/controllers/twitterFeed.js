@@ -8,12 +8,20 @@ controllers.controller('TwitDisplay', ['$scope', 'linker', 'Twitter', function($
 	//starting location for tweets
 	var localLat = 38.942892; 
 	var localLong = -77.334012;
+	var startDates = "2015-06-01T00:00:00";
+	var endDates = "2016-06-01T00:00:00";
 	
+	/* 
+	 * 
+	 * 
+	 */
 	linker.onGetLatLong($scope, function (message) {
         localLat = message.latitude;
         localLong = message.longitude;
+        startDates = message.fromDate;
+        endDates = message.endDate;
         
-    	$scope.records = Twitter.query({latitude: localLat, longitude: localLong}, 
+    	$scope.records = Twitter.query({latitude: localLat, longitude: localLong, fromDate: startDates, endDate: endDates}, 
     			$scope.recordsLoaded);
     });
 
@@ -23,7 +31,6 @@ controllers.controller('TwitDisplay', ['$scope', 'linker', 'Twitter', function($
 	 */
 	$scope.loadTweets = function(){
 		$scope.twits = [];
-		console.log($scope.records.hits.length);
 		for(var i = 0; i < $scope.records.hits.length; i++)
 		{	
 			if($scope.records.hits[i].location != null)
@@ -44,7 +51,7 @@ controllers.controller('TwitDisplay', ['$scope', 'linker', 'Twitter', function($
 		$scope.loadTweets();   
 	}
 
-	$scope.records = Twitter.query({latitude: localLat, longitude: localLong}, 
+	$scope.records = Twitter.query({latitude: localLat, longitude: localLong, fromDate: startDates, endDate: endDates}, 
 			$scope.recordsLoaded);
 
 }]);

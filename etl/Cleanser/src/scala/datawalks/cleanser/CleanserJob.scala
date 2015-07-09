@@ -36,10 +36,8 @@ object CleanserJob {
 
     // .txt file containing bad words. OPEN AT OWN RISK
     val training = sc.textFile("/dataworks/internship-2015/etl/Cleanser/naughty.csv")
-      .map(line => getRow(line))
+      .map(word => getRow(word))
 
-    val stopWords = List("the","and","a","an","to","too")
-     
     val tokenizer = new Tokenizer()
       .setInputCol("text")
       .setOutputCol("words")

@@ -19,18 +19,31 @@ class TwitterController {
 	@RequestMapping("/twitter/getTweets")
 	public def getTweets(@RequestParam(value = "latitude", required = false) String latitude,
 			@RequestParam(value = "longitude", required = false) String longitude,
-			@RequestParam(value = "date", required = false) String date) {
+			@RequestParam(value = "fromDate", required = false) String fromDate,
+			@RequestParam(value = "endDate", required = false) String endDate) {
 		esService.search(
 			[query: [filtered: [
 					query: [match_all: []],
 					filter: [
-						geo_distance: [
-							distance: "2mi",
-							location: [
-								lat: latitude,
-								lon: longitude
+							and: [ 
+									[
+										geo_distance: [
+											distance: "2mi",
+											location: [
+												lat: latitude,
+												lon: longitude
+												]
+											]
+									],
+								   [
+										range : [
+											date : [
+												gte: fromDate,
+												lte: endDate
+												]
+											]
+									]
 								]
-							]
 						 ]
 					]
 				],

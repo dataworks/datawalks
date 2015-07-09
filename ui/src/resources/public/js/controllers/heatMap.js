@@ -11,6 +11,8 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
     $scope.lat = '';
     $scope.long = '';
     $scope.calendar;
+    var startDate="2015-06-01T00:00:00";
+    var endDate="2016-06-01T00:00:00";
     var longTw;
     var latTw;
     var longSum = 0;
@@ -47,15 +49,29 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 			document.getElementById('current').innerHTML = '<p>Marker dropped: Current Lat: ' + evt.latLng.lat().toFixed(3) + ' Current Lng: ' + evt.latLng.lng().toFixed(3) + '</p>';
 			latTw = evt.latLng.lat().toFixed(3);
 			longTw = evt.latLng.lng().toFixed(3);
-			linker.getLatLong(latTw, longTw);
+			console.log(endDate);
+			linker.getLatLong(latTw, longTw, startDate, endDate);
 		});
 
 		google.maps.event.addListener(myMarker, 'dragstart', function(evt){
 			document.getElementById('current').innerHTML = '<p>Currently dragging marker...</p>';
 		});
-		
 		myMarker.setMap($scope.map);
 		$scope.loadIds();
+	}
+	
+	/* parseToDateString
+	 * 
+	 * Convert date from 6/7/2015 to 2015-06-07T23:00:00
+	 */
+	var parseToDateString = function(dt){
+		var rep = dt.split("/");
+		rep4 = rep[0];
+		rep[0] = rep[2];
+		rep[2] = rep[1];
+		rep[1] = rep4;
+		ret = rep.join("-")+"T23:00:00";
+		return ret;
 	}
 
 	$(document).ready(function () {                
@@ -64,7 +80,8 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 			selectionMode: 'range', theme: 'energyblue'});
 		$('#jqxCalendar').on('change', function (event) {
 			var selection = event.args.range;
-			console.log(selection.from.toLocaleDateString());
+			startDate = parseToDateString(selection.from.toLocaleDateString());
+			endDate = parseToDateString(selection.to.toLocaleDateString());
 		});
 	});
 	
@@ -127,7 +144,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 			
 			if($scope.deviceIds[index].enDate < results.rows[results.rows.length-1].dtime)
 			{
-				console.log("end " + $scope.deviceIds[index].enDate)
 				endInd = binSearch($scope.deviceIds[index].enDate, results);
 				console.log("b " + moment(results.rows[endInd-1].dtime).format("YYYY-MM-DD") + 
 						" " + moment($scope.deviceIds[index].enDate).format("YYYY-MM-DD"));		
@@ -425,7 +441,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
    $scope.devicesLoaded = function(results){
 	   $scope.selectedDeviceIds = [];
 	   for(var i=0; i< results.rows.length; i++){
-		   console.log("dev: " + results.rows[i].device);
 			$scope.selectedDeviceIds.push(results.rows[i].device);
 	   }
 	   

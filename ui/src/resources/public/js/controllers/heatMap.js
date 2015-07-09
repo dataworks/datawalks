@@ -68,6 +68,18 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		});
 	});
 	
+	$scope.buildDD = function (){		
+        // Create a jqxDropDownList
+        $("#jqxdropdownlist").jqxDropDownList({ source: $scope.ownerNames, selectedIndex: 0, width: '200px', height: '25px' });
+        // disable the sixth item.
+        $("#jqxdropdownlist").jqxDropDownList('disableAt', 5);
+        // bind to 'select' event.
+        $('#jqxdropdownlist').bind('select', function (event) {
+            var args = event.args;
+            var item = $('#jqxdropdownlist').jqxDropDownList('getItem', args.index);
+        });
+	}
+	
 	function binSearch(val, results)
 	{
 		var low = 0;
@@ -419,7 +431,8 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
    $scope.recordsLoaded = function(results){
 	   for(var i =0; i < results.ownerNames.length; i++)
 		   $scope.ownerNames.push(results.ownerNames[i].ownerName);
-	   $scope.loadMap();      
+	   $scope.buildDD();
+	   $scope.loadMap();  
    }
 	
    $scope.devicesLoaded = function(results){
@@ -432,7 +445,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 	   $scope.records = Watch.query({id: $scope.selectedDeviceIds , startDate: '2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, 
 				$scope.recordsLoaded);
    }
-   
+
    WatchIds.query( {}, $scope.devicesLoaded );
-   
 }]);

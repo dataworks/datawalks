@@ -10,7 +10,7 @@ table, th , td {
 table tr:nth-child(odd) {
   background-color: #f1f1f1;
 }
-.invis {s
+.invis {
 	display: none;
 	visibility: hidden;
 }
@@ -20,22 +20,6 @@ h6 {
 
 table tr:nth-child(even) {
   background-color: #ffffff;
-}
-* {
-  font: normal 20px/30px Nunito, sans-serif;
-  color: rgb(66, 66, 66);
-  
-  border: 0;
-  margin: 0;
-  padding: 0;
-  
-  -webkit-box-sizing: border-bo;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-html {
-  margin: 1em;
-  background: #F0F0F0;
 }
 div {
 	display: inline-block;
@@ -138,47 +122,12 @@ hr.load {
   -moz-animation: progress 10s infinite;
   animation: progress 10s infinite;
 }
-
-ul {
-  list-style: none;
-  display: inline;
-}
-li {
-  width: 100%;
-  margin: 5px 0px;
-  padding: 30px 40px;
-  display: inline-block;
-  background: #000000248248248;
-  font-size: 18px;
-  font-weight: 300;
-  line-height: 24px;
-  text-decoration: none;
-  border: 1px solid blue
-  transition: background 1s;
-  -moz-transition: background 1s;
-  -webkit-transition: background 1s;
-}
-
-li.animate {
-  -webkit-animation: blink 1s 2;
-  -moz-animation: blink 1s 2;
-  animation: blink 1s 2;
-}
 #map-canvas {
 	position: relative;
     height: 600px;
     width: 100%;
 }
-#panel {
-        position: absolute;
-        display: inline-block;
-        margin-left: auto;
-        margin-right: auto;
-        z-index: 5;
-        background-color: #fff;
-        padding: 5px;
-        border: 1px solid #999;
-}
+
 .contain {
 	margin-top:30px;
 	margin-bottom: 80px;
@@ -217,12 +166,6 @@ li.animate {
 }
 .contain .mini {
 	display:inline;
-}
-
-.nav li {
-	display: inline;
-	color: #99999;
-	border: 1px solid #0000FF
 }
 
 .butt {
@@ -311,61 +254,16 @@ select option:hover {
 }
 select::-ms-expand {
     display: none;
-}
+}*/
 #options select.optionsMenu select{
     display: none;
     visibility: none;
 }
 #optionsMenuTree:hover > select {
     display: block;
-}
-*/
-																/*end nav tabs*/
+}*/
 
-
-																/*twitter junk*/
-blockquote.twitter-tweet {
-  background: #ffffff;
-  /*display: inline-block;*/
-  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
-  font-size: 12px;
-  font-weight: bold;
-  line-height: 16px;
-  border-color: #eee #ddd #bbb;
-  border-radius: 5px;
-  border-style: solid;
-  border-width: 1px;
-  box-shadow: 0 1px 3px #B8B8B8;
-  margin: 10px 5px;
-  padding: 10px 10px 10px 10px;
-  max-width: 468px;
-}
-#tweader {
-	horizontal-align: center;
-	height: 54px;
-	font-size:14px;
-	width: 40px;
-}
-blockquote.twitter-tweet p {
-  font-size: 16px;
-  font-weight: normal;
-  line-height: 20px;
-}
- 
-blockquote.twitter-tweet a {
-  color: inherit;
-  font-weight: normal;
-  text-decoration: none;
-  outline: 0 none;
-}
- 
-blockquote.twitter-tweet a:hover,
-blockquote.twitter-tweet a:focus {
-  text-decoration: underline;
-}																
-														
-																/*end twitter*/
-
+															/* plug-ins*/
 
 @-webkit-keyframes progress {
   to { width: 100%; }
@@ -376,7 +274,6 @@ blockquote.twitter-tweet a:focus {
 @keyframes progress {
   to { width: 100%; }
 }
-
 @-webkit-keyframes blink {
   50% { background: rgb(226, 226, 226); }
 }
@@ -384,5 +281,5 @@ blockquote.twitter-tweet a:focus {
   50% { background: rgb(226, 226, 226); }
 }
 @keyframes blink {
-  50% { background: rgb(226, 226, 226); }
+  50% { background: rgb(226, 226, 226); }*/
 }

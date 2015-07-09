@@ -34,7 +34,7 @@ object CleanserJob {
     val sqlContext = new SQLContext(sc)
     import sqlContext.implicits._
 
-    // .txt file containing bad words. OPEN AT OWN RISK
+    // .csv file containing bad words and scores. OPEN AT OWN RISK
     val training = sc.textFile("/dataworks/internship-2015/etl/Cleanser/naughty.csv")
       .map(word => getRow(word))
 

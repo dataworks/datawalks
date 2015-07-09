@@ -39,8 +39,8 @@
 	<div class="dw-tabs">
 		<nav>
 			<ul class="dw-tabs-navigation">
-				<li><a data-content="heatMap" class="selected" href="index.html">Heat Map</a></li>
-				<li><a data-content="distCals" href="chart.html">Distance / Calories</a></li>
+				<li><a data-content="heatMap" class="selected" href="bob.html">Heat Map</a></li>
+				<li><a data-content="distCals" href="larry.html">Distance / Calories</a></li>
 			</ul>
 		</nav>
 		<ul class="dw-tabs-content">
@@ -63,11 +63,13 @@
 							{{index.name}}</option>
 					</select> 
 					<div id='jqxCalendar'></div>
-					<form ng-submit="clear()">
+					<form>
 						{{avg.name}}: <input type="checkbox" name="avg.name"
 							ng-model="avg.value" ng-value="{{avg.value}}"><br />
 						{{comp.name}}: <input type="checkbox" name="comp.name"
-							ng-model="comp.value" ng-value="{{comp.value}}">		
+							ng-model="comp.value" ng-value="{{comp.value}}">
+					</form>
+					
 					 <form ng-submit="clear()" class="clear">
 						<input type="submit" id="clear" value="Clear" style="width: 100px;"/>
 					</form>

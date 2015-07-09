@@ -96,8 +96,7 @@ class SqlService {
 	def getCalorieInfo(long watchId, Date startDate, Date stopDate){
 		def rows = []
 		Sql sql = new Sql(dataSource)
-		sql.eachRow("""
-						SELECT did, dtime, scal, wrun, sdist, sum.time stime
+		sql.eachRow(""" SELECT did, dtime, scal, wrun, sdist, sum.time stime
 						FROM myfastview			
 						JOIN summary sum
 							ON myfastview.wrun = sum.runid

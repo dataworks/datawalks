@@ -12,10 +12,10 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
     $scope.lat = '';
     $scope.long = '';
     $scope.calendar;
+    var startDate="2015-06-01T00:00:00";
+    var endDate="2016-06-01T00:00:00";
     var longTw;
     var latTw;
-    var longSum = 0;
-    var latSum = 0;
     $scope.ownerNames = [];
     $scope.avg = {
     	name: "average",
@@ -48,22 +48,40 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 			document.getElementById('current').innerHTML = '<p>Marker dropped: Current Lat: ' + evt.latLng.lat().toFixed(3) + ' Current Lng: ' + evt.latLng.lng().toFixed(3) + '</p>';
 			latTw = evt.latLng.lat().toFixed(3);
 			longTw = evt.latLng.lng().toFixed(3);
-			linker.getLatLong(latTw, longTw);
+			console.log(endDate);
+			linker.getLatLong(latTw, longTw, startDate, endDate);
 		});
 
 		google.maps.event.addListener(myMarker, 'dragstart', function(evt){
 			document.getElementById('current').innerHTML = '<p>Currently dragging marker...</p>';
 		});
-		
 		myMarker.setMap($scope.map);
 		$scope.loadIds();
 	}
-	$(document).ready(function () { 
+	
+	/* parseToDateString
+	 * 
+	 * Convert date from 6/7/2015 to 2015-06-07T23:00:00
+	 */
+	var parseToDateString = function(dt){
+		var rep = dt.split("/");
+		rep4 = rep[0];
+		rep[0] = rep[2];
+		rep[2] = rep[1];
+		rep[1] = rep4;
+		ret = rep.join("-")+"T23:00:00";
+		return ret;
+	}
+
+	$(document).ready(function () {                
 		// create jqxcalendar.
 		$("#jqxCalendar").jqxCalendar({width: 240, height: 220, 
 			selectionMode: 'range', theme: 'energyblue'});
 		$('#jqxCalendar').on('change', function (event) {
 			var selection = event.args.range;
+			startDate = parseToDateString(selection.from.toLocaleDateString());
+			endDate = parseToDateString(selection.to.toLocaleDateString());
+		});
 			
 			for(var i = 0; i < $scope.deviceIds.length; i++)
 			{				
@@ -77,25 +95,10 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 					var enCheck = 
 						binSearch(new Date(selection.to.toLocaleDateString()).getTime()
 								, specDateHolder[i]);
-					console.log("b " + stCheck + " "  + enCheck)
-					if(stCheck < 0 || enCheck < 0)
-					{
-						window.alert("please select date with entries")
-					}
-					else
-					{
-						$scope.deviceIds[i].stDate = 
-							new Date(selection.from.toLocaleDateString()).getTime();
-						var en = moment(selection.to.toLocaleDateString()
-								).add(23, 'h').add(59 , 'm');
-						$scope.deviceIds[i].enDate = new Date(en).getTime();
-						$scope.deviceIds[i].selectDate = true;
-						$scope.matchId(i);
-					}										
+					console.log("b " + stCheck + " "  + enCheck);									
 				}
 			}					
 		});	
-	});
 	
 	function binSearch(val, results)
 	{
@@ -239,7 +242,22 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 				}
 			}
 			
-			splitDate = moment(results.rows[endInd]).format("YYYY-MM-DD");
+			if($scope.deviceIds[index].enDate < results.rows[results.rows.length-1].dtime)
+			{
+				endInd = binSearch($scope.deviceIds[index].enDate, results);
+				console.log("b " + moment(results.rows[endInd-1].dtime).format("YYYY-MM-DD") + 
+						" " + moment($scope.deviceIds[index].enDate).format("YYYY-MM-DD"));		
+				
+			}
+			else if($scope.deviceIds[index].enDate < results.rows[0].dtime)
+			{
+				window.alert("date doesnt exist");
+			}
+			else
+			{
+				endInd = results.rows[results.rows.length-1].dtime;
+			}
+			splitDate = moment(results.rows[endInd-1]).format("YYYY-MM-DD");
 			splitDate = new Date(splitDate).getTime();
 			console.log(splitDate + " " + moment(splitDate).format("YYYY-MM-DD"));
 			
@@ -323,7 +341,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		if(ind == -1)
 		{
 			e = document.getElementById("dropdownMenu");
-			index = displayNames.indexOf(e.options[e.selectedIndex].text);
+			index = $scope.ownerNames.indexOf(e.options[e.selectedIndex].text);
 		}		
 		else
 		{
@@ -332,7 +350,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		
 		if(heatmaps[index].length === 0)
 		{
-			console.log("hlhj");
 			$scope.deviceIds[index].value = true;
 			loadHeatMap(index);
 		}
@@ -352,23 +369,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 	{	
 			$scope.records = Watch.query({id: $scope.deviceIds[index].id, 
 				startDate:'2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, devLoaded);
-	}
-	function loadCalendar(index)
-	{
-		console.log("loadCla " + specDateHolder[index].length)
-		if($scope.deviceIds[index].selectDate == false)
-		{
-							
-			var sD = $("#jqxCalendar").jqxCalendar('specialDates');
-	        sD = [];
-	        $("#jqxCalendar").jqxCalendar({ specialDates: sD });
-			
-			for(var i = 0; i < specDateHolder[index].length; i++)
-			{
-				$("#jqxCalendar").jqxCalendar('addSpecialDate', specDateHolder[index][i], 
-						'jqx-calendar-cell-specialDate1', 'run');
-			}
-		}
 	}
 	
 	var devLoaded = function(results){
@@ -398,44 +398,19 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 			{
 				st = binStPrep($scope.deviceIds[index].stDate, results);
 				en = binEnPrep($scope.deviceIds[index].enDate, results);
-				console.log("dev st " + st + " en " + en);
 			}
-			
+			console.log()
 			for(var i = st; i < en; i++)
 			{
 				if($scope.deviceIds[index].stDate <= results.rows[i].dtime && 
 						$scope.deviceIds[index].enDate >= results.rows[i].dtime)
 				{
-					
 					watchData.push(new google.maps.LatLng(results.rows[i].latitude, 
 							results.rows[i].longitude));
-					longSum += results.rows[i].longitude;
-					latSum += results.rows[i].latitude;
 				}			
-<<<<<<< HEAD
 			}			
 		}
-		if($scope.deviceIds[index].selectDate == false)
-		{
-			if(specDateHolder[index].length == 0)
-	        {
-				console.log("here");
-				var c = 0;
-	        	for(var i = 0; i < results.uniqueDates.length; i++)
-				{
-					if(results.uniqueDates[i].devid === $scope.deviceIds[index].id)
-					{
-						console.log("there");
-						//console.log(new Date(results.uniqueDates[i].dtime));
-						specDateHolder[index][c] = new Date(results.uniqueDates[i].dtime);
-						c++;
-					}		
-				}
-	        }
-			loadCalendar(index);
-		}
-=======
-			}
+		
 			
 			for(var i = 0; i < results.uniqueDates.length; i++)
 			{
@@ -445,24 +420,20 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 					$("#jqxCalendar").jqxCalendar('addSpecialDate', date1, '', 'run');
 				}		
 			}			
-		}
+		
 		for (var i = 0; i < watchData.length; i++) {
 			  latlngBounds.extend(watchData[i]);
 			}
->>>>>>> 52637323a9a3e7d41ab3d59e0c957e32efcddf62
 		
 		var pointArray = new google.maps.MVCArray(watchData);
 		heatmaps[index] = new google.maps.visualization.HeatmapLayer({
 			data: pointArray});
 		heatmaps[index].setMap($scope.map);
-<<<<<<< HEAD
-=======
 
 		//Fit the map to show all points 
 		$scope.map.setCenter(latlngBounds.getCenter());
 		$scope.map.fitBounds(latlngBounds);
 
->>>>>>> 52637323a9a3e7d41ab3d59e0c957e32efcddf62
 		$scope.deviceIds[index].stDate = 0;
 		$scope.deviceIds[index].enDate = Number.MAX_VALUE;
 		$scope.deviceIds[index].selectDate = false;
@@ -495,12 +466,11 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 				selectDate: false,
 				avgShown: false,
 				value: false,
-				name: displayNames[i]
+				name: $scope.ownerNames[i]
 			});
-			name: $scope.ownerNames[i]
-		});
-		specDateHolder[i] = [];
-		heatmaps[i] = [];
+			specDateHolder[i] = [];
+			heatmaps[i] = [];
+		}	
 	}
 
 	 
@@ -522,7 +492,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
    $scope.devicesLoaded = function(results){
 	   $scope.selectedDeviceIds = [];
 	   for(var i=0; i< results.rows.length; i++){
-		   console.log("dev: " + results.rows[i].device);
 			$scope.selectedDeviceIds.push(results.rows[i].device);
 	   }
 	   

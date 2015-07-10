@@ -21,7 +21,7 @@ class WatchController {
 			@RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern= "yyyy-MM-dd HH:mm:ss") Date startDate,
 			@RequestParam(value = "stopDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date stopDate) {
 		[aggs: sqlService.getTotalDistance(id, startDate, stopDate),
-			device: sqlService.getDeviceId()]
+			device: sqlService.getDeviceId(), ownerNames: sqlService.getLookupName()]
 	}
 
 	@RequestMapping("/watch/calPoints")

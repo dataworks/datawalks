@@ -9,6 +9,7 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 	$scope.globalIndex;
 	var dataTable = [];
 	$scope.portDate;
+	$scope.ownerNames = [];
 	var chart = new google.visualization.Calendar(document.getElementById('calendar_basic'));
 	var options = 
  	{
@@ -29,7 +30,8 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 			$scope.deviceIds.push({
 				index: i+1,
 				id: $scope.records.device[i].device,
-				value: false
+				value: false,
+				name: $scope.ownerNames[i]
 			});
 		}
 	}
@@ -79,7 +81,11 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 	
 	google.visualization.events.addListener(chart, 'select', selectHandler);
 	
-	$scope.recordsLoaded = function(results){ $scope.drawChart(); }
+	$scope.recordsLoaded = function(results){
+		for(var i =0; i < results.ownerNames.length; i++)
+			$scope.ownerNames.push(results.ownerNames[i].ownerName);
+		$scope.drawChart();
+		}
 	
 	$scope.records = Aggregate.query({id: 1, startDate: '2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, 
 				$scope.recordsLoaded);

@@ -113,7 +113,8 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 					}										
 				}
 			}
-		});				
+			$('#jqxCalendar').jqxCalendar('clear');
+		});
 	});	
 	
 	function binSearch(val, results)
@@ -333,14 +334,15 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		return avgData;
 	}
 	
+	var holder = [];
+	var ctr = 0;
+	var prevInd;
 	/* matchId
 	 * 
 	 * Gets the selected device from the dropdown
 	 */
 	$scope.matchId = function(ind)
 	{
-		var holder = [];
-		var ctr = 0;
 		var e;
 		var index;
 		if(ind == -1)
@@ -348,9 +350,21 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 			e = document.getElementById("dropdownMenu");
 			index = $scope.ownerNames.indexOf(e.options[e.selectedIndex].text);
 			$scope.deviceIds[index].active = true;
-			holder.push(index);
+			if(prevInd == null)
+			{
+				console.log("true");
+				prevInd = index;
+			}
+			if(prevInd != index)
+			{
+				console.log("false");
+				$scope.deviceIds[prevInd].active = false;
+			}
+			prevInd = index;
+			/*holder.push(index);
 			if(holder[ctr] != index)
 			{
+				console.log("please");
 				$scope.deviceIds[holder[ctr]].active = false;
 			}
 			if(holder.length > 3)
@@ -358,7 +372,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 				holder.shift();
 				ctr--;
 			}
-			ctr++;
+			ctr++;*/
 		}		
 		else
 		{
@@ -493,6 +507,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 	{
 		for(var i = 0; i < $scope.deviceIds.length; i++)
 		{
+			console.log(specDateHolder[i].length);
 			if(specDateHolder[i].length != 0)
 			{				
 				specDateHolder[i] = [];

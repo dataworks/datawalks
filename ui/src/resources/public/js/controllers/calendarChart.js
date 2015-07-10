@@ -8,7 +8,6 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 	$scope.deviceIds = [];
 	$scope.globalIndex;
 	var dataTable = [];
-	$scope.portDate;
 	$scope.ownerNames = [];
 	var chart = new google.visualization.Calendar(document.getElementById('calendar_basic'));
 	var options = 
@@ -41,11 +40,9 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 	
 	function selectHandler() {
 		var selection = chart.getSelection();
-		var message = '';
-		var it = selection;
+		console.log(selection);
 		var date = moment(selection[0].date).format("YYYY-MM-DD");
-		$scope.portDate = date;
-		linker.getDate($scope.portDate);
+		linker.getDate(date);
 	}
 
 	$scope.showIds = function(index)
@@ -67,7 +64,7 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 	 			offset = moment($scope.records.aggs[i].dtime).add(12, 'h').format("YYYY-MM-DD");
 	 			offset = new Date(offset);
 	 			dataTable.addRow([ offset, 
-	 			                   parseInt($scope.records.aggs[i].mdistance), "THis"] );
+	 			                   parseInt($scope.records.aggs[i].mdistance)] );
 	 		}
 	 	}
 	 	chart.draw(dataTable, options);

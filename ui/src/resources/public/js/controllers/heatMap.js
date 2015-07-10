@@ -119,6 +119,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 					}										
 				}
 			}
+			$('#jqxCalendar').jqxCalendar('clear');
 		});
 				
 						
@@ -355,6 +356,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 	
 	var holder = [];
 	var ctr = 0;
+	var prevInd;
 	$scope.matchId = function(ind)
 	{
 		var e;
@@ -364,10 +366,21 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 			e = document.getElementById("dropdownMenu");
 			index = $scope.ownerNames.indexOf(e.options[e.selectedIndex].text);
 			$scope.deviceIds[index].active = true;
-			console.log("matchId " + ctr + " "+ holder[ctr] + " " + index);
-			holder.push(index);
+			if(prevInd == null)
+			{
+				console.log("true");
+				prevInd = index;
+			}
+			if(prevInd != index)
+			{
+				console.log("false");
+				$scope.deviceIds[prevInd].active = false;
+			}
+			prevInd = index;
+			/*holder.push(index);
 			if(holder[ctr] != index)
 			{
+				console.log("please");
 				$scope.deviceIds[holder[ctr]].active = false;
 			}
 			if(holder.length > 3)
@@ -375,7 +388,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 				holder.shift();
 				ctr--;
 			}
-			ctr++;
+			ctr++;*/
 		}		
 		else
 		{
@@ -509,10 +522,9 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 	
 	$scope.clear = function()
 	{
-		console.log("ljadl");
-		console.log($scope.deviceIds.length);
 		for(var i = 0; i < $scope.deviceIds.length; i++)
 		{
+			console.log(specDateHolder[i].length);
 			if(specDateHolder[i].length != 0)
 			{				
 				specDateHolder[i] = [];

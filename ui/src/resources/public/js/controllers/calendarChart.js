@@ -52,6 +52,7 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 	{
 		index--;
 		$scope.globalIndex = index;
+		
 		linker.getIndex($scope.globalIndex);
 		dataTable = [];
 	    dataTable = new google.visualization.DataTable();

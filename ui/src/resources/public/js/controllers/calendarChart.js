@@ -20,7 +20,10 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
  	   tooltip: {isHtml: true},
 		calendar: { 
 			cellSize: 25
-		}
+		},
+ 	  colorAxis: {
+ 		  colors: ['#ADD8E6', '#0000FF']
+ 	  }
  	 };
 	
 	$scope.loadIds = function()
@@ -49,6 +52,7 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 	{
 		index--;
 		$scope.globalIndex = index;
+		
 		linker.getIndex($scope.globalIndex);
 		dataTable = [];
 	    dataTable = new google.visualization.DataTable();
@@ -63,7 +67,7 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 	 			offset = moment($scope.records.aggs[i].dtime).add(12, 'h').format("YYYY-MM-DD");
 	 			offset = new Date(offset);
 	 			dataTable.addRow([ offset, 
-	 			                   parseInt($scope.records.aggs[i].mdistance)] );
+	 			                   parseInt($scope.records.aggs[i].mdistance), "THis"] );
 	 		}
 	 	}
 	 	chart.draw(dataTable, options);

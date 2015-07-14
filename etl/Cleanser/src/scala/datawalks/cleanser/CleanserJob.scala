@@ -1,22 +1,21 @@
 package datawalks.cleanser
 
+import scala.beans.BeanInfo
 import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkContext._
 import org.apache.spark.ml.Pipeline
 import org.apache.spark.ml.classification.LogisticRegression
-import org.apache.spark.ml.feature.HashingTF
 import org.apache.spark.ml.feature.Tokenizer
+import org.apache.spark.mllib.classification.NaiveBayes
+import org.apache.spark.mllib.feature.HashingTF
 import org.apache.spark.mllib.feature.Word2Vec
 import org.apache.spark.mllib.linalg.Vector
+import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.rdd.RDD
-import org.elasticsearch.spark._
 import org.apache.spark.sql.SQLContext
-import scala.beans.BeanInfo
+import org.elasticsearch.spark._
 import org.apache.spark.sql.Row
-
-@BeanInfo
-case class LabeledDocument(text: String, label: Double)
 
 @BeanInfo
 case class Document(id: Long, text: String)
@@ -34,45 +33,31 @@ object CleanserJob {
     val sqlContext = new SQLContext(sc)
     import sqlContext.implicits._
 
-    // .csv file containing bad words and scores. OPEN AT OWN RISK
+    val htf = new HashingTF(10000)
+    val tokenizer = new LuceneTokenizer()
+
     val training = sc.textFile("/dataworks/internship-2015/etl/Cleanser/naughty.csv")
-      .map(word => getRow(word))
+    val parsedTraining = training.map { line =>
+      val parts = line.split(',')
+      LabeledPoint(parts(1).toDouble, htf.transform(tokenizer.tokenize(parts(0))))
+    }
 
-    val tokenizer = new Tokenizer()
-      .setInputCol("text")
-      .setOutputCol("words")
-    val hashingTF = new HashingTF()
-      .setNumFeatures(1000)
-      .setInputCol(tokenizer.getOutputCol)
-      .setOutputCol("features")
-    val lr = new LogisticRegression()
-      .setMaxIter(10)
-      .setRegParam(0.001)
-    val pipeline = new Pipeline()
-      .setStages(Array(tokenizer, hashingTF, lr))
+    val model = NaiveBayes.train(parsedTraining, lambda = 1.0, modelType = "multinomial")
 
-    val model = pipeline.fit(training.toDF())
-
-    model.transform(rdd.toDF())
-      .select("id", "text", "probability", "prediction")
-      .collect()
-      .foreach {
-        case Row(id: Long, text: String, prob: Vector, prediction: Double) =>
-          println(s"text: $text, prob=$prob, prediction=$prediction")
-      }
-
+    val results = rdd.map { row =>
+      val wordVecs = htf.transform(tokenizer.tokenize(row.text))
+      (model.predict(wordVecs), row.text)
+    }
+    results.foreach{ x =>
+      println("score: " + x._1 + ", text: " + x._2)
+    }
     sc.stop()
   }
 
   private def getData(row: (String, scala.collection.Map[String, AnyRef])): Document = {
-    var text = row._2.get("text").toString()
-    text += " " + row._2.get("user").toString()
-    text += " " + row._2.get("handle").toString()
+    var text = row._2.get("text").get +
+    " " + row._2.get("user").get +
+    " " + row._2.get("handle").get
     return Document(row._1.toLong, text)
-  }
-  
-  private def getRow(row: String) : LabeledDocument = {
-    val values = row.split(",")
-    return LabeledDocument(values(0), values(1).toDouble)
   }
 }

@@ -26,7 +26,7 @@ class LuceneTokenizer(override val uid: String) extends UnaryTransformer[String,
 
   override protected def outputDataType: DataType = new ArrayType(StringType, false)
 
-  private def tokenize(string: String): Seq[String] = {
+  def tokenize(string: String): Seq[String] = {
     var result = new ListBuffer[String]()
     var stream = new StandardAnalyzer().tokenStream(null, new StringReader(string))
     stream.reset()

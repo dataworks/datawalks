@@ -3,6 +3,8 @@
 .cache
 .cache-main
 .gradle
+.classpath
+.settings/org.eclipse.jdt.core.prefs
 naughty.txt
 test.txt
 naughty.csv

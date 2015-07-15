@@ -8,7 +8,6 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 	$scope.deviceIds = [];
 	$scope.globalIndex;
 	var dataTable = [];
-	$scope.portDate;
 	$scope.ownerNames = [];
 	var chart = new google.visualization.Calendar(document.getElementById('calendar_basic'));
 	var options = 
@@ -20,7 +19,10 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
  	   tooltip: {isHtml: true},
 		calendar: { 
 			cellSize: 25
-		}
+		},
+ 	  colorAxis: {
+ 		  colors: ['#ADD8E6', '#0000FF']
+ 	  }
  	 };
 	
 	$scope.loadIds = function()
@@ -38,17 +40,16 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 	
 	function selectHandler() {
 		var selection = chart.getSelection();
-		var message = '';
-		var it = selection;
+		console.log(selection);
 		var date = moment(selection[0].date).format("YYYY-MM-DD");
-		$scope.portDate = date;
-		linker.getDate($scope.portDate);
+		linker.getDate(date);
 	}
 
 	$scope.showIds = function(index)
 	{
 		index--;
 		$scope.globalIndex = index;
+		
 		linker.getIndex($scope.globalIndex);
 		dataTable = [];
 	    dataTable = new google.visualization.DataTable();

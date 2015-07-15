@@ -33,7 +33,7 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 
 	$scope.calRateAnalytics = function(localDate, index)
 	{
-		var localDate = localDate;
+		console.log("what is: " + index);
 		var run = false;
 		for(var i = 0; i< $scope.records.calories.length; i++)
 		{
@@ -103,7 +103,7 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 		analyticsTable.addColumn('string', 'Speed');
 		analyticsTable.addColumn('number', 'Distance');
 		analyticsTable.addColumn('number', 'Calories');
-		console.log(analytics.length);
+		console.log("length: " + analytics.length);
 		for(var i = 0; i < analytics.length; i++)
 		{
 			if(analytics[i].run == true)

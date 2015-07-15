@@ -185,6 +185,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		}
 		return startInd;
 	}
+	
 	function binSplitPrep(split, results)
 	{
 		var splitInd;

@@ -698,7 +698,11 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		        sD = [];
 		        $("#jqxCalendar").jqxCalendar({ specialDates: sD });
 				heatmaps[i].setMap(null);
-				circles[i].setMap(null);
+				if(circles[i].length != 0)
+				{
+					circles[i].setMap(null);
+				}
+				
 				heatmaps[i] = [];
 				circles[i] = [];
 				$scope.deviceIds[i].value = false;

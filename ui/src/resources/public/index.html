@@ -84,7 +84,7 @@
 					<span style="font-style: bold;">{{twit.uname}}</span>
 					<span style="color: #4099FF;"><a href="https://twitter.com/{{twit.handle}}">@{{twit.handle}}</a>
 					</div></br>			
-							{{twit.text}}</br> 
+					<span ng-bind-html="twit.text" style="font-weight: none;"></span>
 						<span style="font-size: 12px">- {{twit.tStamp | date}}</span>
 						</blockquote>
 				</div>

@@ -82,6 +82,6 @@ jar {
 
 task run(type: JavaExec) {
 	main = 'datawalks.cleanser.CleanserJob'
-//	args = "$RUN_PROPERTIES".split().toList()
+    args = "$RUN_PROPERTIES".split().toList()
 	classpath sourceSets.main.runtimeClasspath
 }

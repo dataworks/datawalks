@@ -24,7 +24,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
     	value: false
     };
       
-    
 	/* loadMap
 	 * 
 	 * Creates the heatmap and the marker at the office. Calls loadIds()
@@ -334,7 +333,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		return avgData;
 	}
 	
-	var holder = [];
 	var ctr = 0;
 	var prevInd;
 	/* matchId
@@ -361,18 +359,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 				$scope.deviceIds[prevInd].active = false;
 			}
 			prevInd = index;
-			/*holder.push(index);
-			if(holder[ctr] != index)
-			{
-				console.log("please");
-				$scope.deviceIds[holder[ctr]].active = false;
-			}
-			if(holder.length > 3)
-			{
-				holder.shift();
-				ctr--;
-			}
-			ctr++;*/
 		}		
 		else
 		{
@@ -519,6 +505,9 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 				$scope.deviceIds[i].value = false;
 			}
 		}
+		$('#jqxCalendar').jqxCalendar('clear');
+		startDate = null;
+		endDate = null;
 	}
 	
 	/* loadIds()

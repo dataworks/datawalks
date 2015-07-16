@@ -47,25 +47,24 @@
 	</header>
 	<div class="dw-tabs">
 		<nav>
-			<ul class="dw-tabs-navigation">
+			<ul id="widthCal" class="dw-tabs-navigation">
 				<li><a data-content="heatMap" href="index.html">Heat Map</a></li>
 				<li><a data-content="distCals" class="selected" href="chart.html">Distance / Calories</a></li>
 			</ul>
 		</nav>
 		<ul class="dw-tabs-content">
-			<li data-content="distCals" class="selected">
 				<div ng-controller="ChartDisplay">
 					Select the Watch ID's to view:</br> <label ng-repeat="index in deviceIds">{{index.name}}
 						<input type="radio" name="index" ng-model="index.value"
 						ng-click="showIds(index.index)" ng-value="{{index.value}}">
 					</label><br />
+					
 					<div id="calendar_basic"></div>
 				</div>
 				</br>
 				<div id="table_div"></div>
 				</br> Calories:
 				<div ng-controller="CalDisplay" id="calTime"></div>
-			</li>
 		</ul>
 	</div>
 </body>

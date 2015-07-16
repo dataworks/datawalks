@@ -8,7 +8,10 @@ html {
 	background: #000047;
 	font-family: "Montserrat","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
 }
-
+ul {
+	background: white;
+	color: black;
+}
 header {
 	text-align: center;
 	color: white;
@@ -19,6 +22,15 @@ header {
 	height: 50px;
 	background: purple;
 	display: inline-block;
+}
+ul .google-visualization-tooltip {
+	width: 100px;
+	height: 80px;
+	background: white;
+	color: black;
+}
+rect {
+	background: purple;
 }
 
 body {
@@ -32,12 +44,14 @@ a {
 }
 div .dw-tabs {
 	padding: 0px;
+	color: black;
 }
 ul.dw-tabs-content {
 	height: 1000;
 	padding: 5px 5px 5px 5px;
 	margin: 0px;
 	background: #ffffff;
+	color: black;
 }
 .contain {
 	/*margin: 5px 5px 5px 5px;*/
@@ -102,6 +116,7 @@ ul.dw-tabs-content {
   width: 93%; 
   margin: 1em auto;
   background: transparent;
+  color: black;
 }
 .dw-tabs-navigation {
   width: auto;

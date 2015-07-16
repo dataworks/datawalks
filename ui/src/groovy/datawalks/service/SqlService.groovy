@@ -51,8 +51,8 @@ class SqlService {
 					            longitude longitude, dtime dtime,
 					            distancemeters distancemeters 
 					FROM workabledata
-					WHERE deviceid IN (:devicelist)
-					ORDER by dtime""".replaceAll(":devicelist", watchId))
+					WHERE deviceid IN (:deviceList)
+					ORDER by dtime""".replaceAll(":deviceList", watchId))
 		{
 			rows << [deviceid: it.deviceid, latitude: it.latitude,
 				longitude: it.longitude, dtime: it.dtime, distancemeters: it.distancemeters]
@@ -67,9 +67,9 @@ class SqlService {
 	def getTotalDistance(long watchId, Date startDate, Date stopDate){
 		def rows = []
 		Sql sql = new Sql(dataSource)
-		sql.eachRow("""SELECT deviceid did, max(distancemeters) mdistance,to_char(dtime,'yyyy-mm-dd') dtime from workabledata
-						GROUP BY to_char(dtime,'yyyy-mm-dd'), did;"""){
-			rows << [ dtime: it.dtime, mdistance: it.mdistance, did: it.did]
+		sql.eachRow("""SELECT deviceid did,runid, max(distancemeters) mdistance,to_char(dtime,'yyyy-mm-dd') dtime from workabledata
+						GROUP BY to_char(dtime,'yyyy-mm-dd'), did, runid;"""){
+			rows << [ dtime: it.dtime, mdistance: it.mdistance, did: it.did, runid: it.runid]
 		}
 		return rows
 	}	
@@ -100,7 +100,6 @@ class SqlService {
 						FROM myfastview			
 						JOIN summary sum
 							ON myfastview.wrun = sum.runid
-						WHERE myfastview.scal != 0
 						GROUP BY did, dtime, wrun, stime, scal, sdist
 						ORDER BY dtime, wrun""") {
 			rows << [did: it.did,dtime: it.dtime, scal: it.scal, wrun: it.wrun, sdist: it.sdist, stime: it.stime]				

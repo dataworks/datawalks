@@ -15,7 +15,7 @@ class ElasticsearchService {
 	 * @return _source of document if found
 	 */
 	def getDocument(path) {
-		def client = new RESTClient("${url}$path")
+		def client = new RESTClient("http://172.31.62.129:9200/twitter/tweet/")
 		client.handler.failure = {}
 
 		def resp = client.get([:])

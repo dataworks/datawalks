@@ -33,6 +33,10 @@ rect {
 	background: purple;
 }
 
+a:link {
+	color: blue;
+}
+
 body {
   font-size: 100%;
   font-family: "Montserrat","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
@@ -251,7 +255,7 @@ blockquote.twitter-tweet {
  /*display: inline-block;*/
  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
  font-size: 12px;
- font-weight: bold;
+ font-weight: none;
  line-height: 16px;
  border-color: #eee #ddd #bbb;
  border-radius: 5px;
@@ -270,13 +274,13 @@ blockquote.twitter-tweet {
 }
 blockquote.twitter-tweet p {
  font-size: 16px;
- font-weight: normal;
+ font-weight: none;
  line-height: 20px;
 }
 
 blockquote.twitter-tweet a {
  color: inherit;
- font-weight: normal;
+ font-weight: none;
  text-decoration: none;
  outline: 0 none;
 }

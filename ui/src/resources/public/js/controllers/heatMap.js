@@ -72,8 +72,28 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
         ret = rep.join("-")+"T23:00:00";
         return ret;
     }
-
-
+	
+	$(document).ready(function () {               
+        var src = new Array(1,2,3,4,5,6);
+		// Create a jqxComboBox
+        $("#jqxComboBox").jqxComboBox({source: src, multiSelect: true, width: 350, height: 25});           
+        $("#arrow").jqxButton({  });
+        $("#arrow").click(function () {
+            $("#jqxComboBox").jqxComboBox({ showArrow: false });
+        });
+        // trigger selection changes.
+        $("#jqxComboBox").on('change', function (event) {
+            var items = $("#jqxComboBox").jqxComboBox('getSelectedItems');
+            var selectedItems = "Selected Items: ";
+            $.each(items, function (index) {
+                selectedItems += this.label;
+                if (items.length - 1 != index) {
+                    selectedItems += ", ";
+                }
+            });
+            $("#log").text(selectedItems);
+        });
+    });
 	$(document).ready(function () {                
 		$("#jqxCalendar").jqxCalendar({width: 240, height: 220, 
 			selectionMode: 'range', theme: 'energyblue'});
@@ -515,7 +535,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		var index;
 		if(ind == -1)
 		{
-			e = document.getElementById("dropdownMenu");
+			e = document.getElementById("jqxComboBox");
 			index = $scope.ownerNames.indexOf(e.options[e.selectedIndex].text);
 			$scope.deviceIds[index].active = true;
 			if(prevInd == null)

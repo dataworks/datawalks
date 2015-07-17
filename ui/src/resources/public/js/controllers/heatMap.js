@@ -83,7 +83,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 			var i = 0;
 			for(var k = 0; k < $scope.deviceIds.length; k++)
 			{
-				if($scope.deviceIds[k].active === true)
+				if($scope.deviceIds[k].active == true)
 				{
 					i = k;
 				}
@@ -653,9 +653,8 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 		
 		if(watchData.length < 1000)
 		{
-			for (var i = 0; i < watchData.length; i++) {
+			for (var i = 0; i < watchData.length; i++)
 				latlngBounds.extend(watchData[i].location);
-			}
 		}
 		else
 		{
@@ -675,6 +674,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 
 		//Fit the map to show all points 
 		$scope.map.setCenter(latlngBounds.getCenter());
+		//console.log(latlngBounds.getCenter().A); Show hayato
 		$scope.map.fitBounds(latlngBounds);
 
 		$scope.deviceIds[index].stDate = 0;
@@ -684,10 +684,12 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 	
 	/* clear()
 	 * 
-	 * Associated with the clear button. Self-explanatory
+	 * Associated with the clear button.
 	 */
 	$scope.clear = function()
 	{
+		$scope.map.panTo(new google.maps.LatLng(38.942892, -77.334012));
+		$scope.map.setZoom(10);
 		for(var i = 0; i < $scope.deviceIds.length; i++)
 		{
 			if(specDateHolder[i].length != 0)
@@ -708,8 +710,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 			}
 		}
 		$('#jqxCalendar').jqxCalendar('clear');
-		startDate = null;
-		endDate = null;
+		
 	}
 	
 	/* loadIds()
@@ -760,7 +761,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', func
 	   $scope.records = Watch.query({id: $scope.selectedDeviceIds , startDate: '2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, 
 				$scope.recordsLoaded);
    }
-   
    WatchIds.query( {}, $scope.devicesLoaded );
    
 }]);

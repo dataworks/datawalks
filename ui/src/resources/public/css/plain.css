@@ -20,21 +20,17 @@ header {
 }
 .banner {
 	height: 50px;
-	background: purple;
-	display: inline-block;
-}
-ul .google-visualization-tooltip {
-	width: 100px;
-	height: 80px;
 	background: white;
-	color: black;
+	display: inline-block;
+	color: white;
 }
+
 rect {
-	background: purple;
+	background: white;
 }
 
 a:link {
-	color: blue;
+	color: white;
 }
 
 body {

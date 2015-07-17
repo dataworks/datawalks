@@ -15,10 +15,10 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
  		title: "Distance",
  		subtitle: "(Meters)",
  	    height: 300,
- 	    width: 2000,
+ 	    width: 1200,
  	   tooltip: {isHtml: true},
 		calendar: { 
-			cellSize: 25
+			cellSize: 20
 		},
  	  colorAxis: {
  		  colors: ['#ADD8E6', '#0000FF']
@@ -40,7 +40,6 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 	
 	function selectHandler() {
 		var selection = chart.getSelection();
-		console.log(selection);
 		var date = moment(selection[0].date).format("YYYY-MM-DD");
 		linker.getDate(date);
 	}
@@ -61,9 +60,10 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 	 	{
 	 		if($scope.deviceIds[index].id == $scope.records.aggs[i].did)
 	 		{
-	 			offset = moment($scope.records.aggs[i].dtime).add(12, 'h').format("YYYY-MM-DD");
+	 			console.log($scope.records.aggs[i]);
+	 			offset = moment($scope.records.aggs[i].dtime).format("YYYY-MM-DD");
 	 			offset = new Date(offset);
-	 			dataTable.addRow([ offset, 
+	 			dataTable.addRow([ new Date(offset.getTime() + offset.getTimezoneOffset()), 
 	 			                   parseInt($scope.records.aggs[i].mdistance)] );
 	 		}
 	 	}

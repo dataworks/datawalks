@@ -33,7 +33,6 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 
 	$scope.calRateAnalytics = function(localDate, index)
 	{
-		console.log("what is: " + index);
 		var run = false;
 		for(var i = 0; i< $scope.records.calories.length; i++)
 		{
@@ -144,6 +143,7 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 		{
 			if($scope.deviceIds[index].id == $scope.records.calories[i].did)
 			{
+				console.log($scope.records.calories[i].dtime.substring(5));
 				dataTable.addRow([ $scope.records.calories[i].dtime.substring(5), 
 				                   $scope.records.calories[i].scal ]);
 			}

@@ -21,6 +21,8 @@
        <script src="js/app.js"></script>
        <script src="js/services/watch.js"></script>
        <script src="js/services/watchIds.js"></script>
+       <script src="js/services/binSearch.js"></script>
+       <script src="js/services/compare.js"></script>
        <script src="js/controllers/heatMap.js"></script>
        <script src="js/services/twitter.js"></script>
        <script src="js/controllers/twitterFeed.js"></script>      
@@ -64,9 +66,7 @@
 							{{index.name}}</option>
 					</select> 
 					<div id='jqxCalendar'></div>
-					<form ng-submit="clear()">
-						{{avg.name}}: <input type="checkbox" name="avg.name"
-							ng-model="avg.value" ng-value="{{avg.value}}"><br />
+					<form ng-submit="clear()"><br />
 						{{comp.name}}: <input type="checkbox" name="comp.name"
 							ng-model="comp.value" ng-value="{{comp.value}}">		
 					 <form ng-submit="clear()" class="clear">

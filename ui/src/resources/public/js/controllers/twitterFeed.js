@@ -56,14 +56,11 @@ controllers.controller('TwitDisplay', ['$scope', '$sce', 'linker', 'Twitter', fu
 		//var regex = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
 	    //text.replace(regex, '<a href="$1" target="_blank">$1</a>');
 
-		text = text.replace(/#(\S+)/g, '<a href="http://twitter.com/search?q=%23$1&src=typd">#$1</a>')
-		
-		//test for handles
-		//.replace(/@(\S+)/g, '<a href="https://twitter.com/#!/$1">@$1</a>')
-		return text;
+		text = text.replace(/#(\S+)/g, '<a href="http://twitter.com/search?q=%23$1&src=typd">#$1</a>');
+		var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i;
+	    return text.replace(exp,"<a href='$1'>$1</a>"); 
 	}
-	
-	
+
 	$scope.recordsLoaded = function(results){
 		$scope.loadTweets();   
 	}

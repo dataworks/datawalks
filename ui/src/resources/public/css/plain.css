@@ -60,6 +60,7 @@ ul.dw-tabs-content {
 	position: relative;
 	float: right;
 	width: 50%;
+	display: inline;
 	height: auto;
 	vertical-align: center;
 	height: inherit;
@@ -97,7 +98,9 @@ ul.dw-tabs-content {
 	position: relative;
 	/*display: inline;*/
 }
-
+.col-md-2{
+	display: inline;
+}
 
 										/*			nav bars			*/
 .dw-tabs {
@@ -237,6 +240,7 @@ ul.dw-tabs-content {
 													/*twitter junk*/
 blockquote.twitter-tweet {
  background: #ffffff ;
+ float: left;
  /*display: inline-block;*/
  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
  font-size: 12px;
@@ -264,7 +268,7 @@ blockquote.twitter-tweet p {
 }
 
 blockquote.twitter-tweet a {
- color: inherit;
+ color: #0099FF;
  font-weight: none;
  text-decoration: none;
  outline: 0 none;

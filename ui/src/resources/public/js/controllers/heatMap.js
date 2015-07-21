@@ -73,6 +73,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', 'Bin
 			selectionMode: 'range', theme: 'energyblue'});
 		$('#jqxCalendar').on('change', function (event) {
 			var selection = event.args.range;
+			try{
 			startDate = parseToDateString(selection.from.toLocaleDateString());
 			endDate = parseToDateString(selection.to.toLocaleDateString());
 			var i = 0;
@@ -110,7 +111,9 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', 'Bin
 					}										
 				}
 			}
-			$('#jqxCalendar').jqxCalendar('clear');
+			}
+			catch(err){}
+			
 		});
 	});
 	
@@ -222,8 +225,8 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', 'Bin
 		}
 		if($scope.comp.value == true)
 		{
-			console.log("fag");
 			watchData = Compare.compare(results, index, $scope.deviceIds, specDateHolder);
+			
 			var circle = {
 					strokeColor: '#FF0000',
 					strokeOpacity: 0.8,
@@ -245,8 +248,8 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', 'Bin
 			var en = results.rows.length;
 			if($scope.deviceIds[index].selectDate == true)
 			{
-				st = binStPrep($scope.deviceIds[index].stDate, results);
-				en = binEnPrep($scope.deviceIds[index].enDate, results);
+				st = BinSearch.binStPrep($scope.deviceIds[index].stDate, results);
+				en = BinSearch.binEnPrep($scope.deviceIds[index].enDate, results);
 			}
 			var j = en-1;
 			for(var i = st; i < j; i+=5, j-=5)
@@ -283,7 +286,8 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', 'Bin
 		$scope.map.setCenter(latlngBounds.getCenter());
 		//console.log(latlngBounds.getCenter().A); Show hayato
 		$scope.map.fitBounds(latlngBounds);
-
+		if($scope.map.getZoom() < 5)
+			$scope.map.setZoom(10);
 		$scope.deviceIds[index].stDate = 0;
 		$scope.deviceIds[index].enDate = Number.MAX_VALUE;
 		$scope.deviceIds[index].selectDate = false;
@@ -317,7 +321,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', 'Bin
 			}
 		}
 		$('#jqxCalendar').jqxCalendar('clear');
-		
 	}
 	
 	/* loadIds()
@@ -367,6 +370,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', 'Bin
 	   $scope.records = Watch.query({id: $scope.selectedDeviceIds , startDate: '2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, 
 				$scope.recordsLoaded);
    }
+   
    WatchIds.query( {}, $scope.devicesLoaded );
    
 }]);

@@ -52,13 +52,8 @@ controllers.controller('TwitDisplay', ['$scope', '$sce', 'linker', 'Twitter', fu
 	//https://twitter.com/USER
 	
 	function getHashtags(text) {
-		//in progress
-		//var regex = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
-	    //text.replace(regex, '<a href="$1" target="_blank">$1</a>');
-
-		text = text.replace(/#(\S+)/g, '<a href="http://twitter.com/search?q=%23$1&src=typd">#$1</a>');
-		var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i;
-	    return text.replace(exp,"<a href='$1'>$1</a>"); 
+		var fin = text.replace(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/g, '<a href="$1">$1</a>');
+		return fin.replace(/#(\S+)/g, '<a href="http://twitter.com/search?q=%23$1&src=typd">#$1</a>');
 	}
 
 	$scope.recordsLoaded = function(results){

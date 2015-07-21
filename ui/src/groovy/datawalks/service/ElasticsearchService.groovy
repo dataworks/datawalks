@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class ElasticsearchService {
-	def url = "http://172.31.62.129:9200/twitter/tweet/";
+	def url
 
 	/**
 	 * Returns a document by path
@@ -15,7 +15,7 @@ class ElasticsearchService {
 	 * @return _source of document if found
 	 */
 	def getDocument(path) {
-		def client = new RESTClient("http://172.31.62.129:9200/twitter/tweet/")
+		def client = new RESTClient("${url}$path")
 		client.handler.failure = {}
 
 		def resp = client.get([:])
@@ -33,7 +33,8 @@ class ElasticsearchService {
 	 * @return List of _source maps
 	 */
 	def search(params = [:]) {
-		def client = new RESTClient("http://172.31.62.129:9200/twitter/tweet/") //using 'url' didnt work for some reason
+		//Strangely, using just /twitter/ instead of /twitter/tweet/ works perfectly
+		def client = new RESTClient("http://172.31.62.129:9200/twitter/") //using 'url' didnt work for some reason
 		def size = params.size ?: 200
 		def from = params.from ?: 0
 		def body = [size: size, from: from]

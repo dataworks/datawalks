@@ -12,7 +12,7 @@ controllers.controller('TwitDisplay', ['$scope', '$sce', 'linker', 'Twitter', fu
 	var endDates = "2016-06-01T00:00:00";
 	
 	/* 
-	 * 
+	 * Grab lat, long, fromDate, and endDate from heatmap.js, then reload tweets instantly
 	 * 
 	 */
 	linker.onGetLatLong($scope, function (message) {
@@ -31,6 +31,7 @@ controllers.controller('TwitDisplay', ['$scope', '$sce', 'linker', 'Twitter', fu
 	 */
 	$scope.loadTweets = function(){
 		$scope.twits = [];
+		console.log($scope.records.hits.length);
 		for(var i = 0; i < $scope.records.hits.length; i++)
 		{	
 			if($scope.records.hits[i].location != null)
@@ -39,19 +40,15 @@ controllers.controller('TwitDisplay', ['$scope', '$sce', 'linker', 'Twitter', fu
 				$scope.twits.push({
 					uname: $scope.records.hits[i].user,
 					tStamp: newDate,
-					//new
-					text: $sce.trustAsHtml(getHashtags($scope.records.hits[i].text)),
+					text: $sce.trustAsHtml($scope.getHashtags($scope.records.hits[i].text)),
 					img: $scope.records.hits[i].image,
 					handle: $scope.records.hits[i].handle
 				});
 			}
 		}
 	}
-	//new
 	
-	//https://twitter.com/USER
-	
-	function getHashtags(text) {
+	$scope.getHashtags = function(text) {
 		var fin = text.replace(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/g, '<a href="$1">$1</a>');
 		return fin.replace(/#(\S+)/g, '<a href="http://twitter.com/search?q=%23$1&src=typd">#$1</a>');
 	}

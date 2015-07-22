@@ -1,7 +1,7 @@
 services.factory('Yelp', ['$resource', function($resource) {
-        return $resource('/yelp/:getPlaces', {}, {
+        return $resource('/yelp/:getYelps', {}, {
             query: {
-                    url: '/yelp/getPlaces?latitude=:latitude&longitude=:longitude',
+                    url: '/yelp/getYelps?latitude=:latitude&longitude=:longitude',
                     method: 'GET'
             }
         });

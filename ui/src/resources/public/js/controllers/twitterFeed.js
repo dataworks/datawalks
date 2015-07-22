@@ -20,6 +20,7 @@ controllers.controller('TwitDisplay', ['$scope', '$sce', 'linker', 'Twitter', fu
         localLong = message.longitude;
         startDates = message.fromDate;
         endDates = message.endDate;
+        console.log("twitterfeed: "+ endDates);
         
     	$scope.records = Twitter.query({latitude: localLat, longitude: localLong, fromDate: startDates, endDate: endDates}, 
     			$scope.recordsLoaded);

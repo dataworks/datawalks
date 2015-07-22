@@ -25,8 +25,9 @@
        <script src="js/services/compare.js"></script>
        <script src="js/controllers/heatMap.js"></script>
        <script src="js/services/twitter.js"></script>
-       
-       <script src="js/controllers/twitterFeed.js"></script>      
+       <script src ="js/services/yelp.js"></script>
+       <script src="js/controllers/twitterFeed.js"></script>  
+       <script src="js/controllers/yelpFeed.js"></script>    
        <script type="text/javascript" src="https://www.google.com/jsapi"></script> 
        <!-- new -->
     <script type="text/javascript" src="bower_components/jqwidgets/jqwidgets/jqxcore.js"></script>
@@ -90,11 +91,20 @@
 						</blockquote>
 				</div>
 			</div>
+			<div class="boxish" ng-controller="YelpDisplay" >      
+				<div ng-repeat="yelp in business" style="border: 10px red">
+					<blockquote class="twitter-tweet">
+					<p style="float: left;">
+					<img ng-src="{{yelp.img}}"  height="50px" width="50px">
+					</p>
+					<div id="#tweader">
+					<span style="font-style: bold;">{{yelp.name}}</span>
+					</div></br>			
+						</blockquote>
+				</div>
+			</div>
 						</div>
 					</div>
 				</div>
-			</li>
-		</ul>
-	</div>
 </body>
 </html>

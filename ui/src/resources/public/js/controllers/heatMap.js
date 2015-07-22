@@ -43,7 +43,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', 'Bin
 			document.getElementById('current').innerHTML = '<p>Marker dropped: Current Lat: ' + evt.latLng.lat().toFixed(3) + ' Current Lng: ' + evt.latLng.lng().toFixed(3) + '</p>';
 			latTw = evt.latLng.lat().toFixed(3);
 			longTw = evt.latLng.lng().toFixed(3);
-			console.log("heatmap: " +startDate);
 			linker.getLatLong(latTw, longTw, startDate, endDate);
 			linker.yelpLatLong(latTw, longTw);
 		});
@@ -161,7 +160,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', 'Bin
         {
             loadHeatMap(index);
         }
-        if($scope.deviceIds[index].value = true 
+        if($scope.deviceIds[index].value == true 
                 && $scope.deviceIds[index].selectDate == false)
         {
             updateCalendar(index);
@@ -176,10 +175,11 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', 'Bin
 
 	function updateCalendar(index)
 	{
+		console.log("here");
 		var sD = $("#jqxCalendar").jqxCalendar('specialDates');
         sD = [];
         $("#jqxCalendar").jqxCalendar({ specialDates: sD });
-		
+		console.log(specDateHolder[index].length);
 		for(var i = 0; i < specDateHolder[index].length; i++)
 		{
 			$("#jqxCalendar").jqxCalendar('addSpecialDate', specDateHolder[index][i], 
@@ -209,11 +209,13 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', 'Bin
 			var sD = $("#jqxCalendar").jqxCalendar('specialDates');
 	        sD = [];
 	        $("#jqxCalendar").jqxCalendar({ specialDates: sD });
+	        console.log(specDateHolder[index].length);
 	        for(var i = 0; i < specDateHolder[index].length; i++)
 			{
 				$("#jqxCalendar").jqxCalendar('addSpecialDate', specDateHolder[index][i], 
 						'jqx-calendar-cell-specialDate1', 'run');
 			}
+	        console.log("selectDate is false");
 		}
 		var watchData = [];
 		var index;
@@ -311,6 +313,8 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', 'Bin
 	 */
 	$scope.clear = function()
 	{
+		startDate="2015-06-01T00:00:00";
+		endDate="2016-06-01T00:00:00";
 		$scope.map.panTo(new google.maps.LatLng(38.942892, -77.334012));
 		$scope.map.setZoom(10);
 		for(var i = 0; i < $scope.deviceIds.length; i++)

@@ -1,7 +1,7 @@
 curl -XPUT 'http://es-server:9200/yelps'
 curl -XPUT 'http://es-server:9200/yelps/yelp/_mapping' -d '
 {
- "yelps": {
+ "yelp": {
    "properties": {
      "location": {
        "type": "geo_point",

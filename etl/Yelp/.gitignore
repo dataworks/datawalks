@@ -1,0 +1,6 @@
+/bin/
+/build/
+.cache
+.cache-main
+.gradle
+run.properties

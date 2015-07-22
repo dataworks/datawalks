@@ -1,6 +1,3 @@
-/**
- * 
- */
 services.factory('Calories', ['$resource', function($resource) {
         return $resource('watch/:watchId', {}, {
             query: {

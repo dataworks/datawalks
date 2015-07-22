@@ -74,7 +74,7 @@ class SqlService {
 		return rows
 	}	
 	
-	/* getDeviceId(long, Date, Date)
+	/* getDeviceId()
 	 * 
 	 * Returns one column of deviceid's for comparison purposes
 	 */

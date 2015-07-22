@@ -16,11 +16,30 @@ function linker($rootScope) {
     var passIndex = false;
     var passPoints = false;
     var passDate = false;
+    var passYelp = false;
     var passedI = "passed";
     var passedD = "passed";
     var passedL = "passed";
     var passedT = "passed";
+    var passedY = "passed";
     var globalDate;
+    
+    var yelpLatLong = function(lat, long){
+    	passYelp = true;
+    	$rootScope.$broadcast(passedY, {
+    		latitude: lat,
+    		longitude: long
+    	});
+    };
+    
+    var onYelpLatLong = function($scope, handler){
+    	$scope.$on(passedY, function(event, message){
+    		if(passYelp == true){
+    			handler(message);
+    			passYelp = false;
+    		}
+    	});
+    };
     
     
     var getLatLong = function(lat, long, from, end){
@@ -82,6 +101,8 @@ function linker($rootScope) {
         getDate: getDate,
         onGetDate: onGetDate,
         getLatLong: getLatLong,
-        onGetLatLong: onGetLatLong
+        onGetLatLong: onGetLatLong,
+        yelpLatLong: yelpLatLong,
+        onYelpLatLong: onYelpLatLong
     };
 }

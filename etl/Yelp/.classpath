@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/scala"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER" exported="true"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SPARK" exported="true"/>
+	<classpathentry kind="src" path="src/java"/>
+	<classpathentry kind="output" path="build/classes"/>
+	<classpathentry sourcepath="GRADLE_USER_HOME/caches/modules-2/files-2.1/org.scribe/scribe/1.3.7/337524ef557dc865d6f956149549bf0e3ae480a4/scribe-1.3.7-sources.jar" kind="var" path="GRADLE_USER_HOME/caches/modules-2/files-2.1/org.scribe/scribe/1.3.7/583921bed46635d9f529ef5f14f7c9e83367bc6e/scribe-1.3.7.jar" exported="true"/>
+	<classpathentry sourcepath="GRADLE_USER_HOME/caches/modules-2/files-2.1/org.json4s/json4s_2.11/3.2.11/4f1377527f813880c34c5b47525d1752690c908c/json4s_2.11-3.2.11-sources.jar" kind="var" path="GRADLE_USER_HOME/caches/modules-2/files-2.1/org.json4s/json4s_2.11/3.2.11/e83013590412188e514f8c78936f683553ce0ffb/json4s_2.11-3.2.11.jar" exported="true"/>
+	<classpathentry sourcepath="GRADLE_USER_HOME/caches/modules-2/files-2.1/org.postgresql/postgresql/9.4-1201-jdbc41/d593ec6327c9c9a25934d583eabcbf1451f73caa/postgresql-9.4-1201-jdbc41-sources.jar" kind="var" path="GRADLE_USER_HOME/caches/modules-2/files-2.1/org.postgresql/postgresql/9.4-1201-jdbc41/870b0e689b514304461a9c1aba11920dc5de4321/postgresql-9.4-1201-jdbc41.jar" exported="true"/>
+	<classpathentry sourcepath="GRADLE_USER_HOME/caches/modules-2/files-2.1/org.elasticsearch/elasticsearch-hadoop/2.1.0.rc1/6566dd702be3d9c7ae8056540249b83d5bfea086/elasticsearch-hadoop-2.1.0.rc1-sources.jar" kind="var" path="GRADLE_USER_HOME/caches/modules-2/files-2.1/org.elasticsearch/elasticsearch-hadoop/2.1.0.rc1/7e02ecf4a879940acb3f29ad47c1b058604a8195/elasticsearch-hadoop-2.1.0.rc1.jar" exported="true"/>
+	<classpathentry sourcepath="GRADLE_USER_HOME/caches/modules-2/files-2.1/org.scala-lang/scala-library/2.11.0/53c598cb0fae816c1d902ea2a2290119a5fb14f1/scala-library-2.11.0-sources.jar" kind="var" path="GRADLE_USER_HOME/caches/modules-2/files-2.1/org.scala-lang/scala-library/2.11.0/aa8f7553253318c468f90ce58a85f94bd1a224eb/scala-library-2.11.0.jar" exported="true"/>
+</classpath>

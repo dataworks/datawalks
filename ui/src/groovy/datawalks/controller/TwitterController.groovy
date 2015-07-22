@@ -14,14 +14,14 @@ import datawalks.service.ElasticsearchService
 class TwitterController {
 	private static final Logger logger = LoggerFactory.getLogger(TwitterController.class)
 
-	@Autowired ElasticsearchService esService
+	@Autowired ElasticsearchService esTwitterService
 
 	@RequestMapping("/twitter/getTweets")
 	public def getTweets(@RequestParam(value = "latitude", required = false) String latitude,
 			@RequestParam(value = "longitude", required = false) String longitude,
 			@RequestParam(value = "fromDate", required = false) String fromDate,
 			@RequestParam(value = "endDate", required = false) String endDate) {
-		esService.search(
+		esTwitterService.search(
 			[query: [filtered: [
 					query: [match_all: []],
 					filter: [
@@ -42,6 +42,9 @@ class TwitterController {
 												lte: endDate
 												]
 											]
+									],
+									[
+										term: [ "profane": 0.0 ]
 									]
 								]
 						 ]

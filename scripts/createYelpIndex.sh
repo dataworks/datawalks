@@ -1,5 +1,5 @@
-curl -XPUT 'http://es-server:9200/yelp'
-curl -XPUT 'http://es-server:9200/yelp/yelps/_mapping' -d '
+curl -XPUT 'http://es-server:9200/yelps'
+curl -XPUT 'http://es-server:9200/yelps/yelp/_mapping' -d '
 {
  "yelps": {
    "properties": {

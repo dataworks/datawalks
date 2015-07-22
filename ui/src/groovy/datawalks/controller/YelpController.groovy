@@ -11,21 +11,18 @@ import org.springframework.web.bind.annotation.RestController
 import datawalks.service.ElasticsearchService
 
 @RestController
-class TwitterController {
-	private static final Logger logger = LoggerFactory.getLogger(TwitterController.class)
+class YelpController {
+	private static final Logger logger = LoggerFactory.getLogger(YelpController.class)
 
-	@Autowired ElasticsearchService esTwitterService
+	@Autowired ElasticsearchService esYelpService
 
-	@RequestMapping("/twitter/getTweets")
+	@RequestMapping("/yelp/getPlaces")
 	public def getTweets(@RequestParam(value = "latitude", required = false) String latitude,
-			@RequestParam(value = "longitude", required = false) String longitude,
-			@RequestParam(value = "fromDate", required = false) String fromDate,
-			@RequestParam(value = "endDate", required = false) String endDate) {
-		esTwitterService.search(
+			@RequestParam(value = "longitude", required = false) String longitude) {
+		esYelpService.search(
 			[query: [filtered: [
 					query: [match_all: []],
 					filter: [
-							and: [ 
 									[
 										geo_distance: [
 											distance: "2mi",
@@ -34,28 +31,12 @@ class TwitterController {
 												lon: longitude
 												]
 											]
-									],
-								   [
-										range : [
-											date : [
-												gte: fromDate,
-												lte: endDate
-												]
-											]
-									],
-									[
-										term: [ "profane": 0.0 ]
 									]
-								]
+								
 						 ]
 					]
-				],
-			from: 0,
-			size: 1000,
-			sort : [
-				[ date : [order : "desc"]]
-			]
+				]
 			]
 		)
-	}	
+	}
 }

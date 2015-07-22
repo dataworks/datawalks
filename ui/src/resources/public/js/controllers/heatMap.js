@@ -229,6 +229,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', 'Bin
 		if($scope.comp.value == true)
 		{
 			watchData = Compare.compare(results, index, $scope.deviceIds, specDateHolder);
+			
 			var circle = {
 					strokeColor: '#FF0000',
 					strokeOpacity: 0.8,
@@ -295,7 +296,8 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', 'Bin
 		//Fit the map to show all points 
 		$scope.map.setCenter(latlngBounds.getCenter());
 		$scope.map.fitBounds(latlngBounds);
-
+		if($scope.map.getZoom() < 5)
+			$scope.map.setZoom(10);
 		$scope.deviceIds[index].stDate = 0;
 		$scope.deviceIds[index].enDate = Number.MAX_VALUE;
 		$scope.deviceIds[index].selectDate = false;
@@ -331,7 +333,6 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', 'Bin
 		clearReady = true;
 		$('#jqxCalendar').jqxCalendar('clear');
 		clearReady = false;
-		
 	}
 	
 	/* loadIds()
@@ -381,6 +382,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', 'Bin
 	   $scope.records = Watch.query({id: $scope.selectedDeviceIds , startDate: '2015-06-08 00:00:00', stopDate: '2015-06-08 23:59:59'}, 
 				$scope.recordsLoaded);
    }
+   
    WatchIds.query( {}, $scope.devicesLoaded );
    
 }]);

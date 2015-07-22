@@ -1,12 +1,11 @@
 <!DOCTYPE HTML>
 <html ng-app="datawalks">
 <head>
-	<title>Data Walks</title>
+	<title>Data Walks - Home</title>
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=yes">
     <meta charset="utf-8">
 	<link rel="stylesheet" type=text/css href="/css/plain.css">
-	<link rel="stylesheet" href="bower_components/jqwidgets/styles/jqx.base.css"
-	type="text/css" />
+	<link rel="stylesheet" href="bower_components/jqwidgets/styles/jqx.base.css" type="text/css" />
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=visualization"></script>
        <script src="bower_components/angular/angular.js"></script>
        <script src="bower_components/angular-resource/angular-resource.js"></script>
@@ -25,76 +24,104 @@
        <script src="js/services/compare.js"></script>
        <script src="js/controllers/heatMap.js"></script>
        <script src="js/services/twitter.js"></script>
-       
        <script src="js/controllers/twitterFeed.js"></script>      
        <script type="text/javascript" src="https://www.google.com/jsapi"></script> 
        <!-- new -->
-    <script type="text/javascript" src="bower_components/jqwidgets/jqxcore.js"></script>
-    <script type="text/javascript" src="bower_components/jqwidgets/jqxbuttons.js"></script>
-    <script type="text/javascript" src="bower_components/jqwidgets/jqxscrollbar.js"></script>
-    <script type="text/javascript" src="bower_components/jqwidgets/jqxlistbox.js"></script>
-    <script type="text/javascript" src="bower_components/jqwidgets/jqxdropdownlist.js"></script>
+    <script type="text/javascript" src="../../jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="../../jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="../../jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="../../jqwidgets/jqxlistbox.js"></script>
+    <script type="text/javascript" src="../../jqwidgets/jqxcombobox.js"></script>
+    <script type="text/javascript" src="../../jqwidgets/jqxpanel.js"></script>
+    <script type="text/javascript" src="../../jqwidgets/jqxcheckbox.js"></script>
 </head>
 <body>
 	<header>
 		<a href="http://www.dataworks-inc.com">
-			<h1 ><img src="dw_white.png" style="height: 50px; width:70px">  Data Walks</h1>
+			<img src="logo.jpg" style="float: left; width: 750px; height: 200px;">
 		</a>
+		<div class="nav">
+	      <ul id="myMenu">
+	        <li class="home"><a class="active" href="index.html">Heat Map</a>
+	          <ul>
+	            <li><a href="#" data-id="twitter">Twitter</a></li>
+    			<li><a href="#" data-id="yelp">Yelp</a></li>
+	          </ul>
+	        </li>
+	        <li class="chart"><a href="chart.html">Distance / Calories</a></li>
+	        <li class="about"><a href="about.html">About Data Walks</a></li>
+	      </ul>
+    	</div>
 	</header>
 	<div class="dw-tabs">
-		<nav>
-			<ul class="dw-tabs-navigation">
-				<li><a data-content="heatMap" class="selected" href="index.html">Heat Map</a></li>
-				<li><a data-content="distCals" href="chart.html">Distance / Calories</a></li>
-			</ul>
-		</nav>
 		<ul class="dw-tabs-content">	
 			<li data-content="heatMap" class="selected">	
 				<div class="contain">
 					<div class="banner">
+						<!-- put options here -->
 					</div>
 					<div class="lefty">
 						<div id="map-canvas"></div>
 						<div id="current">Nothing yet...</div> 
 			    	</div>
-					<div class="righty">					
-			   			<div ng-controller="Display">
-				<div class="col-md-2">
-					Select Watch ID to view:
-					<select id="dropdownMenu" multiple ="multiple">
-						<option ng-repeat="index in deviceIds" ng-model="index.value"
-							ng-value="index.value" ng-click="matchId(-1)">
-							{{index.name}}</option>
-					</select> 
-					<div id='jqxCalendar'></div>
-					<form ng-submit="clear()"><br />
-						{{comp.name}}: <input type="checkbox" name="comp.name"
-							ng-model="comp.value" ng-value="{{comp.value}}">		
-					 <form ng-submit="clear()" class="clear">
-						<input type="submit" id="clear" value="Clear" style="width: 100px;"/>
-					</form>
-				</div>
-			</div>
-		    <div class="boxish" ng-controller="TwitDisplay" >      
-				<div ng-repeat="twit in twits" style="border: 10px red">
-					<blockquote class="twitter-tweet">
-					<p style="float: left;">
-					<img ng-src="{{twit.img}}"  height="50px" width="50px">
-					</p>
-					<div id="#tweader">
-					<span style="font-style: bold;">{{twit.uname}}</span>
-					<span style="color: #4099FF;"><a href="https://twitter.com/{{twit.handle}}">@{{twit.handle}}</a>
-					</div></br>			
-					<span ng-bind-html="twit.text" style="font-weight: none;"></span></br>
-						<span style="font-size: 12px">- {{twit.tStamp | date}}</span>
-						</blockquote>
-				</div>
-			</div>
+					<div class="righty">	
+						<div class="subcontent" id="twitter" style="display:block">				
+				   			<div ng-controller="Display">
+								<div class="col-md-2">
+									
+									Select Watch ID to view:
+									<select id="dropdownMenu" multiple ="multiple">
+										<option ng-repeat="index in deviceIds" ng-model="index.value"
+											ng-value="index.value" ng-click="matchId(-1)">
+											{{index.name}}</option>
+									</select> 
+									<div id='jqxCalendar'></div>
+									<form ng-submit="clear()"><br />
+										{{comp.name}}: <input type="checkbox" name="comp.name"
+											ng-model="comp.value" ng-value="{{comp.value}}">		
+									 <form ng-submit="clear()" class="clear">
+										<input type="submit" id="clear" value="Clear" style="width: 100px;"/>
+									</form>
+								</div>
+							</div>
+						    <div class="boxish" ng-controller="TwitDisplay" >      
+							<div ng-repeat="twit in twits" style="border: 10px red">
+								<blockquote class="twitter-tweet">
+								<p style="float: left;">
+								<img ng-src="{{twit.img}}"  height="50px" width="50px">
+								</p>
+								<div id="#tweader">
+									<span style="font-style: bold;">{{twit.uname}}</span>
+									<span style="color: #4099FF;"><a href="https://twitter.com/{{twit.handle}}">@{{twit.handle}}</a>
+								</div></br>			
+								<span ng-bind-html="twit.text" style="font-weight: none;"></span></br>
+								<span style="font-size: 12px">- {{twit.tStamp | date}}</span>
+								</blockquote>
+							</div>
+						</div>
+						</div>
+						<div class="subcontent" id="yelp" style="display:block">
+							yay yelp.
 						</div>
 					</div>
 				</div>
 			</li>
 		</ul>
 	</div>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+		    $('#myMenu').on('click','a',function()
+		    {
+		        // fade out all open subcontents
+		        $('.subcontent:visible').fadeOut();
+		        // fade in new selected subcontent
+		        $('.subcontent[id='+$(this).attr('data-id')+']').fadeIn();
+		    });
+		});
+	</script>
+	<style type="text/css">
+    	div.subcontent { display:none; }
+	</style>
 </body>
 </html>

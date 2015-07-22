@@ -1,11 +1,11 @@
 /*color scheme: 
-blue 	#000047
+blue 	#0072c6
 green 	#7EB900
 grey	#8F8F8F */
 
 
 html {
-	background: #000047;
+	background: #FFFFFF;
 	font-family: "Montserrat","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
 }
 ul {
@@ -14,28 +14,25 @@ ul {
 }
 header {
 	text-align: center;
-	color: white;
+	color: purple;
 	position: relative;
 	font-size: 30px;
+	height: 200px;
+	width: 100%;
 }
 .banner {
 	height: 50px;
-	background: white;
 	display: inline-block;
-	color: white;
+	background: #7EB900;
+	width: 100%;
 }
 
 rect {
-	background: white;
+	background: purple;
 }
 
 a:link {
-	color: white;
-}
-
-body {
-  font-size: 100%;
-  font-family: "Montserrat","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+	color: purple;
 }
 
 a {
@@ -43,7 +40,6 @@ a {
   text-decoration: none;
 }
 div .dw-tabs {
-	padding: 0px;
 	color: black;
 }
 ul.dw-tabs-content {
@@ -58,7 +54,7 @@ ul.dw-tabs-content {
 	position: relative;
 	width: 100%;
 	height: 1000px;
-	padding: 0px;
+	background: #E6E6E6;
 }
 .contain .lefty {
 	position: relative;
@@ -82,7 +78,7 @@ ul.dw-tabs-content {
 #clear {
 	background: white;
 	border: 1px solid #000049;
-	color: #7eb900;
+	color: #0072c6;
 }
 										/*			map essentials		*/
 										
@@ -117,34 +113,30 @@ ul.dw-tabs-content {
   position: relative;
   height: 800px;
   width: 93%; 
-  margin: 1em auto;
+  /*margin: 1em auto;*/
   background: transparent;
   color: black;
+  float: right;
 }
 .dw-tabs-navigation {
   width: auto;
-  background-color: #8f8f8f;
-  box-shadow: inset 0 -2px 3px rgba(203, 196, 130, 0.06); 
+  /*box-shadow: inset 0 -2px 3px rgba(203, 196, 130, 0.06); */
   list-style: none;
+  float: right;
 }
 .dw-tabs-navigation a {
-  position: relative;
   display: block;
-  height: 60px;
-  width: auto;
-  line-height: 60px;
-  text-align: center;
-  font-size: 12px;
-  font-size: 0.875rem;
+  color: #0072c5;
+  font-size: 20px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 700;
-  padding: 0 2.8em 0 4.6em;
+  padding: 10px;
 }
 .dw-tabs-navigation a.selected {
-  background-color: #ffffff !important; 
+  background-color: #0072c6 !important; 
   box-shadow: inset 0 2px 0 #7eb900;  
-  color: #000047; 
+  color: #FFFFFF; 
 }
 *, *::after, *::before {
   -webkit-box-sizing: border-box;
@@ -174,7 +166,7 @@ ul.dw-tabs-content {
   float: left; 
 }
 .dw-tabs-content {
-  margin: auto;
+  /*margin: auto;*/
   background: white;
   height: 1000px;
   width: 100%;
@@ -241,18 +233,111 @@ ul.dw-tabs-content {
   display: block;
 }
 .dw-tabs-content li p {
-  font-size: 14px;
   font-size: 0.875rem;
   line-height: 1.6;
   color: #8493bf;
   margin-bottom: 2em;
 }
 
-													/*twitter junk*/
+        													/* Sub Menus */
+.nav ul {
+  list-style: none;
+  background-color: #FFFFFF;
+  text-align: center;
+  padding: 0;
+  margin: 0 90px;
+}
+
+.nav li {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.2em;
+  line-height: 40px;
+  text-align: left;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #0072c6;
+  display: block;
+  padding-left: 15px;
+  border-bottom: 1px solid #888;
+  transition: .3s background-color;
+}
+
+.nav a:hover {
+  background-color: #0072C6;
+  color: #FFFFFF;
+}
+
+.nav a.active {
+  background-color: #0072C6;
+  color: #FFFFFF;
+  cursor: default;
+}
+
+/* Sub Menus */
+.nav li li {
+  font-size: .8em;
+}
+
+/*******************************************
+   Style menu for larger screens
+
+   Using 650px (130px each * 5 items), but ems
+   or other values could be used depending on other factors
+********************************************/
+
+@media screen and (min-width: 650px) {
+  .nav li {
+    width: 205px;
+    border-bottom: none;
+    height: 50px;
+    line-height: 50px;
+    font-size: .7em;
+    display: inline-block;
+    margin-right: -4px;
+  }
+
+  .nav a {
+    border-bottom: none;
+  }
+
+  .nav > ul > li {
+    text-align: center;
+  }
+
+  .nav > ul > li > a {
+    padding-left: 0;
+    width: inherit; /*bananas*/
+  }
+
+  /* Sub Menus */
+  .nav li ul {
+    position: absolute;
+    display: none;
+    width: inherit;
+  }
+
+  .nav li:hover ul {
+    display: block;
+  }
+
+  .nav li ul li {
+    display: block;
+  }
+}
+
+
+
+
+
+
+
+
+													/*twitter styles*/
 blockquote.twitter-tweet {
  background: #ffffff ;
  float: left;
- /*display: inline-block;*/
  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
  font-size: 12px;
  font-weight: none;
@@ -264,7 +349,8 @@ blockquote.twitter-tweet {
  box-shadow: 0 1px 3px #B8B8B8 ;
  margin: 10px 5px;
  padding: 10px 10px 10px 10px;
- max-width: 468px;
+ width: 100%;
+ /*max-width: 468px;*/
 }
 #tweader {
     horizontal-align: center;

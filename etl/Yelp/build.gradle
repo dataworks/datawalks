@@ -1,0 +1,89 @@
+/**
+ * Builds Yelp Spark job.
+ * 
+ * SPARK_LIB must be defined on the command line 
+ * gradle build -PSPARK_LIB=/path/to/assembly.jar
+ */
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'scala'
+apply plugin: 'eclipse'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile 'org.scribe:scribe:1.3.7'
+	compile 'org.json4s:json4s_2.11:3.2.11'
+	compile 'org.postgresql:postgresql:9.4-1201-jdbc41'
+	compile ('org.elasticsearch:elasticsearch-hadoop:2.1.0.rc1') {
+		exclude group: 'org.apache.pig', module: 'pig'
+		exclude group: 'cascading', module: 'cascading-local'
+		exclude group: 'org.scala-lang', module: 'scala-library'
+		exclude group: 'org.apache.hadoop', module: 'hadoop-streaming'
+		exclude group: 'org.apache.storm', module: 'storm-core'
+		exclude group: 'org.codehaus.jackson', module: 'jackson-mapper-asl'
+		exclude group: 'org.apache.spark', module: 'spark-core_2.10'
+		exclude group: 'org.apache.hadoop', module: 'hadoop-tools'
+		exclude group: 'org.apache.spark', module: 'spark-sql_2.10'
+		exclude group: 'org.apache.hive', module: 'hive-service'
+		exclude group: 'cascading', module: 'cascading-hadoop'
+	}
+	compile files("$SPARK_LIB")
+}
+
+/* 
+ * Use Spark built-in scala library contained within the assembly.
+ */
+compileScala {
+	scalaClasspath = files("$SPARK_LIB")
+}
+
+eclipse {
+	pathVariables 'GRADLE_USER_HOME': gradle.gradleUserHomeDir
+	classpath {
+		containers 'org.eclipse.jdt.USER_LIBRARY/SPARK'
+		defaultOutputDir = new File('build/classes')
+		file {
+			// Remove SCALA_CONTAINER. Use Spark built-in scala library instead.
+			whenMerged { classpath ->
+				classpath.entries.removeAll { entry ->
+					entry.path == "org.scala-ide.sdt.launching.SCALA_CONTAINER" || entry.path == "$SPARK_LIB"
+				}
+			}
+		}
+	}
+}
+
+sourceSets {
+	main {
+		java {
+			srcDir 'src/java'
+		}
+		scala {
+			srcDir 'src/scala'
+		}
+		resources {
+			srcDir 'src/resources'
+		}
+	
+		output.classesDir = 'build/classes'
+	}
+}
+
+jar {
+	baseName = 'datawalks-yelp'
+	version = '1.0'
+}
+
+task run(type: JavaExec) {
+	main = 'datawalks.yelp.YelpJob'
+	args = "$RUN_PROPERTIES".split().toList()
+	classpath sourceSets.main.runtimeClasspath
+}

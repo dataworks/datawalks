@@ -43,7 +43,9 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', 'Bin
 			document.getElementById('current').innerHTML = '<p>Marker dropped: Current Lat: ' + evt.latLng.lat().toFixed(3) + ' Current Lng: ' + evt.latLng.lng().toFixed(3) + '</p>';
 			latTw = evt.latLng.lat().toFixed(3);
 			longTw = evt.latLng.lng().toFixed(3);
+			console.log("heatmap: " +startDate);
 			linker.getLatLong(latTw, longTw, startDate, endDate);
+			linker.yelpLatLong(latTw, longTw);
 		});
 
 		google.maps.event.addListener(myMarker, 'dragstart', function(evt){

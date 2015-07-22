@@ -16,8 +16,8 @@ class YelpController {
 
 	@Autowired ElasticsearchService esYelpService
 
-	@RequestMapping("/yelp/getPlaces")
-	public def getTweets(@RequestParam(value = "latitude", required = false) String latitude,
+	@RequestMapping("/yelp/getYelps")
+	public def getYelps(@RequestParam(value = "latitude", required = false) String latitude,
 			@RequestParam(value = "longitude", required = false) String longitude) {
 		esYelpService.search(
 			[query: [filtered: [
@@ -25,7 +25,7 @@ class YelpController {
 					filter: [
 									[
 										geo_distance: [
-											distance: "2mi",
+											distance: "10km",
 											location: [
 												lat: latitude,
 												lon: longitude

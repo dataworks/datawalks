@@ -63,8 +63,8 @@
 						<div id="current">Move the marker!</div> 
 			    	</div>
 					<div class="righty">			
-				   			<div ng-controller="Display">
-								<div class="col-md-2">
+				   			<div ng-controller="Display" style="display:inline">
+								
 									Select Watch ID to view:
 									<select id="dropdownMenu" multiple ="multiple">
 										<option ng-repeat="index in deviceIds" ng-model="index.value"
@@ -78,7 +78,7 @@
 									 <form ng-submit="clear()" class="clear">
 										<input type="submit" id="clear" value="Clear" style="width: 100px;"/>
 									</form>
-								</div>
+								
 							</div>
 						<div class="subcontent" id="twitter" style="display:block">
 						    <div class="boxish" ng-controller="TwitDisplay" >      

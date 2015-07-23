@@ -175,11 +175,9 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', 'Bin
 
 	function updateCalendar(index)
 	{
-		console.log("here");
 		var sD = $("#jqxCalendar").jqxCalendar('specialDates');
         sD = [];
         $("#jqxCalendar").jqxCalendar({ specialDates: sD });
-		console.log(specDateHolder[index].length);
 		for(var i = 0; i < specDateHolder[index].length; i++)
 		{
 			$("#jqxCalendar").jqxCalendar('addSpecialDate', specDateHolder[index][i], 
@@ -209,13 +207,11 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', 'Bin
 			var sD = $("#jqxCalendar").jqxCalendar('specialDates');
 	        sD = [];
 	        $("#jqxCalendar").jqxCalendar({ specialDates: sD });
-	        console.log(specDateHolder[index].length);
 	        for(var i = 0; i < specDateHolder[index].length; i++)
 			{
 				$("#jqxCalendar").jqxCalendar('addSpecialDate', specDateHolder[index][i], 
 						'jqx-calendar-cell-specialDate', 'run');
 			}
-	        console.log("selectDate is false");
 		}
 		var watchData = [];
 		var index;

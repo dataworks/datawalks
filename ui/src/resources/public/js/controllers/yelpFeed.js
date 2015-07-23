@@ -22,7 +22,6 @@ controllers.controller('YelpDisplay', ['$scope', 'Yelp', 'linker', function($sco
 	 */
 	$scope.loadYelps = function(results){
 		$scope.business = [];
-		console.log(results.hits.length);
 		for( var i = 0; i < results.hits.length; i++){
 			$scope.business.push({
 				name: results.hits[i].name,

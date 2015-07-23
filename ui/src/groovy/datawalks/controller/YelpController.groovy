@@ -25,7 +25,7 @@ class YelpController {
 					filter: [
 									[
 										geo_distance: [
-											distance: "10km",
+											distance: "5km",
 											location: [
 												lat: latitude,
 												lon: longitude

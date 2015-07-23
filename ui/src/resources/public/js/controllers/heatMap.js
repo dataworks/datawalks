@@ -183,7 +183,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', 'Bin
 		for(var i = 0; i < specDateHolder[index].length; i++)
 		{
 			$("#jqxCalendar").jqxCalendar('addSpecialDate', specDateHolder[index][i], 
-					'jqx-calendar-cell-specialDate1', 'run');
+					'jqx-calendar-cell-specialDate', 'run');
 		}
 	}
 	
@@ -213,7 +213,7 @@ controllers.controller('Display', ['$scope', 'linker', 'Watch', 'WatchIds', 'Bin
 	        for(var i = 0; i < specDateHolder[index].length; i++)
 			{
 				$("#jqxCalendar").jqxCalendar('addSpecialDate', specDateHolder[index][i], 
-						'jqx-calendar-cell-specialDate1', 'run');
+						'jqx-calendar-cell-specialDate', 'run');
 			}
 	        console.log("selectDate is false");
 		}

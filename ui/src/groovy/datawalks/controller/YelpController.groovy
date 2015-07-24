@@ -30,6 +30,7 @@ class YelpController {
 												lat: latitude,
 												lon: longitude
 												]
+											
 											]
 									]
 								

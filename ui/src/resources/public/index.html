@@ -63,15 +63,17 @@
 						<div id="current">Move the marker!</div> 
 			    	</div>
 					<div class="righty">			
-				   			<div ng-controller="Display" style="display:inline">
+				   			<div ng-controller="Display">
 								
-									Select Watch ID to view:
+									
 									<select id="dropdownMenu" multiple ="multiple">
+									Select Watch ID to view:
 										<option ng-repeat="index in deviceIds" ng-model="index.value"
 											ng-value="index.value" ng-click="matchId(-1)">
 											{{index.name}}</option>
 									</select> 
-									<div id='jqxCalendar'></div>
+									</br>
+									<div id='jqxCalendar' style:"align: right"></div>
 									<form ng-submit="clear()"><br />
 										{{comp.name}}: <input type="checkbox" name="comp.name"
 											ng-model="comp.value" ng-value="{{comp.value}}">		
@@ -102,7 +104,7 @@
 							<div  ng-repeat="yelp in business" style="border: 10px red">
 								<blockquote class="twitter-tweet">
 								<p style="float: left;">
-								<img ng-src="{{yelp.img}}"  height="50px" width="50px">
+								<img ng-src="{{yelp.img}}"  height="100px" width="100px">
 								</p>
 								<div id="#tweader">
 								<span style="font-style: bold;">{{yelp.name}}</span>
@@ -114,6 +116,9 @@
 								<span>{{yelp.phone}}</span>
 								</br>
 								</br>
+								<p style:"float: right;">
+								<img ng-src="{{yelp.ratPic}}" height="20px" width="100px">
+								</p>
 								<span style="color: #4099FF;"><a href="{{yelp.website}}">MobileSite</a>
 								</div></br>			
 									</blockquote>

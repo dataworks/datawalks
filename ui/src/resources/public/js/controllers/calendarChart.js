@@ -60,7 +60,6 @@ controllers.controller('ChartDisplay', ['$scope', 'linker', 'Aggregate',
 	 	{
 	 		if($scope.deviceIds[index].id == $scope.records.aggs[i].did)
 	 		{
-	 			console.log($scope.records.aggs[i]);
 	 			offset = moment($scope.records.aggs[i].dtime).format("YYYY-MM-DD");
 	 			offset = new Date(offset);
 	 			dataTable.addRow([ new Date(offset.getTime() + offset.getTimezoneOffset()), 

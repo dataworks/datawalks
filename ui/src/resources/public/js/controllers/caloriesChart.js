@@ -102,7 +102,6 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 		analyticsTable.addColumn('string', 'Speed');
 		analyticsTable.addColumn('number', 'Distance');
 		analyticsTable.addColumn('number', 'Calories');
-		console.log("length: " + analytics.length);
 		for(var i = 0; i < analytics.length; i++)
 		{
 			if(analytics[i].run == true)
@@ -143,7 +142,6 @@ controllers.controller('CalDisplay', ['$scope', 'linker', 'Calories', function($
 		{
 			if($scope.deviceIds[index].id == $scope.records.calories[i].did)
 			{
-				console.log($scope.records.calories[i].dtime.substring(5));
 				dataTable.addRow([ $scope.records.calories[i].dtime.substring(5), 
 				                   $scope.records.calories[i].scal ]);
 			}

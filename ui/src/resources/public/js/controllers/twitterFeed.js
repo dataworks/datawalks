@@ -20,7 +20,6 @@ controllers.controller('TwitDisplay', ['$scope', '$sce', 'linker', 'Twitter', fu
         localLong = message.longitude;
         startDates = message.fromDate;
         endDates = message.endDate;
-        console.log("twitterfeed: "+ endDates);
         
     	$scope.records = Twitter.query({latitude: localLat, longitude: localLong, fromDate: startDates, endDate: endDates}, 
     			$scope.recordsLoaded);
@@ -32,7 +31,6 @@ controllers.controller('TwitDisplay', ['$scope', '$sce', 'linker', 'Twitter', fu
 	 */
 	$scope.loadTweets = function(){
 		$scope.twits = [];
-		console.log($scope.records.hits.length);
 		for(var i = 0; i < $scope.records.hits.length; i++)
 		{	
 			if($scope.records.hits[i].location != null)

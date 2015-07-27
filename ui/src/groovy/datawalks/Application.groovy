@@ -27,7 +27,6 @@ class Application {
 	public ElasticsearchService esYelpService() {
 		def esService = new ElasticsearchService()
 		esService.url = yelpUrl
-		println esService.url
 		return esService
 	}
 

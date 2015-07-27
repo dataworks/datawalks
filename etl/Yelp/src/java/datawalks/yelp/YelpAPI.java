@@ -18,23 +18,11 @@ import org.scribe.oauth.OAuthService;
 public class YelpAPI {
 
   private static final String API_HOST = "api.yelp.com";
-  private static final String DEFAULT_TERM = "";
-  private static final String DEFAULT_LOCATION = "";
   private static final int SEARCH_LIMIT = 1;
   private static final String SEARCH_PATH = "/v2/search";
   private static final String BUSINESS_PATH = "/v2/business";
-  //private static final String LL = "lat,lon";
   private static final int RADIUS = 2500;
   private static final int SORT = 1;
-
-  /*
-   * Update OAuth credentials below from the Yelp Developers API site:
-   * http://www.yelp.com/developers/getting_started/api_access
-   */
-  private static final String CONSUMER_KEY = "";
-  private static final String CONSUMER_SECRET = "";
-  private static final String TOKEN = "";
-  private static final String TOKEN_SECRET = "";
 
   OAuthService service;
   Token accessToken;
